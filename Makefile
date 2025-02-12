@@ -7,8 +7,10 @@ HEADERS	:= -Iinclude
 
 SRCS	:= 	src/main.c \
 			src/parsing/open_close_map.c \
-			src/parsing/init.c \
+			src/parsing/init_direction_and_fc.c \
+			src/parsing/stock_direction_and_fc.c \
 			src/parsing/check_map.c \
+			src/parsing/init.c \
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -24,7 +26,7 @@ r:
 	make re && ./cub3D maps/map.cub
 
 v:
-	make re && valgrind --leak-check=full -s ./cub3D maps/map.cub
+	make re && valgrind --leak-check=full -s --track-origins=yes ./cub3D maps/map.cub
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)

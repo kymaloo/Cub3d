@@ -1,6 +1,6 @@
 #include "cub.h"
 
-int	ft_check_map_format_cub(char *str)
+int	check_map_format_cub(char *str)
 {
 	int	status;
 	int	len_str;
@@ -33,7 +33,13 @@ int	check_white_space(char *str)
 	return (1);
 }
 
-int	count_dir(t_parsing_map *map, char *str, int count, int fd)
+int	is_white_space(char c)
+{
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (0);
+	return (1);
+}
+int	count_dir(char **dir, char *str, int count, int fd)
 {
 	char	*line;
 
@@ -45,7 +51,7 @@ int	count_dir(t_parsing_map *map, char *str, int count, int fd)
 	{
 		if (check_white_space(line) == 0)
 			free(line);
-		else if (strncmp_with_array(line, map->direction, 5) != -1)
+		else if (strncmp_with_array(line, dir, 5) != -1)
 		{
 			count++;
 			free(line);
@@ -61,7 +67,7 @@ int	count_dir(t_parsing_map *map, char *str, int count, int fd)
 	return (count);
 }
 
-int	count_fc(t_parsing_map *map, char *str, int count, int fd)
+int	count_fc(char **fc, char *str, int count, int fd)
 {
 	char	*line;
 
@@ -73,7 +79,7 @@ int	count_fc(t_parsing_map *map, char *str, int count, int fd)
 	{
 		if (check_white_space(line) == 0)
 			free(line);
-		else if (strncmp_with_array(line, map->fc, 2) != -1)
+		else if (strncmp_with_array(line, fc, 2) != -1)
 		{
 			count++;
 			free(line);
@@ -115,20 +121,21 @@ int	get_index_before_map(t_parsing_map *map, char *str, int count, int fd)
 	return (count);
 }
 
-int	ft_check_map(t_parsing_map *map)
+int	check_map(char **map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map->grid[i])
+	while (map[i])
 	{
 		j = 0;
-		while (map->grid[i][j])
+		while (map[i][j])
 		{
-			if (map->grid[i][j] != '1' && map->grid[i][j] != '0' &&
-			map->grid[i][j] != 'N' && map->grid[i][j] != 'S' &&
-			map->grid[i][j] != 'E' && map->grid[i][j] != 'W')
+			if (map[i][j] != '1' && map[i][j] != '0' &&
+			map[i][j] != 'N' && map[i][j] != 'S' &&
+			map[i][j] != 'E' && map[i][j] != 'W' &&
+			is_white_space(map[i][j]) != 0)
 				return (printf("Error: The map is not ready!\n"), -1);
 			j++;
 		}
@@ -137,7 +144,7 @@ int	ft_check_map(t_parsing_map *map)
 	return (0);
 }
 
-void	ft_count_line(t_parsing_map *map, char *str, int fd)
+void	count_line(t_parsing_map *map, char *str, int fd)
 {
 	char	*line;
 	int		i;
@@ -157,7 +164,6 @@ void	ft_count_line(t_parsing_map *map, char *str, int fd)
 	}
 	free(line);
 	close_map(fd);
-	printf("%d\n", map->count_line);
 }
 
 void	line_size(t_parsing_map *map, char *str, int fd)
@@ -182,31 +188,166 @@ void	line_size(t_parsing_map *map, char *str, int fd)
 	close_map(fd); 
 }
 
-void	extract_map(t_parsing_map *map, char *str)
+int	count_line_in_file(char *str)
 {
-	int	status;
+	int 	fd;
+	int		count;
+	char	*line;
+
+	fd = open_map(str);
+	count = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		free(line);
+		count++;
+		line = get_next_line(fd);
+	}
+	free(line);
+	close_map(fd);
+	return (count);
+}
+
+void	print_map(char **map)
+{
+	int i;
+
+	i = 0;
+	while (map[i] != NULL)
+	{
+		printf("%s\n", map[i]);
+		i++;
+	}
+}
+
+char	**stock_file(char *str)
+{
+	int		i;
+	int		fd;
+	int		count;
+	char	**result;
+
+	i = 0;
+	fd = open_map(str);
+	count = count_line_in_file(str);
+	result = malloc(sizeof(char *) * (count + 1));
+	if (!result)
+		return (NULL);
+	while (i < count)
+	{
+		result[i] = get_next_line(fd);
+		i++;
+	}
+	result[i] = NULL;
+	close_map(fd);
+	return (result);
+}
+
+char	**extract_map(t_parsing_map *map, char **src, char *str)
+{
+	int 	i;
+	int		j;
+	char 	**result;
+
+	i = 0;
+	j = 0;
+	result = malloc(sizeof(char *) * (map->count_line + 1));
+	if (!result)
+		return (NULL);
+	while (i < get_index_before_map(map, str, 0, 0))
+		i++;
+	while (src[i])
+	{
+		result[j] = ft_strdup(src[i]);
+		i++;
+		j++;
+	}
+	result[j] = NULL;
+	return (result);
+}
+
+void	copy_map(t_parsing_map *map)
+{
 	int	i;
 
-	status = EXIT_FAILURE;
 	i = 0;
-	map->grid = malloc(sizeof(char *) * (map->count_line + 1));
-	if (map->grid)
+	map->grid_copy = malloc(sizeof(char *) * (map->count_line + 1));
+	if (!map->grid_copy)
+		return ;
+	while (map->grid[i])
 	{
-		while (i < map->count_line)
-		{
-			map->grid[i] = get_next_line(fd);
-			if (map->grid[i])
-				status = EXIT_SUCCESS;
-			else
-			{
-				ft_printf("Error: The copy failed\n");
-				ft_free_all(map->grid, i);
-			}
-			i++;
-		}
-		map->grid[i] = NULL;
+		map->grid_copy[i] = ft_strdup(map->grid[i]);
+		i++;
 	}
-	else
-		ft_printf("Error: The malloc failed\n");
-	return (status);
+	map->grid_copy[i] = NULL;
+}
+
+void	free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+bool	isset(char c, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (c == set[i])
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+int	path_finding(int x, int y, char **cells)
+{
+	int	end;
+
+	end = 0;
+	if (isset(cells[x][y], "NSEW0") == false)
+		return (end++);
+	cells[x][y] = '1';
+	if (isset(cells[x + 1][y], "1\0\n") == false)
+		end += path_finding(x + 1, y, cells);
+	if (isset(cells[x - 1][y], "1\0\n") == false)
+		end += path_finding(x - 1, y, cells);
+	if (isset(cells[x][y + 1], "1\0\n") == false)
+		end += path_finding(x, y + 1, cells);
+	if (isset(cells[x][y - 1], "1\0\n") == false)
+		end += path_finding(x, y - 1, cells);
+	return (end);
+}
+
+void	find_last_floor(t_parsing_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map->grid_copy[i])
+	{
+		j = 0;
+		while (map->grid_copy[i][j])
+		{
+			if (map->grid_copy[i][j] == '0')
+			{
+				map->x_last_0 = i;
+				map->y_last_0 = j;
+				printf("%d----%d\n", map->x_last_0, map->y_last_0);
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
 }
