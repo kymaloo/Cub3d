@@ -2,7 +2,7 @@
 # define DEFINE_H
 
 # define MALLOC_FAILED "Error: Malloc failed\n"
-
+# define WHERE __FILE__":"__FUNCTION__":"__LINE__
 enum e_error
 {
 	MALLOC_ERROR = -1,
