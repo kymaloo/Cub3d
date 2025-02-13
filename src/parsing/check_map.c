@@ -84,3 +84,27 @@ int	check_doublon_map(char **map, char *str)
 	}
 	return (count);
 }
+
+int	update_color(char **color, char *tmp)
+{
+	int	i;
+	int	j;
+
+	i = 2;
+	j = 0;
+	*color = malloc(sizeof(char) * (ft_strlen_int(tmp) - 1));
+	if (!*color)
+	{
+		free(tmp);
+		return (EXIT_FAILURE);
+	}
+	while (tmp[i])
+	{
+		(*color)[j] = tmp[i];
+		j++;
+		i++;
+	}
+	(*color)[j] = '\0';
+	free(tmp);
+	return (EXIT_SUCCESS);
+}
