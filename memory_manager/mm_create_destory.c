@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:55:19 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/13 19:45:13 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/14 19:26:55 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_mm	*mm_create(void)
 
 	new = malloc(sizeof(t_mm));
 	if (!new)
-		mm_nuclear_exit(NULL, "mm_create(): malloc failure", EXIT_FAILURE);
+		mm_nuclear_exit(NULL, error(WHERE, "mm_create(): malloc failure", EXIT_FAILURE));
 	new->areas = NULL;
 	return (new);
 }
@@ -44,7 +44,7 @@ void	destroy_area_content(t_content_node *content_node)
 	}
 }
 
-void	destroy_areas(t_area_node *areas)
+static void	destroy_areas(t_area_node *areas)
 {
 	t_area_node	*next;
 
@@ -65,4 +65,10 @@ void	mm_destroy(t_mm *mm)
 	destroy_areas(mm->areas);
 	free(mm);
 	return ;
+}
+
+void	mm_nuclear_exit(t_mm *mm, t_status status)
+{
+	mm_destroy(mm);
+	exit(status);
 }
