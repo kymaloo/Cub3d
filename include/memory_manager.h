@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/14 19:43:07 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/14 19:54:11 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,12 @@ void	mm_area_add_elem(t_mm *mm, char *area, void *elem);
 void	mm_area_free_elem(t_mm *mm, char *area, void *elem);
 void	mm_nuclear_exit(t_mm *mm, t_status status);
 
+
+//utils
+
 t_content_node	*create_content_node(t_mm *mm);
 t_area_node		*create_area_node(t_mm *mm, char *new_area_name);
 t_area_node		*go_to_area_name(t_mm *mm, char *area_name_to_find);
+void			destroy_area_content(t_content_node *content_node);
 
 #endif

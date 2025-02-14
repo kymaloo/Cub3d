@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:28:02 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/14 19:42:19 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/14 19:55:46 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	mm_area_delete(t_mm *mm, char *area_name_to_delete)
 	t_area_node	*area_node;
 
 	area_node = go_to_area_name(mm, area_name_to_delete);
-	destroy_area_content(area_node);
+	destroy_area_content(area_node->area_content);
 	free(area_node);
 	return ;
 }
