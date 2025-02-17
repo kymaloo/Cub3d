@@ -7,6 +7,7 @@
 # include "define.h"
 # include "struct.h"
 # include "../libft/libft.h"
+# include "ft_error.h"
 
 int		check_map_format_cub(char *str);
 int		check_white_space(char *str);
