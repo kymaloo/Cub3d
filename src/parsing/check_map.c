@@ -85,14 +85,14 @@ int	check_doublon_map(char **map, char *str)
 	return (count);
 }
 
-int	update_color(char **color, char *tmp)
+int	update_color(t_mm *mm, char **color, char *tmp)
 {
 	int	i;
 	int	j;
 
 	i = 2;
 	j = 0;
-	*color = malloc(sizeof(char) * (ft_strlen_int(tmp) - 1));
+	*color = safe_malloc(mm, ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
 	if (!*color)
 	{
 		free(tmp);

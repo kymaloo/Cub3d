@@ -1,11 +1,11 @@
 #include "cub.h"
 
-int	init_tab_direction(t_parsing_map *map)
+int	init_tab_direction(t_mm *mm, t_parsing_map *map)
 {
 	int	i;
 
 	i = 0;
-	map->direction = malloc(sizeof(char *) * 6);
+	map->direction = safe_malloc(mm, ZONE_1, sizeof(char *) * 6);
 	if (!map->direction)
 	{
 		printf(MALLOC_FAILED);
@@ -23,12 +23,12 @@ int	init_tab_direction(t_parsing_map *map)
 	return (EXIT_SUCCESS);
 }
 
-int	init_tab_fc(t_parsing_map *map)
+int	init_tab_fc(t_mm *mm, t_parsing_map *map)
 {
 	int	i;
 
 	i = 0;
-	map->fc = malloc(sizeof(char *) * 3);
+	map->fc = safe_malloc(mm, ZONE_1, sizeof(char *) * 3);
 	if (!map->fc)
 	{
 		printf(MALLOC_FAILED);

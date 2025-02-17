@@ -13,8 +13,11 @@ SRCS	:= 	\
 			memory_manager/utils/mm_bitfield_utils.c	\
 			memory_manager/utils/mm_destruction_utils.c	\
 			memory_manager/utils/mm_hashmap_utils.c		\
+			memory_manager/safe_allocations.c			\
+			\
 			src/main.c									\
 			src/error.c									\
+			\
 			src/parsing/open_close_map.c				\
 			src/parsing/init_direction_and_fc.c			\
 			src/parsing/stock_direction_and_fc.c		\
@@ -53,12 +56,12 @@ $(NAME): $(OBJS)
 	@echo "\033[32m----${NAME} Compiled!----\033[0m"
 	
 clean:
-	@echo "\033[31m----Cleaning object files----\033[0m"
+	@echo "\033[34m----Cleaning object files----\033[0m"
 	@rm -rf $(OBJS)
 	@$(MAKE) clean -C  $(LIBFT)
 
 fclean: clean
-	@echo "\033[31m----Cleaning all generated files----\033[0m"
+	@echo "\033[34m----Cleaning all generated files----\033[0m"
 	@rm -rf $(NAME)
 	@$(MAKE) fclean -C  $(LIBFT)
 

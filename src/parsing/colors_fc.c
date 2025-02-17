@@ -1,6 +1,6 @@
 #include "cub.h"
 
-int	check_fc(t_parsing_map *map)
+int	check_fc(t_mm *mm, t_parsing_map *map)
 {
 	char	*tmp;
 
@@ -9,12 +9,12 @@ int	check_fc(t_parsing_map *map)
 		EXIT_FAILURE);
 	tmp = ft_strdup(map->color_ceiling);
 	free(map->color_ceiling);
-	if (update_color(&map->color_ceiling, tmp) == EXIT_FAILURE)
+	if (update_color(mm, &map->color_ceiling, tmp) == EXIT_FAILURE)
 		return (printf("Error : The ceiling isn't valid\n"), \
 		EXIT_FAILURE);
 	tmp = ft_strdup(map->color_floor);
 	free(map->color_floor);
-	if (update_color(&map->color_floor, tmp) == EXIT_FAILURE)
+	if (update_color(mm, &map->color_floor, tmp) == EXIT_FAILURE)
 		return (printf("Error : The floor isn't valid\n"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

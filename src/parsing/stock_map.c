@@ -42,7 +42,7 @@ int	count_line_in_file(char *str)
 	return (count);
 }
 
-char	**stock_file(char *str)
+char	**stock_file(t_mm *mm, char *str)
 {
 	int		i;
 	int		fd;
@@ -52,7 +52,7 @@ char	**stock_file(char *str)
 	i = 0;
 	fd = open_map(str);
 	count = count_line_in_file(str);
-	result = malloc(sizeof(char *) * (count + 1));
+	result = safe_malloc(mm, ZONE_1, sizeof(char *) * (count + 1));
 	if (!result)
 		return (NULL);
 	while (i < count)
@@ -65,7 +65,7 @@ char	**stock_file(char *str)
 	return (result);
 }
 
-char	**extract_map(t_parsing_map *map, char **src, char *str)
+char	**extract_map(t_mm *mm, t_parsing_map *map, char **src, char *str)
 {
 	int		i;
 	int		j;
@@ -73,7 +73,7 @@ char	**extract_map(t_parsing_map *map, char **src, char *str)
 
 	i = 0;
 	j = 0;
-	result = malloc(sizeof(char *) * (map->count_line + 1));
+	result = safe_malloc(mm, ZONE_1, sizeof(char *) * (map->count_line + 1));
 	if (!result)
 		return (NULL);
 	while (i < get_index_before_map(map, str, 0, 0))
@@ -88,12 +88,12 @@ char	**extract_map(t_parsing_map *map, char **src, char *str)
 	return (result);
 }
 
-void	copy_map(t_parsing_map *map)
+void	copy_map(t_mm *mm, t_parsing_map *map)
 {
 	int	i;
 
 	i = 0;
-	map->grid_copy = malloc(sizeof(char *) * (map->count_line + 1));
+	map->grid_copy = safe_malloc(mm, ZONE_PARSING_TMP, sizeof(char *) * (map->count_line + 1));
 	if (!map->grid_copy)
 		return ;
 	while (map->grid[i])
