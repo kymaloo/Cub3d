@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:17:57 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 13:02:37 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:38:42 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "memory_manager.h"
 
 //utils
-
 
 t_area_node		*create_area_node(t_mm *mm, char *new_area_name);
 t_area_node		*go_to_area_name(t_mm *mm, char *area_name_to_find);
@@ -29,6 +28,7 @@ void			mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem);
 
 
 // destroy utils
+
 void	destroy_content_array(t_content_array *content);
 void	destroy_area_hahsmap(t_content_hashmap *hashmap);
 void	destroy_area(t_area_node *area);

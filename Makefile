@@ -45,7 +45,7 @@ v:
 $(NAME): $(OBJS)
 	@echo "\033[34m----Compiling ${NAME}---\033[0m"
 	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_EXE) $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) -lm $(OBJS) $(LIBFT_EXE) $(HEADERS) -o $(NAME)
 	@echo "\033[32m----${NAME} Compiled!----\033[0m"
 	
 clean:
