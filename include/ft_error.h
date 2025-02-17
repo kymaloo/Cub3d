@@ -7,6 +7,6 @@
 # define WHERE __FILE__":", __LINE__
 
 typedef	int t_status;
-t_status error(char *where, int line, char *msg, t_status errcode);
+t_status ft_error(char *where, int line, char *msg, t_status errcode);
 
 #endif
