@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:15 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 13:31:05 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 16:47:12 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	destroy_content_array(t_content_array *content)
 	size_t	i;
 	size_t	size;
 
-	size = sizeof(content->bits);
+	size = content->bitfield_size;
 	i = 0;
 	while(i < size)
 	{

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:17:57 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 13:38:42 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 17:14:21 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ size_t			findFirstZeroBit(const bool *bits, size_t length);
 void			mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem);
 void			mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem);
 
+t_status		ft_strcmp(char *s1, char *s2);
 
 // destroy utils
 

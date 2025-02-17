@@ -20,7 +20,7 @@ void	*safe_calloc(t_mm *mm, char *area, size_t nmeb, size_t size)
 	return (new);
 }
 
-char	*safe_strdup(t_mm *mm, char *area, const char str)
+char	*safe_strdup(t_mm *mm, char *area, const char *str)
 {
 	void	*new;
 
