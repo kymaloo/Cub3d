@@ -1,22 +1,22 @@
 #include "cub.h"
 
-static void	save_path(t_parsing_map *map, char *line, int dir_index)
+static void	save_path(t_mm *mm, t_parsing_map *map, char *line, int dir_index)
 {
 	if (dir_index == 0)
-		map->path_north = ft_strdup(line);
+		map->path_north = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 1)
-		map->path_south = ft_strdup(line);
+		map->path_south = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 2)
-		map->path_west = ft_strdup(line);
+		map->path_west = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 3)
-		map->path_east = ft_strdup(line);
+		map->path_east = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 4)
-		map->color_floor = ft_strdup(line);
+		map->color_floor = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 5)
-		map->color_ceiling = ft_strdup(line);
+		map->color_ceiling = safe_strdup(mm, ZONE_1, line);
 }
 
-int	process_direction(t_parsing_map *map, char *line, int dir_i, int fd)
+int	process_direction(t_mm *mm, t_parsing_map *map, char *line, int dir_i, int fd)
 {
 	if (dir_i == 0 && map->path_north != NULL)
 		return (check_doublon("north", line, fd));
@@ -30,7 +30,7 @@ int	process_direction(t_parsing_map *map, char *line, int dir_i, int fd)
 		return (check_doublon("floor", line, fd));
 	if (dir_i == 5 && map->color_ceiling != NULL)
 		return (check_doublon("ceiling", line, fd));
-	save_path(map, line, dir_i);
+	save_path(mm, map, line, dir_i);
 	free(line);
 	return (EXIT_SUCCESS);
 }

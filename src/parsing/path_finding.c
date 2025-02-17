@@ -56,7 +56,7 @@ static int	path_finding(int x, int y, char **cells)
 	return (end);
 }
 
-int	check_wall(t_parsing_map *map)
+int	check_wall(t_mm *mm, t_parsing_map *map)
 {
 	int	i;
 	int	j;
@@ -72,7 +72,7 @@ int	check_wall(t_parsing_map *map)
 				find_last_floor(map);
 				if (path_finding(map->x_last_0, \
 				map->y_last_0, map->grid_copy) != 0)
-					return (printf("Error: map not valid\n", EXIT_FAILURE));
+					mm_nuclear_exit(mm, ft_error(WHERE, "map not valid", EXIT_FAILURE));
 			}
 			j++;
 		}

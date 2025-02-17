@@ -5,17 +5,15 @@ int	check_fc(t_mm *mm, t_parsing_map *map)
 	char	*tmp;
 
 	if (ft_isdigit(map->color_ceiling[2]) || ft_isdigit(map->color_floor[2]))
-		return (printf("Error : The ceiling or floor isn't valid\n"), \
-		EXIT_FAILURE);
-	tmp = ft_strdup(map->color_ceiling);
+		mm_nuclear_exit(mm, ft_error(WHERE, "The ceiling or floor isn't valid", EXIT_FAILURE));
+	tmp = safe_strdup(mm, ZONE_1, map->color_ceiling);
 	free(map->color_ceiling);
 	if (update_color(mm, &map->color_ceiling, tmp) == EXIT_FAILURE)
-		return (printf("Error : The ceiling isn't valid\n"), \
-		EXIT_FAILURE);
-	tmp = ft_strdup(map->color_floor);
+		mm_nuclear_exit(mm, ft_error(WHERE, "The ceiling isn't valid", EXIT_FAILURE));
+	tmp = safe_strdup(mm, ZONE_1, map->color_floor);
 	free(map->color_floor);
 	if (update_color(mm, &map->color_floor, tmp) == EXIT_FAILURE)
-		return (printf("Error : The floor isn't valid\n"), EXIT_FAILURE);
+		mm_nuclear_exit(mm, ft_error(WHERE, "The floor isn't valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -34,12 +32,12 @@ int	validate_color_format(char *color)
 	return (EXIT_SUCCESS);
 }
 
-int	check_format_fc(t_parsing_map *map)
+int	check_format_fc(t_mm *mm,t_parsing_map *map)
 {
 	if (validate_color_format(map->color_ceiling) == EXIT_FAILURE)
-		return (printf("Error : The ceiling isn't valid\n"), EXIT_FAILURE);
+		mm_nuclear_exit(mm, ft_error(WHERE, "The ceiling isn't valid", EXIT_FAILURE));
 	if (validate_color_format(map->color_floor) == EXIT_FAILURE)
-		return (printf("Error : The floor isn't valid\n"), EXIT_FAILURE);
+		mm_nuclear_exit(mm, ft_error(WHERE, "The floor isn't valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -66,11 +64,11 @@ int	validate_color_range(char *color)
 	return (EXIT_SUCCESS);
 }
 
-int	verif_colors(t_parsing_map *map)
+int	verif_colors(t_mm *mm, t_parsing_map *map)
 {
 	if (validate_color_range(map->color_ceiling) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		mm_nuclear_exit(mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
 	if (validate_color_range(map->color_floor) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		mm_nuclear_exit(mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
