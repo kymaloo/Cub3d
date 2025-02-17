@@ -37,5 +37,12 @@ int		is_white_space(char c);
 int		check_wall(t_parsing_map *map);
 int		init(t_parsing_map *map, char *str);
 int		check_doublon_map(char **map, char *str);
-
+int		check_fc(t_parsing_map *map);
+int		verif_colors(t_parsing_map *map);
+int		check_format_fc(t_parsing_map *map);
+int		validate_color_range(char *color);
+int		validate_color_format(char *color);
+int		update_color(char **color, char *tmp);
+void	free_all(t_parsing_map *map);
+int		check_map_reel(char *str);
 #endif

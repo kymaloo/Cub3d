@@ -20,7 +20,11 @@ SRCS	:= 	\
 			src/parsing/stock_direction_and_fc.c		\
 			src/parsing/check_map.c						\
 			src/parsing/init.c							\
-
+			src/parsing/free.c							\
+			src/parsing/path_finding.c					\
+			src/parsing/stock_map.c						\
+			src/parsing/utils_parse.c					\
+			src/parsing/colors_fc.c						\
 
 
 OBJS	:= ${SRCS:.c=.o}

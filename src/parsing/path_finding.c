@@ -72,7 +72,7 @@ int	check_wall(t_parsing_map *map)
 				find_last_floor(map);
 				if (path_finding(map->x_last_0, \
 				map->y_last_0, map->grid_copy) != 0)
-					return (EXIT_FAILURE);
+					return (printf("Error: map not valid\n", EXIT_FAILURE));
 			}
 			j++;
 		}

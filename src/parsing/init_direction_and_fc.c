@@ -97,3 +97,16 @@ int	init_direction(t_parsing_map *map, char *str, int dir, int fd)
 	free(line);
 	return (close_map(fd));
 }
+
+int	check_map_reel(char *str)
+{
+	int	fd;
+
+	fd = open_map(str);
+	if (fd == -1)
+	{
+		printf("Error: The map isn't reel\n");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
