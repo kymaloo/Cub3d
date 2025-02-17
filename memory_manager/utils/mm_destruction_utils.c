@@ -6,12 +6,11 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:15 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/16 22:41:11 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:31:05 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory_manager.h"
-#include "../mm_interns.h"
+#include "mm_interns.h"
 
 void	destroy_content_array(t_content_array *content)
 {
@@ -28,14 +27,12 @@ void	destroy_content_array(t_content_array *content)
 	}
 	free(content->content);
 	free(content->bits);
-	free(content);
 	return ;
 }
 
-void	destroy_area_hahsmap(t_content_hashmap *hashmap)
+void	destroy_area_hahsmap_content(t_content_hashmap *hashmap)
 {
 	size_t				i;
-	size_t				size;
 
 	i = 0;
 	while (i < MM_HASHMAP_NB_BUCKETS)
@@ -49,7 +46,7 @@ void	destroy_area_hahsmap(t_content_hashmap *hashmap)
 void	destroy_area(t_area_node *area)
 {
 	free(area->area_name);
-	destroy_area_hahsmap(&area->area_hashmap);
+	destroy_area_hahsmap_content(&area->area_hashmap);
 	free(area);
 	return ;
 }

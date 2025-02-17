@@ -6,12 +6,11 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:21:06 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/16 21:30:46 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:31:15 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory_manager.h"
-#include "mm_interns.h"
+#include "utils/mm_interns.h"
 
 /**
  * @brief creates an area of the mm

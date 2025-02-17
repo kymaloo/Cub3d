@@ -6,12 +6,11 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 23:08:20 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/16 23:09:14 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:31:09 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory_manager.h"
-#include "../mm_interns.h"
+#include "mm_interns.h"
 
 static	size_t	findZeroInChunk(size_t chunk)
 {

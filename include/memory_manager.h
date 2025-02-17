@@ -6,22 +6,22 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/16 22:37:58 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:27:20 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MEMORY_MANAGER_H
 # define	MEMORY_MANAGER_H
-# include	"error.h"
+# include	"ft_error.h"
 # include	"define.h"
+# include	"../libft/libft.h"
+# include	<math.h>
 # include	<stdbool.h>
 # include	<stdlib.h>
 # include	<aio.h>
 
 // here, add the safe_allocation_functions ...
 
-void	*safe_malloc(size_t size, char *area);
-void	*safe_calloc(size_t nmeb, size_t size, char *area);
 
 # define	MM_AREA_NAME_MAX_SIZE	64
 # define	MM_INITIAL_CONTENT_NB	4
@@ -55,6 +55,9 @@ typedef struct s_memory_manager
 	t_area_node		*areas;
 } t_memory_manager, t_mm;
 
+
+void	*safe_malloc(t_mm *mm, size_t size, char *area);
+void	*safe_calloc(t_mm *mm, size_t nmeb, size_t size, char *area);
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.

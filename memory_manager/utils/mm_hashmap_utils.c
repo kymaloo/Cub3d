@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mm_hahsmap_utils.c                                 :+:      :+:    :+:   */
+/*   mm_hashmap_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:16:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 00:04:06 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:31:02 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory_manager.h"
-#include "../mm_interns.h"
+#include "mm_interns.h"
 
 /**
  * @brief multiplies ptr by 2^64 / phi  (golden ratio)
@@ -34,7 +33,7 @@ size_t	mm_hashmap_hash(void *ptr)
 }
 
 
-mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
+void	mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 {
 	size_t hash;
 	size_t where;
@@ -51,7 +50,7 @@ mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 	return ;
 }
 
-mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
+void	mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 {
 	size_t			hash;
 	t_content_array	*array;
@@ -69,5 +68,5 @@ mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 			return ;
 		}
 	}
-	mm_nuclear_exit(mm, error(WHERE, "elem not found", EXIT_FAILURE));
+	mm_nuclear_exit(mm, ft_error(WHERE, "elem not found", EXIT_FAILURE));
 }

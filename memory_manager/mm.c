@@ -6,12 +6,11 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:55:19 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/16 23:05:29 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:31:21 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory_manager.h"
-#include "mm_interns.h"
+#include "utils/mm_interns.h"
 
 t_mm	*mm_create(void)
 {
@@ -19,7 +18,7 @@ t_mm	*mm_create(void)
 
 	new = malloc(sizeof(t_mm));
 	if (!new)
-		mm_nuclear_exit(NULL, error(WHERE, "mm_create(): malloc failure", EXIT_FAILURE));
+		mm_nuclear_exit(NULL, ft_error(WHERE, "mm_create(): malloc failure", EXIT_FAILURE));
 	new->areas = NULL;
 	return (new);
 }

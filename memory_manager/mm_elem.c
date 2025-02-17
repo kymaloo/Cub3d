@@ -6,12 +6,11 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:28:09 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/16 21:35:31 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 13:31:17 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory_manager.h"
-#include "mm_interns.h"
+#include "utils/mm_interns.h"
 
 /**
  * @brief 
@@ -28,7 +27,7 @@ void	mm_area_add_elem(t_mm *mm, char *area, void *elem)
 	t_area_node		*area_node;
 
 	area_node = go_to_area_name(mm, area);
-	mm_hashmap_add(mm, area_node->area_hashmap, elem);
+	mm_hashmap_add(mm, &area_node->area_hashmap, elem);
 	return ;
 }
 
@@ -37,6 +36,6 @@ void	mm_area_free_elem(t_mm *mm, char *area, void *elem)
 	t_area_node		*area_node;
 
 	area_node = go_to_area_name(mm, area);
-	mm_hashmap_remove(mm, area_node->area_hashmap, elem);
+	mm_hashmap_remove(mm, &area_node->area_hashmap, elem);
 	return ;
 }
