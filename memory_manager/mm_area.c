@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mm_area.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:21:06 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 13:31:15 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/17 16:26:44 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ void	mm_area_create(t_mm *mm, char *new_area_name)
 {
 	t_area_node	*area_node;
 
+	if (!mm->areas)
+	{
+		mm->areas = create_area_node(mm, new_area_name);
+		return ;
+	}
 	area_node = mm->areas;
-	while(area_node)
+	while(area_node->next)
 		area_node = area_node->next;
-	area_node = create_area_node(mm, new_area_name);
+	area_node->next = create_area_node(mm, new_area_name);
 	if (!area_node)
 		mm_nuclear_exit(mm, EXIT_FAILURE);
 	return ;
