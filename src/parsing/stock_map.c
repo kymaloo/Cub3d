@@ -1,7 +1,7 @@
 #include "cub.h"
 #include "parsing_interns.h"
 
-void	line_size(t_mm *mm, t_parsing_map *map, char *str, int fd)
+void	line_size(t_mm *mm, t_parsing_map *parse, char *str, int fd)
 {
 	char	*line;
 	int		i;
@@ -64,7 +64,7 @@ char	**stock_file(t_mm *mm, char *str)
 	return (result);
 }
 
-char	**extract_map(t_mm *mm, t_parsing_map *map, char **src, char *str)
+char	**extract_map(t_mm *mm, t_parsing_map *parse, char **src, char *str)
 {
 	int		i;
 	int		j;
@@ -87,7 +87,7 @@ char	**extract_map(t_mm *mm, t_parsing_map *map, char **src, char *str)
 	return (result);
 }
 
-void	copy_map(t_mm *mm, t_parsing_map *map)
+void	copy_map(t_mm *mm, t_parsing_map *parse)
 {
 	int	i;
 

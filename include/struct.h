@@ -24,8 +24,9 @@ typedef struct s_parsing_map
 
 typedef struct s_game
 {
-	t_mm		*mm;
-	mlx_t		*mlx;
+	t_mm			*mm;
+	mlx_t			*mlx;
+	t_parsing_map 	*parse;
 }			t_game;
 
 #endif

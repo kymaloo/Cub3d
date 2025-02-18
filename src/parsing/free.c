@@ -14,30 +14,30 @@ void	free_tab(t_mm *mm, char **tab)
 	safe_free(mm, ZONE_1, tab);
 }
 
-void	free_all(t_mm *mm, t_parsing_map *map)
+void	free_all(t_mm *mm, t_parsing_map *parse)
 {
-	if (map->direction != NULL)
-		free_tab(mm, map->direction);
-	if (map->fc != NULL)
-		free_tab(mm, map->fc);
-	if (map->grid_and_dir != NULL)
-		free_tab(mm, map->grid_and_dir);
-	if (map->path_east != NULL)
-		safe_free(mm, ZONE_1, map->path_east);
-	if (map->path_west != NULL)
-		safe_free(mm, ZONE_1, map->path_west);
-	if (map->path_south != NULL)
-		safe_free(mm, ZONE_1, map->path_south);
-	if (map->path_north != NULL)
-		safe_free(mm, ZONE_1, map->path_north);
-	if (map->color_ceiling != NULL)
-		safe_free(mm, ZONE_1, map->color_ceiling);
-	if (map->color_floor != NULL)
-		safe_free(mm, ZONE_1, map->color_floor);
-	if (map->grid != NULL)
-		free_tab(mm, map->grid);
-	if (map->grid_copy != NULL)
-		free_tab(mm, map->grid_copy);
-	if (map != NULL)
-		safe_free(mm, ZONE_1, map);
+	if (parse->direction != NULL)
+		free_tab(mm, parse->direction);
+	if (parse->fc != NULL)
+		free_tab(mm, parse->fc);
+	if (parse->grid_and_dir != NULL)
+		free_tab(mm, parse->grid_and_dir);
+	if (parse->path_east != NULL)
+		safe_free(mm, ZONE_1, parse->path_east);
+	if (parse->path_west != NULL)
+		safe_free(mm, ZONE_1, parse->path_west);
+	if (parse->path_south != NULL)
+		safe_free(mm, ZONE_1, parse->path_south);
+	if (parse->path_north != NULL)
+		safe_free(mm, ZONE_1, parse->path_north);
+	if (parse->color_ceiling != NULL)
+		safe_free(mm, ZONE_1, parse->color_ceiling);
+	if (parse->color_floor != NULL)
+		safe_free(mm, ZONE_1, parse->color_floor);
+	if (parse->grid != NULL)
+		free_tab(mm, parse->grid);
+	if (parse->grid_copy != NULL)
+		free_tab(mm, parse->grid_copy);
+	if (parse != NULL)
+		safe_free(mm, ZONE_1, parse);
 }

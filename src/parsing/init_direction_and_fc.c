@@ -1,7 +1,7 @@
 #include "cub.h"
 #include "parsing_interns.h"
 
-int	init_tab_direction(t_mm *mm, t_parsing_map *map)
+int	init_tab_direction(t_mm *mm, t_parsing_map *parse)
 {
 	int	i;
 
@@ -21,7 +21,7 @@ int	init_tab_direction(t_mm *mm, t_parsing_map *map)
 	return (EXIT_SUCCESS);
 }
 
-int	init_tab_fc(t_mm *mm, t_parsing_map *map)
+int	init_tab_fc(t_mm *mm, t_parsing_map *parse)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ int	init_tab_fc(t_mm *mm, t_parsing_map *map)
 	return (EXIT_SUCCESS);
 }
 
-int	init_fc(t_mm *mm, t_parsing_map *map, char *str)
+int	init_fc(t_mm *mm, t_parsing_map *parse, char *str)
 {
 	char	*line;
 	int		fc;
@@ -63,30 +63,30 @@ int	init_fc(t_mm *mm, t_parsing_map *map, char *str)
 	return (close_map(fd));
 }
 
-int	init_direction(t_mm *mm, t_parsing_map *map, char *str, int dir, int fd)
+int	init_direction(t_game *game, char *str, int dir, int fd)
 {
 	char	*line;
 
-	dir = count_dir(mm, map->direction, str, 0, 0);
+	dir = count_dir(game->mm, game->parse->direction, str, 0, 0);
 	if (dir != 4)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	line = safe_get_next_line(mm, ZONE_1, fd);
+	line = safe_get_next_line(game->mm, ZONE_1, fd);
 	while (line != NULL)
 	{
 		if (check_white_space(line) == 0)
-			safe_free(mm, ZONE_1, line);
-		else if (ft_strncmp(line, map->direction[0], 5) == 0)
-			process_direction(mm, map, line, 0, fd);
-		else if (ft_strncmp(line, map->direction[1], 5) == 0)
-			process_direction(mm, map, line, 1, fd);
-		else if (ft_strncmp(line, map->direction[2], 5) == 0)
-			process_direction(mm, map, line, 2, fd);
-		else if (ft_strncmp(line, map->direction[3], 5) == 0)
-			process_direction(mm, map, line, 3, fd);
+			safe_free(game->mm, ZONE_1, line);
+		else if (ft_strncmp(line, game->parse->direction[0], 5) == 0)
+			process_direction(game->mm, game->parse, line, 0, fd);
+		else if (ft_strncmp(line, game->parse->direction[1], 5) == 0)
+			process_direction(game->mm, game->parse, line, 1, fd);
+		else if (ft_strncmp(line, game->parse->direction[2], 5) == 0)
+			process_direction(game->mm, game->parse, line, 2, fd);
+		else if (ft_strncmp(line, game->parse->direction[3], 5) == 0)
+			process_direction(game->mm, game->parse, line, 3, fd);
 		else
-			safe_free(mm, ZONE_1, line);
-		line = safe_get_next_line(mm, ZONE_1, fd);
+			safe_free(game->mm, ZONE_1, line);
+		line = safe_get_next_line(game->mm, ZONE_1, fd);
 	}
 	return (close_map(fd));
 }

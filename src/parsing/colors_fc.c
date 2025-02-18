@@ -1,7 +1,7 @@
 #include "cub.h"
 #include "parsing_interns.h"
 
-int	check_fc(t_mm *mm, t_parsing_map *map)
+int	check_fc(t_mm *mm, t_parsing_map *parse)
 {
 	char	*tmp;
 
@@ -33,7 +33,7 @@ int	validate_color_format(char *color)
 	return (EXIT_SUCCESS);
 }
 
-int	check_format_fc(t_mm *mm,t_parsing_map *map)
+int	check_format_fc(t_mm *mm,t_parsing_map *parse)
 {
 	if (validate_color_format(map->color_ceiling) == EXIT_FAILURE)
 		mm_nuclear_exit(mm, ft_error(WHERE, "The ceiling isn't valid", EXIT_FAILURE));
@@ -65,11 +65,11 @@ int	validate_color_range(t_mm *mm, char *color)
 	return (EXIT_SUCCESS);
 }
 
-int	verif_colors(t_mm *mm, t_parsing_map *map)
+int	verif_colors(t_game *game)
 {
-	if (validate_color_range(mm, map->color_ceiling) == EXIT_FAILURE)
-		mm_nuclear_exit(mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
-	if (validate_color_range(mm, map->color_floor) == EXIT_FAILURE)
-		mm_nuclear_exit(mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
+	if (validate_color_range(game->mm, game->parse->color_ceiling) == EXIT_FAILURE)
+		mm_nuclear_exit(game->mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
+	if (validate_color_range(game->mm, game->parse->color_floor) == EXIT_FAILURE)
+		mm_nuclear_exit(game->mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }

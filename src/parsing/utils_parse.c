@@ -20,7 +20,7 @@ int	is_white_space(char c)
 	return (1);
 }
 
-void	count_line(t_mm *mm, t_parsing_map *map, char *str, int fd)
+void	count_line(t_mm *mm, t_parsing_map *parse, char *str, int fd)
 {
 	char	*line;
 	int		i;
@@ -41,7 +41,7 @@ void	count_line(t_mm *mm, t_parsing_map *map, char *str, int fd)
 	close_map(fd);
 }
 
-int	get_index_before_map(t_mm *mm, t_parsing_map *map, char *str, int count, int fd)
+int	get_index_before_map(t_mm *mm, t_parsing_map *parse, char *str, int count, int fd)
 {
 	char	*line;
 

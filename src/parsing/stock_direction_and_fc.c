@@ -1,38 +1,38 @@
 #include "cub.h"
 #include "parsing_interns.h"
 
-static void	save_path(t_mm *mm, t_parsing_map *map, char *line, int dir_index)
+static void	save_path(t_mm *mm, t_parsing_map *parse, char *line, int dir_index)
 {
 	if (dir_index == 0)
-		map->path_north = safe_strdup(mm, ZONE_1, line);
+		parse->path_north = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 1)
-		map->path_south = safe_strdup(mm, ZONE_1, line);
+		parse->path_south = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 2)
-		map->path_west = safe_strdup(mm, ZONE_1, line);
+		parse->path_west = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 3)
-		map->path_east = safe_strdup(mm, ZONE_1, line);
+		parse->path_east = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 4)
-		map->color_floor = safe_strdup(mm, ZONE_1, line);
+		parse->color_floor = safe_strdup(mm, ZONE_1, line);
 	else if (dir_index == 5)
-		map->color_ceiling = safe_strdup(mm, ZONE_1, line);
+		parse->color_ceiling = safe_strdup(mm, ZONE_1, line);
 }
 
-int	process_direction(t_mm *mm, t_parsing_map *map, char *line, int dir_i, int fd)
+int	process_direction(t_game *game, char *line, int dir_i, int fd)
 {
-	if (dir_i == 0 && map->path_north != NULL)
-		return (check_doublon(mm, "north", line, fd));
-	if (dir_i == 1 && map->path_south != NULL)
-		return (check_doublon(mm, "south", line, fd));
-	if (dir_i == 2 && map->path_west != NULL)
-		return (check_doublon(mm, "west", line, fd));
-	if (dir_i == 3 && map->path_east != NULL)
-		return (check_doublon(mm, "east", line, fd));
-	if (dir_i == 4 && map->color_floor != NULL)
-		return (check_doublon(mm, "floor", line, fd));
-	if (dir_i == 5 && map->color_ceiling != NULL)
-		return (check_doublon(mm, "ceiling", line, fd));
-	save_path(mm, map, line, dir_i);
-	safe_free(mm, ZONE_1, line);
+	if (dir_i == 0 && game->parse->path_north != NULL)
+		return (check_doublon(game->parse, "north", line, fd));
+	if (dir_i == 1 && game->parse->path_south != NULL)
+		return (check_doublon(game->parse, "south", line, fd));
+	if (dir_i == 2 && game->parse->path_west != NULL)
+		return (check_doublon(game->parse, "west", line, fd));
+	if (dir_i == 3 && game->parse->path_east != NULL)
+		return (check_doublon(game->parse, "east", line, fd));
+	if (dir_i == 4 && game->parse->color_floor != NULL)
+		return (check_doublon(game->parse, "floor", line, fd));
+	if (dir_i == 5 && game->parse->color_ceiling != NULL)
+		return (check_doublon(game->parse, "ceiling", line, fd));
+	save_path(game->parse, game->parse, line, dir_i);
+	safe_free(game->parse, ZONE_1, line);
 	return (EXIT_SUCCESS);
 }
 
