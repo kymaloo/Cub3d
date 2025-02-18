@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 16:42:12 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/18 12:53:39 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_content_array
 {
 	t_addr			*content;
 	bool			*bits;
-	unsigned int	bitfield_size;
+	unsigned int	size;
 } t_content_array;
 
 typedef struct	s_content_hashmap
@@ -59,6 +59,9 @@ typedef struct s_memory_manager
 void	*safe_malloc(t_mm *mm, char *area, size_t size);
 void	*safe_calloc(t_mm *mm, char *area, size_t nmeb, size_t size);
 char	*safe_strdup(t_mm *mm, char *area, const char *str);
+void	safe_free(t_mm *mm, char *area, void *address);
+char	*safe_get_next_line(t_mm *mm, char *area, int fd);
+
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.

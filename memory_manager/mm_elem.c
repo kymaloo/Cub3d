@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mm_elem.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:28:09 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 16:03:21 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:22:48 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	mm_area_free_elem(t_mm *mm, char *area, void *elem)
 	t_area_node		*area_node;
 
 	if (!elem)
-		mm_nuclear_exit(mm, ft_error(WHERE, "element is NULL", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(WHERE, "element is NULL (how dare you)", EXIT_FAILURE));
 	area_node = go_to_area_name(mm, area);
 	mm_hashmap_remove(mm, &area_node->area_hashmap, elem);
 	return ;

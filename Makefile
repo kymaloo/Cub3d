@@ -35,7 +35,7 @@ OBJS	:= ${SRCS:.c=.o}
 LIBFT	:= ./libft
 LIBFT_EXE := ./libft/libft.a
 
-all: $(NAME)
+all: clear $(NAME)
 
 n:
 	norminette
@@ -44,7 +44,7 @@ r:
 	make re && ./cub3D maps/map.cub
 
 v:
-	make re && valgrind --leak-check=full -s --track-origins=yes ./cub3D maps/map.cub
+	make re && valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
@@ -54,7 +54,10 @@ $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIBFT)
 	@$(CC) $(CFLAGS) -lm $(OBJS) $(LIBFT_EXE) $(HEADERS) -o $(NAME)
 	@echo "\033[32m----${NAME} Compiled!----\033[0m"
-	
+
+clear:
+	clear
+
 clean:
 	@echo "\033[34m----Cleaning object files----\033[0m"
 	@rm -rf $(OBJS)
@@ -65,6 +68,6 @@ fclean: clean
 	@rm -rf $(NAME)
 	@$(MAKE) fclean -C  $(LIBFT)
 
-re: fclean all
+re: clear fclean all
 
 .PHONY: all, clean, fclean, re

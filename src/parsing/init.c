@@ -6,9 +6,9 @@ static int	init_direction_and_fc(t_mm *mm, t_parsing_map *map, char *str)
 		mm_nuclear_exit(mm, ft_error(WHERE, "Init Tab Direction Failed", EXIT_FAILURE));
 	if (init_tab_fc(mm, map) == EXIT_FAILURE)
 		mm_nuclear_exit(mm, ft_error(WHERE, "Init Tab Fc Failed", EXIT_FAILURE));
-	if (init_direction(map, str, 0, 0) == EXIT_FAILURE)
+	if (init_direction(mm, map, str, 0, 0) == EXIT_FAILURE)
 		mm_nuclear_exit(mm, ft_error(WHERE, "Init Direction Failed", EXIT_FAILURE));
-	if (init_fc(map, str) == EXIT_FAILURE)
+	if (init_fc(mm, map, str) == EXIT_FAILURE)
 		mm_nuclear_exit(mm, ft_error(WHERE, "Init Fc Failed", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
@@ -39,8 +39,8 @@ int	init(t_mm *mm, t_parsing_map *map, char *str)
 		return (EXIT_FAILURE);
 	if (verif_colors(mm, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	count_line(map, str, 0);
-	line_size(map, str, 0);
+	count_line(mm, map, str, 0);
+	line_size(mm, map, str, 0);
 	if (init_map(mm, map, str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_wall(mm, map) == EXIT_FAILURE)

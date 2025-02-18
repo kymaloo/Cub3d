@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:12 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 13:31:12 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/18 11:32:03 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_content_array *initialize_content_array(t_mm *mm, t_content_array *new)
 	new->bits = ft_calloc(MM_INITIAL_CONTENT_NB, MM_INITIAL_CONTENT_NB * 1);
 	if (!new->bits)
 		mm_nuclear_exit(mm, ft_error(WHERE, "calloc failure.", EXIT_FAILURE));
-	new->bitfield_size = MM_INITIAL_CONTENT_NB;
+	new->size = MM_INITIAL_CONTENT_NB;
 	return (new);
 }
 
@@ -70,7 +70,7 @@ void upgrade_content_array_size(t_mm *mm, t_content_array *old)
 	size_t	old_size;
 	size_t	new_size;
 
-	old_size = old->bitfield_size; 
+	old_size = old->size; 
 	new_size = old_size * 2;
 	new_content = ft_calloc(new_size, new_size * sizeof(void *));
 	if (!new_content)
@@ -84,7 +84,7 @@ void upgrade_content_array_size(t_mm *mm, t_content_array *old)
 	ft_memcpy(new_bits, old->bits, old_size);
 	free(old->bits);
 	old->bits = new_bits;
-	old->bitfield_size = new_size;
+	old->size = new_size;
 	return ;
 }
 

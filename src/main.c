@@ -19,5 +19,6 @@ int	main(int argc, char **argv)
 
 	mm_area_delete(mm, ZONE_PARSING_TMP);
 	mm_destroy(mm);
+	printf(BGREEN"\tDone !\n"RESET);
 	return (EXIT_SUCCESS);
 }

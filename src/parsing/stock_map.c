@@ -1,28 +1,27 @@
 #include "cub.h"
 
-void	line_size(t_parsing_map *map, char *str, int fd)
+void	line_size(t_mm *mm, t_parsing_map *map, char *str, int fd)
 {
 	char	*line;
 	int		i;
 	int		count;
 
-	i = get_index_before_map(map, str, 0, 0);
+	i = get_index_before_map(mm, map, str, 0, 0);
 	count = 0;
 	fd = open_map(str);
-	line = get_next_line(fd);
+	line = safe_get_next_line(mm, ZONE_1, fd);
 	while (line != NULL)
 	{
 		if (count >= i && ft_strlen_int(line) > map->line_size)
 			map->line_size = ft_strlen_int(line);
-		free(line);
-		line = get_next_line(fd);
+		safe_free(mm, ZONE_1, line);
+		line = safe_get_next_line(mm, ZONE_1, fd);
 		count++;
 	}
-	free(line);
 	close_map(fd);
 }
 
-int	count_line_in_file(char *str)
+int	count_line_in_file(t_mm *mm, char *str)
 {
 	int		fd;
 	int		count;
@@ -30,14 +29,13 @@ int	count_line_in_file(char *str)
 
 	fd = open_map(str);
 	count = 0;
-	line = get_next_line(fd);
+	line = safe_get_next_line(mm, ZONE_1, fd);
 	while (line != NULL)
 	{
-		free(line);
+		safe_free(mm, ZONE_1, line);
 		count++;
-		line = get_next_line(fd);
+		line = safe_get_next_line(mm, ZONE_1, fd);
 	}
-	free(line);
 	close_map(fd);
 	return (count);
 }
@@ -51,13 +49,13 @@ char	**stock_file(t_mm *mm, char *str)
 
 	i = 0;
 	fd = open_map(str);
-	count = count_line_in_file(str);
+	count = count_line_in_file(mm, str);
 	result = safe_malloc(mm, ZONE_1, sizeof(char *) * (count + 1));
 	if (!result)
 		return (NULL);
 	while (i < count)
 	{
-		result[i] = get_next_line(fd);
+		result[i] = safe_get_next_line(mm, ZONE_1, fd);
 		i++;
 	}
 	result[i] = NULL;
@@ -76,7 +74,7 @@ char	**extract_map(t_mm *mm, t_parsing_map *map, char **src, char *str)
 	result = safe_malloc(mm, ZONE_1, sizeof(char *) * (map->count_line + 1));
 	if (!result)
 		return (NULL);
-	while (i < get_index_before_map(map, str, 0, 0))
+	while (i < get_index_before_map(mm, map, str, 0, 0))
 		i++;
 	while (src[i])
 	{
