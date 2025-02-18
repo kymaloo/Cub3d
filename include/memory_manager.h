@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/18 12:53:39 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/18 14:57:48 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	*safe_calloc(t_mm *mm, char *area, size_t nmeb, size_t size);
 char	*safe_strdup(t_mm *mm, char *area, const char *str);
 void	safe_free(t_mm *mm, char *area, void *address);
 char	*safe_get_next_line(t_mm *mm, char *area, int fd);
-
+char	**save_split(t_mm *mm, char *area, const char *s, char c);
+char	*safe_substr(t_mm *mm, char *area, char *str, unsigned int start, size_t len);
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.
