@@ -7,17 +7,14 @@ int	init_tab_direction(t_mm *mm, t_parsing_map *map)
 	i = 0;
 	map->direction = safe_malloc(mm, ZONE_1, sizeof(char *) * 6);
 	if (!map->direction)
-	{
-		printf(MALLOC_FAILED);
-		return (MALLOC_ERROR);
-	}
-	map->direction[i] = ft_strdup("NO ./");
+		mm_nuclear_exit(mm, ft_error(WHERE, MALLOC_ERROR, EXIT_FAILURE));
+	map->direction[i] = safe_strdup(mm, ZONE_1, "NO ./");
 	i++;
-	map->direction[i] = ft_strdup("SO ./");
+	map->direction[i] = safe_strdup(mm, ZONE_1, "SO ./");
 	i++;
-	map->direction[i] = ft_strdup("WE ./");
+	map->direction[i] = safe_strdup(mm, ZONE_1, "WE ./");
 	i++;
-	map->direction[i] = ft_strdup("EA ./");
+	map->direction[i] = safe_strdup(mm, ZONE_1, "EA ./");
 	i++;
 	map->direction[i] = NULL;
 	return (EXIT_SUCCESS);
@@ -30,13 +27,10 @@ int	init_tab_fc(t_mm *mm, t_parsing_map *map)
 	i = 0;
 	map->fc = safe_malloc(mm, ZONE_1, sizeof(char *) * 3);
 	if (!map->fc)
-	{
-		printf(MALLOC_FAILED);
-		return (MALLOC_ERROR);
-	}
-	map->fc[i] = ft_strdup("F ");
+		mm_nuclear_exit(mm, ft_error(WHERE, MALLOC_ERROR, EXIT_FAILURE));
+	map->fc[i] = safe_strdup(mm, ZONE_1, "F ");
 	i++;
-	map->fc[i] = ft_strdup("C ");
+	map->fc[i] = safe_strdup(mm, ZONE_1, "C ");
 	i++;
 	map->fc[i] = NULL;
 	return (EXIT_SUCCESS);
@@ -98,15 +92,12 @@ int	init_direction(t_parsing_map *map, char *str, int dir, int fd)
 	return (close_map(fd));
 }
 
-int	check_map_reel(char *str)
+int	check_map_reel(t_mm *mm, char *str)
 {
 	int	fd;
 
 	fd = open_map(str);
 	if (fd == -1)
-	{
-		printf("Error: The map isn't reel\n");
-		return (EXIT_FAILURE);
-	}
+		mm_nuclear_exit(mm, ft_error(WHERE, "check_map_reel() failure", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }

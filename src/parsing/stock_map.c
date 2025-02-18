@@ -80,7 +80,7 @@ char	**extract_map(t_mm *mm, t_parsing_map *map, char **src, char *str)
 		i++;
 	while (src[i])
 	{
-		result[j] = ft_strdup(src[i]);
+		result[j] = safe_strdup(mm, ZONE_1, src[i]);
 		i++;
 		j++;
 	}
@@ -98,7 +98,7 @@ void	copy_map(t_mm *mm, t_parsing_map *map)
 		return ;
 	while (map->grid[i])
 	{
-		map->grid_copy[i] = ft_strdup(map->grid[i]);
+		map->grid_copy[i] = safe_strdup(mm, ZONE_1, map->grid[i]);
 		i++;
 	}
 	map->grid_copy[i] = NULL;
