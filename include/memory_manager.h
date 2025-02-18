@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 16:35:43 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:42:12 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_memory_manager
 
 void	*safe_malloc(t_mm *mm, char *area, size_t size);
 void	*safe_calloc(t_mm *mm, char *area, size_t nmeb, size_t size);
-char	*safe_strdup(t_mm *mm, char *area, const char str);
+char	*safe_strdup(t_mm *mm, char *area, const char *str);
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.
