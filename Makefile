@@ -3,7 +3,9 @@ NAME	:= cub3D
 
 CFLAGS	:= -Wextra -Wall -Werror -g3
 
-HEADERS	:= -Iinclude
+LIBS	:= MLX42/build/libmlx42.a -ldl -lglfw -lm -g3
+
+HEADERS	:= -Iinclude -IMLX42/include
 
 SRCS	:= 	\
 			memory_manager/mm_area.c					\
@@ -52,7 +54,7 @@ v:
 $(NAME): $(OBJS)
 	@echo "\033[34m----Compiling ${NAME}---\033[0m"
 	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(CFLAGS) -lm $(OBJS) $(LIBFT_EXE) $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) -lm $(OBJS) $(LIBS) $(LIBFT_EXE) $(HEADERS) -o $(NAME)
 	@echo "\033[32m----${NAME} Compiled!----\033[0m"
 
 clear:
