@@ -1,6 +1,7 @@
-
 #ifndef STRUCT_H
 # define STRUCT_H
+
+# include "memory_manager.h"
 
 typedef struct s_parsing_map
 {
@@ -20,5 +21,11 @@ typedef struct s_parsing_map
 	int		x_last_0;
 	int		y_last_0;
 }	t_parsing_map;
+
+typedef struct s_game
+{
+	t_mm		*mm;
+	mlx_t		*mlx;
+}			t_game;
 
 #endif

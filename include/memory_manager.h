@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/18 15:04:13 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/18 16:13:48 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define	MEMORY_MANAGER_H
 # include	"ft_error.h"
 # include	"define.h"
+# include	"MLX42/MLX42.h"
 # include	"../libft/libft.h"
 # include	<math.h>
 # include	<stdbool.h>
@@ -63,6 +64,7 @@ void	safe_free(t_mm *mm, char *area, void *address);
 char	*safe_get_next_line(t_mm *mm, char *area, int fd);
 char	**safe_split(t_mm *mm, char *area, const char *s, char c);
 char	*safe_substr(t_mm *mm, char *area, const char *str, unsigned int start, size_t len);
+mlx_t	*safe_mlx_init(t_mm *mm, char *area);
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.

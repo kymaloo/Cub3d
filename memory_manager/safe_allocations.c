@@ -1,5 +1,6 @@
 
 #include "memory_manager.h"
+#include "cub.h"
 
 void	*safe_malloc(t_mm *mm, char *area, size_t size)
 {
@@ -11,7 +12,6 @@ void	*safe_malloc(t_mm *mm, char *area, size_t size)
 	mm_area_add_elem(mm, area, new);
 	return (new);
 }
-
 
 void	*safe_calloc(t_mm *mm, char *area, size_t nmeb, size_t size)
 {
@@ -88,4 +88,15 @@ char	**safe_split(t_mm *mm, char *area, const char *s, char c)
 	}
 	tab[i] = NULL;
 	return (tab);
+}
+
+mlx_t *safe_mlx_init(t_mm *mm, char *area)
+{
+	void	*new;
+	
+	new = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
+	if (!new)
+		mm_nuclear_exit(mm, ft_error(WHERE, "mlx init failure", MALLOC_ERROR));
+	mm_area_add_elem(mm, area, new);
+	return (new);
 }
