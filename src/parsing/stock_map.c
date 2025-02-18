@@ -1,4 +1,5 @@
 #include "cub.h"
+#include "parsing_interns.h"
 
 void	line_size(t_mm *mm, t_parsing_map *map, char *str, int fd)
 {

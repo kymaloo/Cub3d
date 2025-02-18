@@ -1,4 +1,5 @@
 #include "cub.h"
+#include "parsing_interns.h"
 
 void	free_tab(t_mm *mm, char **tab)
 {
