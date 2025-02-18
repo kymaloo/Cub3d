@@ -1,3 +1,7 @@
+
+#ifndef STRUCT_H
+# define STRUCT_H
+
 typedef struct s_parsing_map
 {
 	char	**grid;
@@ -16,3 +20,5 @@ typedef struct s_parsing_map
 	int		x_last_0;
 	int		y_last_0;
 }	t_parsing_map;
+
+#endif

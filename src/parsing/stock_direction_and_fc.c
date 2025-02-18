@@ -1,4 +1,5 @@
 #include "cub.h"
+#include "parsing_interns.h"
 
 static void	save_path(t_mm *mm, t_parsing_map *map, char *line, int dir_index)
 {

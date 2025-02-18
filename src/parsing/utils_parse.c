@@ -1,4 +1,5 @@
 #include "cub.h"
+#include "parsing_interns.h"
 
 void	print_map(char **map)
 {

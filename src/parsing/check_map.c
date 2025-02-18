@@ -1,4 +1,5 @@
 #include "cub.h"
+#include "parsing_interns.h"
 
 int	check_map_format_cub(t_mm *mm, char *str)
 {

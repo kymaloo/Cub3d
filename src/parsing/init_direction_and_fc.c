@@ -1,4 +1,5 @@
 #include "cub.h"
+#include "parsing_interns.h"
 
 int	init_tab_direction(t_mm *mm, t_parsing_map *map)
 {
