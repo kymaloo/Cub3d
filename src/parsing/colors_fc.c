@@ -47,7 +47,7 @@ int	validate_color_range(t_mm *mm, char *color)
 	int		i;
 	int		tmp;
 
-	splited = ft_split(color, ',');
+	splited = safe_split(mm, ZONE_1, color, ',');
 	i = 0;
 	while (splited[i])
 	{

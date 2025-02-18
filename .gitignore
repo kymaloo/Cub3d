@@ -46,6 +46,8 @@
 *.mod*
 *.cmd
 .tmp_versions/
+cub3D
+cube3D
 modules.order
 Module.symvers
 Mkfile.old

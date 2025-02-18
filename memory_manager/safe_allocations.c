@@ -50,7 +50,7 @@ void	safe_free(t_mm *mm, char *area, void *address)
 	mm_area_free_elem(mm, area, address);
 }
 
-char	*safe_substr(t_mm *mm, char *area, char *str, unsigned int start, size_t len)
+char	*safe_substr(t_mm *mm, char *area, const char *str, unsigned int start, size_t len)
 {
 	void	*new;
 
@@ -61,7 +61,7 @@ char	*safe_substr(t_mm *mm, char *area, char *str, unsigned int start, size_t le
 	return (new);
 }
 
-char	**save_split(t_mm *mm, char *area, const char *s, char c)
+char	**safe_split(t_mm *mm, char *area, const char *s, char c)
 {
 	int			nbword;
 	char		**tab;
@@ -74,7 +74,7 @@ char	**save_split(t_mm *mm, char *area, const char *s, char c)
 	nbword = ft_count_word(s, c);
 	tab = safe_malloc(mm, area, (sizeof(char *) * (nbword + 1)));
 	if (!tab)
-		return (NULL);
+		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure", MALLOC_ERROR));
 	while (i < nbword)
 	{
 		while (*s && *s == c)
@@ -84,7 +84,7 @@ char	**save_split(t_mm *mm, char *area, const char *s, char c)
 			s++;
 		tab[i] = safe_substr(mm, area, start, 0, s - start);
 		if (!tab[i++])
-			return (ft_free_all(tab, i - 1));
+			mm_nuclear_exit(mm, ft_error(WHERE, "substr failure", MALLOC_ERROR));
 	}
 	tab[i] = NULL;
 	return (tab);
