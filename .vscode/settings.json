@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"cub.h": "c"
+		"cub.h": "c",
+		"struct.h": "c",
+		"define.h": "c"
 	}
 }

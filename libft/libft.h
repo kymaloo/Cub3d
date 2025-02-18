@@ -77,5 +77,6 @@ char	*ft_get_new_line(char	*str);
 char	*strjoin_gnl(char *s1, char const *s2);
 void	trash_gnl(char *str);
 int		ft_strlen_int(const char *s);
+int		ft_count_word(char const *str, char c);
 
 #endif

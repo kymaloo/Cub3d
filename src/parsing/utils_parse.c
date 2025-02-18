@@ -19,36 +19,35 @@ int	is_white_space(char c)
 	return (1);
 }
 
-void	count_line(t_parsing_map *map, char *str, int fd)
+void	count_line(t_mm *mm, t_parsing_map *map, char *str, int fd)
 {
 	char	*line;
 	int		i;
 	int		count;
 
-	i = get_index_before_map(map, str, 0, 0);
+	i = get_index_before_map(mm, map, str, 0, 0);
 	count = 0;
 	fd = open_map(str);
-	line = get_next_line(fd);
+	line = safe_get_next_line(mm, ZONE_1, fd);
 	while (line != NULL)
 	{
-		free(line);
+		safe_free(mm, ZONE_1, line);
 		if (count >= i)
 			map->count_line++;
-		line = get_next_line(fd);
+		line = safe_get_next_line(mm, ZONE_1, fd);
 		count++;
 	}
-	free(line);
 	close_map(fd);
 }
 
-int	get_index_before_map(t_parsing_map *map, char *str, int count, int fd)
+int	get_index_before_map(t_mm *mm, t_parsing_map *map, char *str, int count, int fd)
 {
 	char	*line;
 
 	fd = open_map(str);
 	if (fd == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	line = get_next_line(fd);
+	line = safe_get_next_line(mm, ZONE_1, fd);
 	while (line != NULL)
 	{
 		if (check_white_space(line) == 0)
@@ -59,10 +58,9 @@ int	get_index_before_map(t_parsing_map *map, char *str, int count, int fd)
 			count++;
 		else
 			break ;
-		free(line);
-		line = get_next_line(fd);
+		safe_free(mm, ZONE_1, line);
+		line = safe_get_next_line(mm, ZONE_1, fd);
 	}
-	free(line);
 	close_map(fd);
 	trash_gnl(str);
 	if (fd == EXIT_FAILURE)

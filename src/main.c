@@ -13,9 +13,12 @@ int	main(int argc, char **argv)
 
 	map = safe_calloc(mm, ZONE_1, 1, sizeof(t_parsing_map));
 	mm_area_create(mm, ZONE_PARSING_TMP);
+
 	if (init(mm, map, argv[1]) != EXIT_SUCCESS)
 		mm_nuclear_exit(mm, ft_error(WHERE, "init() failure", EXIT_FAILURE));
+
 	mm_area_delete(mm, ZONE_PARSING_TMP);
 	mm_destroy(mm);
+	printf(BGREEN"\tDone !\n"RESET);
 	return (EXIT_SUCCESS);
 }

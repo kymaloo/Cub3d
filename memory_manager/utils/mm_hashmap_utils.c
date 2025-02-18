@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:16:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 13:49:34 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/18 12:11:04 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 	size_t where;
 
 	hash = mm_hashmap_hash(elem);
-	where = findFirstZeroBit(hashmap->buckets[hash].bits, hashmap->buckets[hash].bitfield_size);
+	where = findFirstZeroBit(hashmap->buckets[hash].bits, hashmap->buckets[hash].size);
 	if (where == (size_t) -1)
 	{
-		where = hashmap->buckets[hash].bitfield_size + 1;
+		where = hashmap->buckets[hash].size + 1;
 		upgrade_content_array_size(mm, &hashmap->buckets[hash]);
 	}
 	hashmap->buckets[hash].content[where] = elem;
@@ -59,7 +59,7 @@ void	mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 	hash = mm_hashmap_hash(elem);
 	array = &hashmap->buckets[hash];
 	i = 0;
-	while (i < array->bitfield_size)
+	while (i < array->size)
 	{
 		if (array->content[i] == elem)
 		{
@@ -67,6 +67,7 @@ void	mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 			array->bits[i] = 0;
 			return ;
 		}
+		i++;
 	}
-	mm_nuclear_exit(mm, ft_error(WHERE, "elem not found", EXIT_FAILURE));
+	mm_nuclear_exit(mm, ft_error(WHERE, "elem not found (how dare you give me false information)", EXIT_FAILURE));
 }

@@ -1,22 +1,19 @@
 #include "cub.h"
 
-int	check_map_format_cub(char *str)
+int	check_map_format_cub(t_mm *mm, char *str)
 {
-	int	status;
 	int	len_str;
 
-	status = EXIT_FAILURE;
 	len_str = ft_strlen(str);
 	if (len_str > 4)
 	{
 		if (ft_strncmp(&str[len_str - 4], ".cub", 4) == 0)
-			status = EXIT_SUCCESS;
+			return (EXIT_SUCCESS);
 		else
-			printf("Error: The len is false!\n");
+		mm_nuclear_exit(mm, ft_error(WHERE, "check_map_format_cub() failure", EXIT_FAILURE));
 	}
-	else
-		printf("Error: The len of str is too small!\n");
-	return (status);
+	mm_nuclear_exit(mm, ft_error(WHERE, "check_map_format_cub() failure", EXIT_FAILURE));
+	return (EXIT_SUCCESS);
 }
 
 int	check_white_space(char *str)
@@ -95,7 +92,7 @@ int	update_color(t_mm *mm, char **color, char *tmp)
 	*color = safe_malloc(mm, ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
 	if (!*color)
 	{
-		free(tmp);
+		safe_free(mm, ZONE_1, tmp);
 		return (EXIT_FAILURE);
 	}
 	while (tmp[i])
@@ -105,6 +102,6 @@ int	update_color(t_mm *mm, char **color, char *tmp)
 		i++;
 	}
 	(*color)[j] = '\0';
-	free(tmp);
+	safe_free(mm, ZONE_1, tmp);
 	return (EXIT_SUCCESS);
 }
