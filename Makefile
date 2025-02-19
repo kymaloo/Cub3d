@@ -1,11 +1,20 @@
 
-NAME	:= cub3D
+NAME		:= cub3D
+LIBFT_DIR	:= ./libft
+MLX_DIR		:= ./MLX42
+LIBFT_A		:= $(LIBFT_DIR)/libft.a
+MLX_A		:= $(MLX_DIR)/build/libmlx42.a
 
-CFLAGS	:= -Wextra -Wall -Werror -g3
+INCLUDES	:= -Iinclude -IMLX42/include
+ARCHIVES	:= $(LIBFT_A) $(MLX_A)
+LIBS		:= -ldl -lglfw -lm
+CFLAGS		:= -Wextra -Wall -Werror -g3 $(INCLUDES)
 
-LIBS	:= MLX42/build/libmlx42.a -ldl -lglfw -lm -g3
-
-HEADERS	:= -Iinclude -IMLX42/include
+RED		:=	\033[31m
+YELLOW	:=	\033[33m
+GREEN	:=	\033[32m
+BLUE	:=	\033[34m
+RESET	:=	\033[0m
 
 SRCS	:= 	\
 			memory_manager/mm_area.c					\
@@ -31,45 +40,59 @@ SRCS	:= 	\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
 
-
 OBJS	:= ${SRCS:.c=.o}
 
-LIBFT	:= ./libft
-LIBFT_EXE := ./libft/libft.a
+all: clear $(MLX_A) $(LIBFT_A) $(NAME) 
 
-all: clear $(NAME)
-
-n:
+n:	clear
 	norminette
 
-r:
-	make re && ./cub3D maps/map.cub
+r:	re
+	./cub3D maps/map.cub
 
-v:
-	make re && valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
+v:	re
+	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
+	@$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIBFT_A): $(LIBFT_DIR)
+	@echo "$(BLUE)$(NAME): archiving $(LIBFT_A)$(RESET)"
+	@$(MAKE) -C $(LIBFT_DIR)
+	@echo "$(BLUE)$(NAME): $(GREEN)$(LIBFT_A) archived !$(RESET)"
+
+$(LIBFT_DIR):
+	git submodule update --init --recursive $(LIBFT_DIR)
+
+$(MLX_A): $(MLX_DIR)
+	@echo "$(BLUE)$(NAME): archiving $(MLX_A)$(RESET)"
+	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
+	@echo "$(BLUE)$(NAME): $(GREEN)$(MLX_A) archived !$(RESET)"
+
+$(MLX_DIR):
+	@echo "$(BLUE)$(NAME): $(YELLOW)$(MLX_DIR) missing$(RESET)"
+	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
+	git submodule update --init --recursive $(MLX_DIR)
+
 
 $(NAME): $(OBJS)
-	@echo "\033[34m----Compiling ${NAME}---\033[0m"
-	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(CFLAGS) -lm $(OBJS) $(LIBS) $(LIBFT_EXE) $(HEADERS) -o $(NAME)
-	@echo "\033[32m----${NAME} Compiled!----\033[0m"
+	@echo "$(BLUE)$(NAME): Compiling $$(OBJS) ${NAME}$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
+	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Compiled!$(RESET)"
 
 clear:
 	clear
 
 clean:
-	@echo "\033[34m----Cleaning object files----\033[0m"
+	@echo "$(BLUE)$(NAME): Cleaning object files$(RESET)"
 	@rm -rf $(OBJS)
-	@$(MAKE) clean -C  $(LIBFT)
+	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@echo "\033[34m----Cleaning all generated files----\033[0m"
+	@echo "$(BLUE)$(NAME): Cleaning $(NAME)$(RESET)"
 	@rm -rf $(NAME)
-	@$(MAKE) fclean -C  $(LIBFT)
+	@make -C $(LIBFT_DIR) fclean
 
 re: clear fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: all, clean, fclean, re, n, r, v, clear
