@@ -33,7 +33,7 @@ void	init_mlx(t_game *game)
 		mm_nuclear_exit(game->mm, ft_error(WHERE, "init() failure", EXIT_FAILURE));
 }
 
-nuke_game(t_game *game, t_status errstatus)
+void	nuke_game(t_game *game, t_status errstatus)
 {
 	mm_destroy(game->mm);
 	mlx_terminate(game->mlx);
