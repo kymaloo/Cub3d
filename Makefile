@@ -70,6 +70,10 @@ $(LIBFT_DIR):
 	git submodule update --init --recursive $(LIBFT_DIR)
 
 $(MLX_A): $(MLX_DIR)
+	@echo "$(BLUE)$(NAME): versionning $(MLX_DIR) submodule$(RESET)"
+	git submodule update --init --recursive $(MLX_DIR)
+	@echo "$(BLUE)$(NAME): setting $(MLX_DIR) submodule to ce254c3$(RESET)"
+	cd $(MLX_DIR) && git checkout $(MLX_VERSION_GIT_HASH) && cd ..
 	@echo "$(BLUE)$(NAME): archiving $(MLX_A)$(RESET)"
 	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
 	@echo "$(BLUE)$(NAME): $(GREEN)$(MLX_A) archived !$(RESET)"
@@ -78,8 +82,6 @@ $(MLX_DIR):
 	@echo "$(BLUE)$(NAME): $(YELLOW)$(MLX_DIR) missing$(RESET)"
 	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
 	git submodule update --init --recursive $(MLX_DIR)
-	@echo "$(BLUE)$(NAME): setting $(MLX_DIR) submodule to ce254c3 for versionning$(RESET)"
-	cd $(MLX_DIR) && git checkout $(MLX_VERSION_GIT_HASH) && cd ..
 
 
 $(NAME): $(OBJS)
