@@ -92,7 +92,7 @@ void	copy_map(t_game *game)
 	int	i;
 
 	i = 0;
-	game->parse->grid_copy = safe_malloc(game->mm, ZONE_PARSING_TMP, sizeof(char *) * (game->parse->count_line + 1));
+	game->parse->grid_copy = safe_malloc(game->mm, ZONE_1, sizeof(char *) * (game->parse->count_line + 1));
 	if (!game->parse->grid_copy)
 		return ;
 	while (game->parse->grid[i])
