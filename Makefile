@@ -19,8 +19,6 @@ GREEN	:=	\033[32m
 BLUE	:=	\033[34m
 RESET	:=	\033[0m
 
-ERROR	= 0;
-
 SRCS	:= 	\
 			memory_manager/mm_area.c					\
 			memory_manager/mm_elem.c					\

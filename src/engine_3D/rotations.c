@@ -1,6 +1,7 @@
 
 
 #include "engine_3d.h"
+#include "cub.h"
 
 
 /**
@@ -22,6 +23,10 @@ rotate_vector(t_vect2D *vect, double angle_rad)
 
 	v = vect->coords;
 	v[X] = v[X] * cos(angle_rad) - v[Y] * sin(angle_rad);
-	v[Y] = v[X] * sin(angle_rad) - v[Y] * cos(angle_rad);
+	v[Y] = v[X] * sin(angle_rad) + v[Y] * cos(angle_rad);
 }
 
+t_status	game(t_game *g)
+{
+	g->
+}

@@ -2,6 +2,7 @@
 # define STRUCT_H
 
 # include "memory_manager.h"
+# include "engine_3d.h"
 
 typedef struct s_parsing_map
 {
@@ -22,11 +23,32 @@ typedef struct s_parsing_map
 	int		y_last_0;
 }	t_parsing_map;
 
+typedef	struct s_textures
+{
+	char	*path_north;
+	char	*path_south;
+	char	*path_east;
+	char	*path_west;
+	char	*color_floor;
+	char	*color_ceiling;
+}	t_textures;
+
+typedef	struct s_map
+{
+	char	**map;
+	int		x_max;
+	int		y_max;
+}	t_map;
+
+t_parsing_map 		*parse;
+
 typedef struct s_game
 {
-	t_mm			*mm;
-	mlx_t			*mlx;
-	t_parsing_map 	*parse;
+	t_memory_manager	*mm;
+	mlx_t				*mlx;
+	t_player			player;
+	t_map				map;
+	t_textures			textures;
 }			t_game;
 
 #endif
