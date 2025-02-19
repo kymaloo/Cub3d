@@ -20,47 +20,47 @@ int	is_white_space(char c)
 	return (1);
 }
 
-void	count_line(t_mm *mm, t_parsing_map *parse, char *str, int fd)
+void	count_line(t_game *game, char *str, int fd)
 {
 	char	*line;
 	int		i;
 	int		count;
 
-	i = get_index_before_map(mm, map, str, 0, 0);
+	i = get_index_before_map(game, str, 0, 0);
 	count = 0;
 	fd = open_map(str);
-	line = safe_get_next_line(mm, ZONE_1, fd);
+	line = safe_get_next_line(game->mm, ZONE_1, fd);
 	while (line != NULL)
 	{
-		safe_free(mm, ZONE_1, line);
+		safe_free(game->mm, ZONE_1, line);
 		if (count >= i)
-			map->count_line++;
-		line = safe_get_next_line(mm, ZONE_1, fd);
+		game->parse->count_line++;
+		line = safe_get_next_line(game->mm, ZONE_1, fd);
 		count++;
 	}
 	close_map(fd);
 }
 
-int	get_index_before_map(t_mm *mm, t_parsing_map *parse, char *str, int count, int fd)
+int	get_index_before_map(t_game *game, char *str, int count, int fd)
 {
 	char	*line;
 
 	fd = open_map(str);
 	if (fd == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	line = safe_get_next_line(mm, ZONE_1, fd);
+	line = safe_get_next_line(game->mm, ZONE_1, fd);
 	while (line != NULL)
 	{
 		if (check_white_space(line) == 0)
 			count++;
-		else if (strncmp_with_array(line, map->direction, 5) != -1)
+		else if (strncmp_with_array(line, game->parse->direction, 5) != -1)
 			count++;
-		else if (strncmp_with_array(line, map->fc, 2) != -1)
+		else if (strncmp_with_array(line, game->parse->fc, 2) != -1)
 			count++;
 		else
 			break ;
-		safe_free(mm, ZONE_1, line);
-		line = safe_get_next_line(mm, ZONE_1, fd);
+		safe_free(game->mm, ZONE_1, line);
+		line = safe_get_next_line(game->mm, ZONE_1, fd);
 	}
 	close_map(fd);
 	trash_gnl(str);
