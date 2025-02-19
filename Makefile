@@ -5,6 +5,9 @@ MLX_DIR		:= ./MLX42
 LIBFT_A		:= $(LIBFT_DIR)/libft.a
 MLX_A		:= $(MLX_DIR)/build/libmlx42.a
 
+#got that hash from `git submodule status`. we're using it for versionning of the MLX42 purposes.
+MLX_VERSION_GIT_HASH := ce254c3a19af8176787601a2ac3490100a5c4c61
+
 INCLUDES	:= -Iinclude -IMLX42/include
 ARCHIVES	:= $(LIBFT_A) $(MLX_A)
 LIBS		:= -ldl -lglfw -lm
@@ -15,6 +18,8 @@ YELLOW	:=	\033[33m
 GREEN	:=	\033[32m
 BLUE	:=	\033[34m
 RESET	:=	\033[0m
+
+ERROR	= 0;
 
 SRCS	:= 	\
 			memory_manager/mm_area.c					\
@@ -54,7 +59,7 @@ v:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(RED) $< Compilation failure$(RESET)" && return 1)
 
 $(LIBFT_A): $(LIBFT_DIR)
 	@echo "$(BLUE)$(NAME): archiving $(LIBFT_A)$(RESET)"
@@ -73,6 +78,8 @@ $(MLX_DIR):
 	@echo "$(BLUE)$(NAME): $(YELLOW)$(MLX_DIR) missing$(RESET)"
 	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
 	git submodule update --init --recursive $(MLX_DIR)
+	@echo "$(BLUE)$(NAME): setting $(MLX_DIR) submodule to ce254c3 for versionning$(RESET)"
+	cd $(MLX_DIR) && git checkout $(MLX_VERSION_GIT_HASH) && cd ..
 
 
 $(NAME): $(OBJS)
