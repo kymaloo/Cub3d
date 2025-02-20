@@ -5,6 +5,8 @@
 # define ZONE_1				"petit_chacalot"
 # define ZONE_PARSING_TMP	"bonjour"
 
+# define WIDTH				3840
+# define HEIGHT				2160
 
 enum e_error
 {

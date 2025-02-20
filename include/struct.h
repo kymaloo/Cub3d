@@ -1,12 +1,13 @@
-
 #ifndef STRUCT_H
 # define STRUCT_H
+
+# include "memory_manager.h"
 
 typedef struct s_parsing_map
 {
 	char	**grid;
 	char	**grid_copy;
-	char	**grid_and_dir;
+	char	**all_file;
 	char	**direction;
 	char	**fc;
 	char	*path_north;
@@ -20,5 +21,11 @@ typedef struct s_parsing_map
 	int		x_last_0;
 	int		y_last_0;
 }	t_parsing_map;
+
+typedef struct s_game
+{
+	t_mm			*mm;
+	t_parsing_map 	*parse;
+}			t_game;
 
 #endif

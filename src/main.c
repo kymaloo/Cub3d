@@ -2,23 +2,21 @@
 
 int	main(int argc, char **argv)
 {
+	t_game			*game;
 	t_mm			*mm;
-	t_parsing_map	*map;
 
 	if (argc != 2)
 		return (ft_error(WHERE, "Bad argument", EXIT_FAILURE));
-
 	mm = mm_create();
 	mm_area_create(mm, ZONE_1);
-
-	map = safe_calloc(mm, ZONE_1, 1, sizeof(t_parsing_map));
-	mm_area_create(mm, ZONE_PARSING_TMP);
-
-	if (init(mm, map, argv[1]) != EXIT_SUCCESS)
-		mm_nuclear_exit(mm, ft_error(WHERE, "init() failure", EXIT_FAILURE));
-
-	mm_area_delete(mm, ZONE_PARSING_TMP);
-	mm_destroy(mm);
+	game = safe_calloc(mm, ZONE_1, 1, sizeof(t_game));
+	game->mm = mm;
+	mm_area_create(game->mm, ZONE_PARSING_TMP);
+	game->parse = safe_calloc(game->mm, ZONE_PARSING_TMP, 1, sizeof(t_parsing_map));
+	
+	if (init(game, argv[1]) != EXIT_SUCCESS)
+		mm_nuclear_exit(game->mm, ft_error(WHERE, "init() failure", EXIT_FAILURE));
+	mm_destroy(game->mm);
 	printf(BGREEN"\tDone !\n"RESET);
 	return (EXIT_SUCCESS);
 }

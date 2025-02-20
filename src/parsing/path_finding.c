@@ -1,21 +1,21 @@
 #include "cub.h"
 #include "parsing_interns.h"
 
-static void	find_last_floor(t_parsing_map *map)
+static void	find_last_floor(t_parsing_map *parse)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map->grid_copy[i])
+	while (parse->grid_copy[i])
 	{
 		j = 0;
-		while (map->grid_copy[i][j])
+		while (parse->grid_copy[i][j])
 		{
-			if (map->grid_copy[i][j] == '0')
+			if (parse->grid_copy[i][j] == '0')
 			{
-				map->x_last_0 = i;
-				map->y_last_0 = j;
+				parse->x_last_0 = i;
+				parse->y_last_0 = j;
 				return ;
 			}
 			j++;
@@ -57,22 +57,22 @@ static int	path_finding(int x, int y, char **cells)
 	return (end);
 }
 
-int	check_wall(t_mm *mm, t_parsing_map *map)
+int	check_wall(t_mm *mm, t_parsing_map *parse)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map->grid_copy[i])
+	while (parse->grid_copy[i])
 	{
 		j = 0;
-		while (map->grid_copy[i][j])
+		while (parse->grid_copy[i][j])
 		{
-			if (isset(map->grid_copy[i][j], "NSEW0") == true)
+			if (isset(parse->grid_copy[i][j], "NSEW0") == true)
 			{
-				find_last_floor(map);
-				if (path_finding(map->x_last_0, \
-				map->y_last_0, map->grid_copy) != 0)
+				find_last_floor(parse);
+				if (path_finding(parse->x_last_0, \
+				parse->y_last_0, parse->grid_copy) != 0)
 					mm_nuclear_exit(mm, ft_error(WHERE, "map not valid", EXIT_FAILURE));
 			}
 			j++;
