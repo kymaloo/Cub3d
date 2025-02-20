@@ -45,7 +45,7 @@ SRCS	:= 	\
 
 OBJS	:= ${SRCS:.c=.o}
 
-all: clear $(MLX_A) $(LIBFT_A) $(NAME) 
+all: $(NAME)
 
 n:	clear
 	norminette
@@ -53,25 +53,23 @@ n:	clear
 a:	all
 	./cub3D maps/map.cub
 
-l:
+l:	all
 	lldb ./cub3D maps/map.cub
 
 r:	re
 	./cub3D maps/map.cub
 
-v:	re
+v:	all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
 
 %.o: %.c
+	@echo "$(CC) $(CFLAGS) -o $@ -c $<"
 	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
 
-$(LIBFT_A): $(LIBFT_DIR)
+$(LIBFT_A):
 	@echo "$(BLUE)$(NAME): archiving $(LIBFT_A)$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(BLUE)$(NAME): $(GREEN)$(LIBFT_A) archived !$(RESET)"
-
-$(LIBFT_DIR):
-	git submodule update --init --recursive $(LIBFT_DIR)
 
 $(MLX_A): $(MLX_DIR)
 	@echo "$(BLUE)$(NAME): versionning $(MLX_DIR) submodule$(RESET)"
@@ -88,10 +86,12 @@ $(MLX_DIR):
 	git submodule update --init --recursive $(MLX_DIR)
 
 
-$(NAME): $(OBJS)
-	@echo "$(BLUE)$(NAME): Compiling $$(OBJS) ${NAME}$(RESET)"
+$(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
+	@echo "$(BLUE)$(NAME): ${NAME} $(GREEN)OBJS compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): Linking ${NAME} $(RESET)"
+	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
-	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Compiled!$(RESET)"
+	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Linked !$(RESET)"
 
 clear:
 	clear
