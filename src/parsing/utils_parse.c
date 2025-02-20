@@ -41,30 +41,54 @@ int	is_white_space(char c)
 // 	close_map(fd);
 // }
 
-// int	get_index_before_map(t_game *game, char *str, int count, int fd)
-// {
-// 	char	*line;
+int	get_size_of_array(t_game *game, char **array)
+{
+	int	i;
+	int	j;
+	int	size;
 
-// 	fd = open_map(str);
-// 	if (fd == EXIT_FAILURE)
-// 		return (EXIT_FAILURE);
-// 	line = safe_get_next_line(game->mm, ZONE_1, fd);
-// 	while (line != NULL)
-// 	{
-// 		if (check_white_space(line) == 0)
-// 			count++;
-// 		else if (strncmp_with_array(line, game->parse->direction, 5) != -1)
-// 			count++;
-// 		else if (strncmp_with_array(line, game->parse->fc, 2) != -1)
-// 			count++;
-// 		else
-// 			break ;
-// 		safe_free(game->mm, ZONE_1, line);
-// 		line = safe_get_next_line(game->mm, ZONE_1, fd);
-// 	}
-// 	close_map(fd);
-// 	trash_gnl(str);
-// 	if (fd == EXIT_FAILURE)
-// 		return (EXIT_FAILURE);
-// 	return (count);
-// }
+	i = 0;
+	while (array[i])
+	{
+		size = ft_strlen_int(array[i]);
+		if (check_white_space(array[i]) == 0)
+			i++;
+		else if (ft_strncmp(array[i], game->parse->path_north, size) == 0  || ft_strncmp(array[i], game->parse->path_south, size) == 0)
+			i++;
+		else if (ft_strncmp(array[i], game->parse->path_east, size) == 0 || ft_strncmp(array[i], game->parse->path_west, size) == 0)
+			i++;
+		else if (ft_strncmp(array[i], game->parse->color_ceiling_cp, size) == 0 || ft_strncmp(array[i], game->parse->color_floor_cp, size) == 0)
+			i++;
+		else
+			break ;
+	}
+	j = i;
+	while (array[i])
+		i++;
+	i = i - j;
+	printf("%d\n", i);
+	return (i);
+}
+
+int	get_index_before_array(t_game *game, char **array)
+{
+	int	i;
+	int	size;
+
+	i = 0;
+	while (array[i])
+	{
+		size = ft_strlen_int(array[i]);
+		if (check_white_space(array[i]) == 0)
+			i++;
+		else if (ft_strncmp(array[i], game->parse->path_north, size) == 0  || ft_strncmp(array[i], game->parse->path_south, size) == 0)
+			i++;
+		else if (ft_strncmp(array[i], game->parse->path_east, size) == 0 || ft_strncmp(array[i], game->parse->path_west, size) == 0)
+			i++;
+		else if (ft_strncmp(array[i], game->parse->color_ceiling_cp, size) == 0 || ft_strncmp(array[i], game->parse->color_floor_cp, size) == 0)
+			i++;
+		else
+			break ;
+	}
+	return (i);
+}

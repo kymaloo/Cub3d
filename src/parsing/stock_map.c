@@ -51,12 +51,12 @@ char	**stock_file(t_mm *mm, char *str)
 	i = 0;
 	fd = open_map(str);
 	count = count_line_in_file(mm, str);
-	result = safe_malloc(mm, ZONE_1, sizeof(char *) * (count + 1));
+	result = safe_malloc(mm, ZONE_PARSING_TMP, sizeof(char *) * (count + 1));
 	if (!result)
 		return (NULL);
 	while (i < count)
 	{
-		result[i] = safe_get_next_line(mm, ZONE_1, fd);
+		result[i] = safe_get_next_line(mm, ZONE_PARSING_TMP, fd);
 		i++;
 	}
 	result[i] = NULL;
@@ -64,41 +64,43 @@ char	**stock_file(t_mm *mm, char *str)
 	return (result);
 }
 
-// char	**extract_map(t_game *game, char **src, char *str)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	**result;
+char	**extract_map(t_game *game, char **array)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	**result;
 
-// 	i = 0;
-// 	j = 0;
-// 	result = safe_malloc(game->mm, ZONE_1, sizeof(char *) * (game->parse->count_line + 1));
-// 	if (!result)
-// 		return (NULL);
-// 	while (i < get_index_before_map(game, str, 0, 0))
-// 		i++;
-// 	while (src[i])
-// 	{
-// 		result[j] = safe_strdup(game->mm, ZONE_1, src[i]);
-// 		i++;
-// 		j++;
-// 	}
-// 	result[j] = NULL;
-// 	return (result);
-// }
+	i = 0;
+	j = 0;
+	size = get_size_of_array(game, array);
+	result = safe_malloc(game->mm, ZONE_1, sizeof(char *) * (size + 1));
+	if (!result)
+		return (NULL);
+	while (i != get_index_before_array(game, array))
+		i++;
+	while (array[i])
+	{
+		result[j] = safe_strdup(game->mm, ZONE_1, array[i]);
+		i++;
+		j++;
+	}
+	result[j] = NULL;
+	return (result);
+}
 
-// void	copy_map(t_game *game)
-// {
-// 	int	i;
+void	copy_map(t_game *game)
+{
+	int	i;
 
-// 	i = 0;
-// 	game->parse->grid_copy = safe_malloc(game->mm, ZONE_PARSING_TMP, sizeof(char *) * (game->parse->count_line + 1));
-// 	if (!game->parse->grid_copy)
-// 		return ;
-// 	while (game->parse->grid[i])
-// 	{
-// 		game->parse->grid_copy[i] = safe_strdup(game->mm, ZONE_1, game->parse->grid[i]);
-// 		i++;
-// 	}
-// 	game->parse->grid_copy[i] = NULL;
-// }
+	i = 0;
+	game->parse->grid_copy = safe_malloc(game->mm, ZONE_PARSING_TMP, sizeof(char *) * (game->parse->count_line + 1));
+	if (!game->parse->grid_copy)
+		return ;
+	while (game->parse->grid[i])
+	{
+		game->parse->grid_copy[i] = safe_strdup(game->mm, ZONE_1, game->parse->grid[i]);
+		i++;
+	}
+	game->parse->grid_copy[i] = NULL;
+}

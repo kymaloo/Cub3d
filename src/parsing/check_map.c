@@ -83,26 +83,26 @@ int	check_doublon_map(char **map, char *str)
 	return (count);
 }
 
-// int	update_color(t_game *game, char **color, char *tmp)
-// {
-// 	int	i;
-// 	int	j;
+int	update_color(t_game *game, char **color, char *tmp)
+{
+	int	i;
+	int	j;
 
-// 	i = 2;
-// 	j = 0;
-// 	*color = safe_malloc(game->mm, ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
-// 	if (!*color)
-// 	{
-// 		safe_free(game->mm, ZONE_1, tmp);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	while (tmp[i])
-// 	{
-// 		(*color)[j] = tmp[i];
-// 		j++;
-// 		i++;
-// 	}
-// 	(*color)[j] = '\0';
-// 	safe_free(game->mm, ZONE_1, tmp);
-// 	return (EXIT_SUCCESS);
-// }
+	i = 2;
+	j = 0;
+	*color = safe_malloc(game->mm, ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
+	if (!*color)
+	{
+		safe_free(game->mm, ZONE_1, tmp);
+		return (EXIT_FAILURE);
+	}
+	while (tmp[i])
+	{
+		(*color)[j] = tmp[i];
+		j++;
+		i++;
+	}
+	(*color)[j] = '\0';
+	safe_free(game->mm, ZONE_1, tmp);
+	return (EXIT_SUCCESS);
+}

@@ -40,7 +40,6 @@ int	process_direction(t_game *game, char *line, int dir_i, int fd)
 	if (dir_i == 5 && game->parse->color_ceiling != NULL)
 		return (check_doublon(game->mm, "ceiling", line, fd));
 	save_path(game->mm, game->parse, line, dir_i);
-	safe_free(game->mm, ZONE_1, line);
 	return (EXIT_SUCCESS);
 }
 
