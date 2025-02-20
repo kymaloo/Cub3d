@@ -13,7 +13,7 @@ ARCHIVES	:= $(LIBFT_A) $(MLX_A)
 LIBS		:= -ldl -lglfw -lm
 CFLAGS		:= -Wextra -Wall -Werror -g3 $(INCLUDES)
 
-RED		:=	\033[31m
+BRED	:=	\033[1;31m
 YELLOW	:=	\033[33m
 GREEN	:=	\033[32m
 BLUE	:=	\033[34m
@@ -50,14 +50,20 @@ all: clear $(MLX_A) $(LIBFT_A) $(NAME)
 n:	clear
 	norminette
 
+a:	all
+	./cub3D maps/map.cub
+
+l:
+	lldb ./cub3D maps/map.cub
+
 r:	re
 	./cub3D maps/map.cub
 
 v:	re
-	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
+	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(RED) $< Compilation failure$(RESET)" && return 1)
+	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
 
 $(LIBFT_A): $(LIBFT_DIR)
 	@echo "$(BLUE)$(NAME): archiving $(LIBFT_A)$(RESET)"
