@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_direction_and_fc.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 15:08:41 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/02/21 15:18:19 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 #include "parsing_interns.h"
 
@@ -48,12 +60,12 @@ int	init_fc(t_game *game, char *str)
 	if (fc != 2)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	
 	while (game->parse->all_file[i])
 	{
 		if (ft_strncmp(game->parse->all_file[i], game->parse->fc[0], 2) == 0)
 			process_direction(game, game->parse->all_file[i], 4, fd);
-		else if (ft_strncmp(game->parse->all_file[i], game->parse->fc[1], 2) == 0)
+		else if (ft_strncmp(game->parse->all_file[i], \
+		game->parse->fc[1], 2) == 0)
 			process_direction(game, game->parse->all_file[i], 5, fd);
 		i++;
 	}
@@ -71,13 +83,17 @@ int	init_direction(t_game *game, char *str, int dir, int fd)
 	fd = open_map(str);
 	while (game->parse->all_file[i])
 	{
-		if (ft_strncmp(game->parse->all_file[i], game->parse->direction[0], 5) == 0)
+		if (ft_strncmp(game->parse->all_file[i], \
+		game->parse->direction[0], 5) == 0)
 			process_direction(game, game->parse->all_file[i], 0, fd);
-		else if (ft_strncmp(game->parse->all_file[i], game->parse->direction[1], 5) == 0)
+		else if (ft_strncmp(game->parse->all_file[i], \
+		game->parse->direction[1], 5) == 0)
 			process_direction(game, game->parse->all_file[i], 1, fd);
-		else if (ft_strncmp(game->parse->all_file[i], game->parse->direction[2], 5) == 0)
+		else if (ft_strncmp(game->parse->all_file[i], \
+		game->parse->direction[2], 5) == 0)
 			process_direction(game, game->parse->all_file[i], 2, fd);
-		else if (ft_strncmp(game->parse->all_file[i], game->parse->direction[3], 5) == 0)
+		else if (ft_strncmp(game->parse->all_file[i], \
+		game->parse->direction[3], 5) == 0)
 			process_direction(game, game->parse->all_file[i], 3, fd);
 		i++;
 	}
@@ -90,6 +106,7 @@ int	check_map_reel(t_mm *mm, char *str)
 
 	fd = open_map(str);
 	if (fd == -1)
-		mm_nuclear_exit(mm, ft_error(WHERE, "check_map_reel() failure", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(WHERE, \
+		"check_map_reel() failure", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }

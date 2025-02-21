@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 15:29:12 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/02/21 15:29:13 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCT_H
 # define STRUCT_H
 
@@ -25,7 +37,7 @@ typedef struct s_parsing_map
 typedef struct s_game
 {
 	t_mm			*mm;
-	t_parsing_map 	*parse;
+	t_parsing_map	*parse;
 }			t_game;
 
 #endif

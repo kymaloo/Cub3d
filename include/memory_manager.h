@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/18 16:13:48 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:49:49 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	safe_free(t_mm *mm, char *area, void *address);
 char	*safe_get_next_line(t_mm *mm, char *area, int fd);
 char	**safe_split(t_mm *mm, char *area, const char *s, char c);
 char	*safe_substr(t_mm *mm, char *area, const char *str, unsigned int start, size_t len);
+char	*safe_strdup_with_calloc(t_mm *mm, char *area, char *str, int size);
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.

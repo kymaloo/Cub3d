@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 15:08:29 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/02/21 15:10:15 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 #include "parsing_interns.h"
 
@@ -11,9 +23,11 @@ int	check_map_format_cub(t_mm *mm, char *str)
 		if (ft_strncmp(&str[len_str - 4], ".cub", 4) == 0)
 			return (EXIT_SUCCESS);
 		else
-		mm_nuclear_exit(mm, ft_error(WHERE, "check_map_format_cub() failure", EXIT_FAILURE));
+			mm_nuclear_exit(mm, ft_error(WHERE, \
+			"check_map_format_cub() failure", EXIT_FAILURE));
 	}
-	mm_nuclear_exit(mm, ft_error(WHERE, "check_map_format_cub() failure", EXIT_FAILURE));
+	mm_nuclear_exit(mm, ft_error(WHERE, \
+	"check_map_format_cub() failure", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -90,7 +104,8 @@ int	update_color(t_game *game, char **color, char *tmp)
 
 	i = 2;
 	j = 0;
-	*color = safe_malloc(game->mm, ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
+	*color = safe_malloc(game->mm, \
+	ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
 	if (!*color)
 	{
 		safe_free(game->mm, ZONE_1, tmp);

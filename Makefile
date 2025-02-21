@@ -39,7 +39,6 @@ SRCS	:= 	\
 			src/parsing/stock_direction_and_fc.c		\
 			src/parsing/check_map.c						\
 			src/parsing/init.c							\
-			src/parsing/free.c							\
 			src/parsing/path_finding.c					\
 			src/parsing/stock_map.c						\
 			src/parsing/utils_parse.c					\
@@ -50,13 +49,16 @@ OBJS	:= ${SRCS:.c=.o}
 all: clear $(LIBFT_A) $(NAME) 
 
 n:	clear
-	norminette
+	norminette src/
 
 r:	re
 	./cub3D maps/map.cub
 
 v:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
+
+vs:	re
+	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(RED) $< Compilation failure$(RESET)" && return 1)

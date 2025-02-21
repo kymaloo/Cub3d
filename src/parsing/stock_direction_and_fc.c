@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stock_direction_and_fc.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 15:08:54 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/02/21 15:08:55 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 #include "parsing_interns.h"
 
@@ -80,6 +92,5 @@ int	count_fc_in_file(t_game *game, char **dir)
 		else
 			i++;
 	}
-	printf("%d\n", count);
 	return (count);
 }

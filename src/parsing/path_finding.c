@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_finding.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 15:08:22 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/02/21 15:08:23 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 #include "parsing_interns.h"
 
@@ -43,6 +55,8 @@ static int	path_finding(int x, int y, char **cells)
 	int	end;
 
 	end = 0;
+	if (!cells[x][y])
+		return (1);
 	if (isset(cells[x][y], "NSEW01D") == false)
 		return (1);
 	cells[x][y] = '1';
@@ -73,7 +87,8 @@ int	check_wall(t_mm *mm, t_parsing_map *parse)
 				find_last_floor(parse);
 				if (path_finding(parse->x_last_0, \
 				parse->y_last_0, parse->grid_copy) != 0)
-					mm_nuclear_exit(mm, ft_error(WHERE, "map not valid", EXIT_FAILURE));
+					mm_nuclear_exit(mm, ft_error(WHERE, \
+					"map not valid", EXIT_FAILURE));
 			}
 			j++;
 		}

@@ -11,7 +11,5 @@
 # include "ft_error.h"
 
 int	init(t_game *game, char *str);
-void	line_size(t_game *game, char *str, int fd);
-void	count_line(t_game *game, char *str, int fd);
 
 #endif

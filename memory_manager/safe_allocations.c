@@ -89,3 +89,14 @@ char	**safe_split(t_mm *mm, char *area, const char *s, char c)
 	tab[i] = NULL;
 	return (tab);
 }
+
+char	*safe_strdup_with_calloc(t_mm *mm, char *area, char *str, int size)
+{
+	void	*new;
+
+	new = ft_strdup_with_calloc(str, size);
+	if (!new)
+		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+	mm_area_add_elem(mm, area, new);
+	return (new);
+}

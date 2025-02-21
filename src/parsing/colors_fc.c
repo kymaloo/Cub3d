@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors_fc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 15:08:32 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/02/21 15:13:34 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 #include "parsing_interns.h"
 
@@ -5,18 +17,24 @@ int	check_fc(t_game *game)
 {
 	char	*tmp;
 
-	game->parse->color_ceiling_cp = safe_strdup(game->mm, ZONE_1, game->parse->color_ceiling);
-	game->parse->color_floor_cp = safe_strdup(game->mm, ZONE_1, game->parse->color_floor);
-	if (ft_isdigit(game->parse->color_ceiling[2]) || ft_isdigit(game->parse->color_floor[2]))
-		mm_nuclear_exit(game->mm, ft_error(WHERE, "The ceiling or floor isn't valid", EXIT_FAILURE));
+	game->parse->color_ceiling_cp = safe_strdup(game->mm, \
+	ZONE_1, game->parse->color_ceiling);
+	game->parse->color_floor_cp = safe_strdup(game->mm, \
+	ZONE_1, game->parse->color_floor);
+	if (ft_isdigit(game->parse->color_ceiling[2])
+		|| ft_isdigit(game->parse->color_floor[2]))
+		mm_nuclear_exit(game->mm, ft_error(WHERE, \
+		"The ceiling or floor isn't valid", EXIT_FAILURE));
 	tmp = safe_strdup(game->mm, ZONE_1, game->parse->color_ceiling);
 	safe_free(game->mm, ZONE_1, game->parse->color_ceiling);
 	if (update_color(game, &game->parse->color_ceiling, tmp) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, "The ceiling isn't valid", EXIT_FAILURE));
-	tmp = safe_strdup(game->mm, ZONE_1,game->parse->color_floor);
+		mm_nuclear_exit(game->mm, ft_error(WHERE, \
+		"The ceiling isn't valid", EXIT_FAILURE));
+	tmp = safe_strdup(game->mm, ZONE_1, game->parse->color_floor);
 	safe_free(game->mm, ZONE_1, game->parse->color_floor);
 	if (update_color(game, &game->parse->color_floor, tmp) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, "The floor isn't valid", EXIT_FAILURE));
+		mm_nuclear_exit(game->mm, ft_error(WHERE, \
+		"The floor isn't valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -35,12 +53,14 @@ int	validate_color_format(char *color)
 	return (EXIT_SUCCESS);
 }
 
-int	check_format_fc(t_mm *mm,t_parsing_map *parse)
+int	check_format_fc(t_mm *mm, t_parsing_map *parse)
 {
 	if (validate_color_format(parse->color_ceiling) == EXIT_FAILURE)
-		mm_nuclear_exit(mm, ft_error(WHERE, "The ceiling isn't valid", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(WHERE, \
+		"The ceiling isn't valid", EXIT_FAILURE));
 	if (validate_color_format(parse->color_floor) == EXIT_FAILURE)
-		mm_nuclear_exit(mm, ft_error(WHERE, "The floor isn't valid", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(WHERE, \
+		"The floor isn't valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -68,9 +88,13 @@ int	validate_color_range(t_mm *mm, char *color)
 
 int	verif_colors(t_game *game)
 {
-	if (validate_color_range(game->mm, game->parse->color_ceiling) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
-	if (validate_color_range(game->mm, game->parse->color_floor) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, "Format not valid", EXIT_FAILURE));
+	if (validate_color_range(game->mm, \
+	game->parse->color_ceiling) == EXIT_FAILURE)
+		mm_nuclear_exit(game->mm, ft_error(WHERE, \
+		"Format not valid", EXIT_FAILURE));
+	if (validate_color_range(game->mm, \
+	game->parse->color_floor) == EXIT_FAILURE)
+		mm_nuclear_exit(game->mm, ft_error(WHERE, \
+		"Format not valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
