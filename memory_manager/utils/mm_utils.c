@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:12 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/18 11:32:03 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/21 10:46:33 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void upgrade_content_array_size(t_mm *mm, t_content_array *old)
 	return ;
 }
 
-t_area_node	*create_area_node(t_mm *mm, char *new_area_name)
+t_area_node	*create_area_node(t_mm *mm, char *new_area_name, t_deletion_func deletion_func, size_t nb_hahsmap_buckets)
 {
 	t_area_node	*new;
 	size_t		i;
@@ -102,12 +102,8 @@ t_area_node	*create_area_node(t_mm *mm, char *new_area_name)
 	new->area_name = ft_strdup(new_area_name);
 	if (!new->area_name)
 		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure.", EXIT_FAILURE));
-	i = 0;
-	while (i < MM_HASHMAP_NB_BUCKETS)
-	{
-		initialize_content_array(mm, &new->area_hashmap.buckets[i]);
-		i++;
-	}
 	new->next = NULL;
+	new->deletion_func = deletion_func;
+	mm_hashmap_init(mm, &new->area_hashmap, nb_hahsmap_buckets);
 	return (new);
 }

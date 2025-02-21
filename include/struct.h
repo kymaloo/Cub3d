@@ -4,6 +4,9 @@
 # include "memory_manager.h"
 # include "engine_3d.h"
 
+# define GRID_X 64
+# define GRID_Y 64
+
 typedef struct s_parsing_map
 {
 	char	**grid;
@@ -40,7 +43,14 @@ typedef	struct s_map
 	int		y_max;
 }	t_map;
 
-t_parsing_map 		*parse;
+typedef	struct s_time
+{
+	double	now;
+	double	old;
+	double	taken_to_draw_frame;
+}	t_time;
+
+
 
 typedef struct s_game
 {
@@ -49,6 +59,7 @@ typedef struct s_game
 	t_player			player;
 	t_map				map;
 	t_textures			textures;
+	t_time				time;
 }			t_game;
 
 #endif

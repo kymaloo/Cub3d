@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:16:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/18 12:11:04 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:31:54 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param ptr 
  * @return size_t 
  */
-size_t	mm_hashmap_hash(void *ptr)
+size_t	mm_hashmap_hash(t_content_hashmap *h, void *ptr)
 {
 	size_t addr;
 	size_t hash;
@@ -28,8 +28,8 @@ size_t	mm_hashmap_hash(void *ptr)
 
 	fibonnacci_ratio = 11400714819323198485ull;
 	addr = (size_t) ptr;
-	hash = (addr * fibonnacci_ratio) >> (64 - (int) log2(MM_HASHMAP_NB_BUCKETS)); //TODO REQUIRES METH.H
-	return (hash % MM_HASHMAP_NB_BUCKETS);
+	hash = (addr * fibonnacci_ratio) >> (64 - (int) log2(h->nb_buckets));
+	return (hash % h->nb_buckets);
 }
 
 
@@ -38,7 +38,7 @@ void	mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 	size_t hash;
 	size_t where;
 
-	hash = mm_hashmap_hash(elem);
+	hash = mm_hashmap_hash(hashmap, elem);
 	where = findFirstZeroBit(hashmap->buckets[hash].bits, hashmap->buckets[hash].size);
 	if (where == (size_t) -1)
 	{
@@ -50,13 +50,29 @@ void	mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 	return ;
 }
 
+void	mm_hashmap_init(t_mm *mm, t_content_hashmap *h, size_t nb_buckets)
+{	
+	size_t	i;
+
+	h->nb_buckets = nb_buckets;
+	h->buckets = malloc(sizeof(t_content_array) * nb_buckets);
+	if (!h->buckets)
+		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure.", EXIT_FAILURE));
+	i = 0;
+	while (i < h->nb_buckets)
+	{
+		initialize_content_array(mm, &h->buckets[i]);
+		i++;
+	}
+}
+
 void	mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 {
 	size_t			hash;
 	t_content_array	*array;
 	size_t			i;
 
-	hash = mm_hashmap_hash(elem);
+	hash = mm_hashmap_hash(hashmap, elem);
 	array = &hashmap->buckets[hash];
 	i = 0;
 	while (i < array->size)

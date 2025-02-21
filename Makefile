@@ -28,20 +28,21 @@ SRCS	:= 	\
 			memory_manager/utils/mm_destruction_utils.c	\
 			memory_manager/utils/mm_hashmap_utils.c		\
 			memory_manager/safe_allocations.c			\
+			memory_manager/user_functions.c				\
 			\
 			src/main.c									\
 			src/error.c									\
-			\
-			src/parsing/open_close_map.c				\
-			src/parsing/init_direction_and_fc.c			\
-			src/parsing/stock_direction_and_fc.c		\
-			src/parsing/check_map.c						\
-			src/parsing/init.c							\
-			src/parsing/free.c							\
-			src/parsing/path_finding.c					\
-			src/parsing/stock_map.c						\
-			src/parsing/utils_parse.c					\
-			src/parsing/colors_fc.c						\
+
+# src/parsing/open_close_map.c					\
+# src/parsing/init_direction_and_fc.c			\
+# src/parsing/stock_direction_and_fc.c			\
+# src/parsing/check_map.c						\
+# src/parsing/init.c							\
+# src/parsing/free.c							\
+# src/parsing/path_finding.c					\
+# src/parsing/stock_map.c						\
+# src/parsing/utils_parse.c						\
+# src/parsing/colors_fc.c						\
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -63,7 +64,7 @@ v:	all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
 
 %.o: %.c
-	@echo "$(CC) $(CFLAGS) -o $@ -c $<"
+#@echo "$(CC) $(CFLAGS) -o $@ -c $<"
 	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
 
 $(LIBFT_A):
