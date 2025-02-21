@@ -18,8 +18,6 @@ typedef struct s_parsing_map
 	char	*color_ceiling;
 	char	*color_floor_cp;
 	char	*color_ceiling_cp;
-	int		count_line;
-	int		line_size;
 	int		x_last_0;
 	int		y_last_0;
 }	t_parsing_map;

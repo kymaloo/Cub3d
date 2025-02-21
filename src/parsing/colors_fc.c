@@ -50,20 +50,19 @@ int	validate_color_range(t_mm *mm, char *color)
 	int		i;
 	int		tmp;
 
-	splited = safe_split(mm, ZONE_1, color, ',');
+	splited = safe_split(mm, ZONE_PARSING_TMP, color, ',');
 	i = 0;
 	while (splited[i])
 	{
 		tmp = ft_atoi(splited[i]);
 		if (tmp < 0 || tmp > 255)
 		{
-			free_tab(mm, splited);
-			printf("Error : Format not valid\n");
+			mm_area_free_elem(mm, ZONE_PARSING_TMP, splited);
 			return (EXIT_FAILURE);
 		}
 		i++;
 	}
-	free_tab(mm, splited);
+	mm_area_free_elem(mm, ZONE_PARSING_TMP, splited);
 	return (EXIT_SUCCESS);
 }
 

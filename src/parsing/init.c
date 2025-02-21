@@ -17,13 +17,11 @@ static int	init_direction_and_fc(t_game *game, char *str)
 static int	init_map(t_game *game)
 {
 	game->parse->grid = extract_map(game, game->parse->all_file);
-	print_map(game->parse->grid);
 	if (check_map(game->parse->grid) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_doublon_map(game->parse->grid, "NSEW") != 1)
 		mm_nuclear_exit(game->mm, ft_error(WHERE, "ONE PLEYER PLSSSS 🤓", EXIT_FAILURE));
 	copy_map(game);
-	print_map(game->parse->grid);
 	return (EXIT_SUCCESS);
 }
 
@@ -42,6 +40,7 @@ static void	is_dir_and_filled(t_game *game)
 	if (game->parse->color_floor == NULL)
 		mm_nuclear_exit(game->mm, ft_error(WHERE, "Path floor is Null", EXIT_FAILURE));
 }
+
 int	init(t_game *game, char *str)
 {
 	if (check_map_format_cub(game->mm, str) == EXIT_FAILURE)
@@ -51,8 +50,6 @@ int	init(t_game *game, char *str)
 	game->parse->all_file = stock_file(game->mm, str);
 	if (init_direction_and_fc(game, str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	mm_area_free_elem(game->mm, ZONE_PARSING_TMP, game->parse->direction);
-	mm_area_free_elem(game->mm, ZONE_PARSING_TMP, game->parse->fc);
 	is_dir_and_filled(game);
 	if (all_line_is_valid(game, game->parse->all_file) ==  EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -64,11 +61,10 @@ int	init(t_game *game, char *str)
 		return (EXIT_FAILURE);
 	if (init_map(game) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	//mm_area_free_elem(game->mm, ZONE_1, game->parse->all_file);
-		// count_line(game, str, 0);
-	// line_size(game, str, 0);
-	// if (check_wall(game->mm, game->parse) == EXIT_FAILURE)
-	// 	return (EXIT_FAILURE);
+	mm_area_free_elem(game->mm, ZONE_PARSING_TMP, game->parse->all_file);
+	if (check_wall(game->mm, game->parse) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	mm_area_delete(game->mm, ZONE_PARSING_TMP);
 	return (EXIT_SUCCESS);
 }
 

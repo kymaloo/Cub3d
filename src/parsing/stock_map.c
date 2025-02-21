@@ -1,27 +1,6 @@
 #include "cub.h"
 #include "parsing_interns.h"
 
-// void	line_size(t_game *game, char *str, int fd)
-// {
-// 	char	*line;
-// 	int		i;
-// 	int		count;
-
-// 	i = get_index_before_map(game, str, 0, 0);
-// 	count = 0;
-// 	fd = open_map(str);
-// 	line = safe_get_next_line(game->mm, ZONE_1, fd);
-// 	while (line != NULL)
-// 	{
-// 		if (count >= i && ft_strlen_int(line) > game->parse->line_size)
-// 			game->parse->line_size = ft_strlen_int(line);
-// 		safe_free(game->mm, ZONE_1, line);
-// 		line = safe_get_next_line(game->mm, ZONE_1, fd);
-// 		count++;
-// 	}
-// 	close_map(fd);
-// }
-
 int	count_line_in_file(t_mm *mm, char *str)
 {
 	int		fd;
@@ -91,10 +70,12 @@ char	**extract_map(t_game *game, char **array)
 
 void	copy_map(t_game *game)
 {
-	int	i;
+	int		i;
+	int		size;
 
 	i = 0;
-	game->parse->grid_copy = safe_malloc(game->mm, ZONE_PARSING_TMP, sizeof(char *) * (game->parse->count_line + 1));
+	size = get_size_of_array(game, game->parse->grid);
+	game->parse->grid_copy = safe_malloc(game->mm, ZONE_1, sizeof(char *) * (size + 1));
 	if (!game->parse->grid_copy)
 		return ;
 	while (game->parse->grid[i])

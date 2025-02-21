@@ -11,8 +11,6 @@ int		init_tab_direction(t_mm *mm, t_parsing_map *parse);
 int		init_tab_fc(t_mm *mm, t_parsing_map *parse);
 int		open_map(char *str);
 int		close_map(int fd);
-int		count_fc(t_mm *mm, char **fc, char *str, int count, int fd);
-int		get_size_of_tab(t_game *game, char **array);
 int     init_direction(t_game *game, char *str, int dir, int fd);
 int     process_direction(t_game *game, char *line, int dir_i, int fd);
 int     init_fc(t_game *game, char *str);

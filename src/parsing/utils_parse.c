@@ -20,27 +20,6 @@ int	is_white_space(char c)
 	return (1);
 }
 
-// void	count_line(t_game *game, char *str, int fd)
-// {
-// 	char	*line;
-// 	int		i;
-// 	int		count;
-
-// 	i = get_index_before_map(game, str, 0, 0);
-// 	count = 0;
-// 	fd = open_map(str);
-// 	line = safe_get_next_line(game->mm, ZONE_1, fd);
-// 	while (line != NULL)
-// 	{
-// 		safe_free(game->mm, ZONE_1, line);
-// 		if (count >= i)
-// 		game->parse->count_line++;
-// 		line = safe_get_next_line(game->mm, ZONE_1, fd);
-// 		count++;
-// 	}
-// 	close_map(fd);
-// }
-
 int	get_size_of_array(t_game *game, char **array)
 {
 	int	i;
@@ -66,7 +45,6 @@ int	get_size_of_array(t_game *game, char **array)
 	while (array[i])
 		i++;
 	i = i - j;
-	printf("%d\n", i);
 	return (i);
 }
 
