@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:22 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:08:23 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:06:52 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,24 @@
 #include "parsing_interns.h"
 
 static void	find_last_floor(t_parsing_map *parse)
+static void	find_last_floor(t_parsing_map *parse)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	while (parse->grid_copy[i])
+	while (parse->grid_copy[i])
 	{
 		j = 0;
 		while (parse->grid_copy[i][j])
+		while (parse->grid_copy[i][j])
 		{
 			if (parse->grid_copy[i][j] == '0')
+			if (parse->grid_copy[i][j] == '0')
 			{
+				parse->x_last_0 = i;
+				parse->y_last_0 = j;
 				parse->x_last_0 = i;
 				parse->y_last_0 = j;
 				return ;
@@ -72,16 +78,20 @@ static int	path_finding(int x, int y, char **cells)
 }
 
 int	check_wall(t_mm *mm, t_parsing_map *parse)
+int	check_wall(t_mm *mm, t_parsing_map *parse)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	while (parse->grid_copy[i])
+	while (parse->grid_copy[i])
 	{
 		j = 0;
 		while (parse->grid_copy[i][j])
+		while (parse->grid_copy[i][j])
 		{
+			if (isset(parse->grid_copy[i][j], "NSEW0") == true)
 			if (isset(parse->grid_copy[i][j], "NSEW0") == true)
 			{
 				find_last_floor(parse);

@@ -6,13 +6,14 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:32 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:13:34 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:06:24 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
+int	check_fc(t_game *game)
 int	check_fc(t_game *game)
 {
 	char	*tmp;
@@ -86,6 +87,7 @@ int	validate_color_range(t_mm *mm, char *color)
 	return (EXIT_SUCCESS);
 }
 
+int	verif_colors(t_game *game)
 int	verif_colors(t_game *game)
 {
 	if (validate_color_range(game->mm, \

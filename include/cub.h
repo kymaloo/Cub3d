@@ -9,6 +9,7 @@
 # include "../libft/libft.h"
 # include "memory_manager.h"
 # include "ft_error.h"
+# include "MLX42/MLX42.h"
 
 int	init(t_game *game, char *str);
 

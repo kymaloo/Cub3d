@@ -8,18 +8,16 @@ MLX_A		:= $(MLX_DIR)/build/libmlx42.a
 #got that hash from `git submodule status`. we're using it for versionning of the MLX42 purposes.
 MLX_VERSION_GIT_HASH := ce254c3a19af8176787601a2ac3490100a5c4c61
 
-INCLUDES	:= -Iinclude
-ARCHIVES	:= $(LIBFT_A)
+INCLUDES	:= -Iinclude -IMLX42/include
+ARCHIVES	:= $(LIBFT_A) $(MLX_A)
 LIBS		:= -ldl -lglfw -lm
 CFLAGS		:= -Wextra -Wall -Werror -g3 $(INCLUDES)
 
-RED		:=	\033[31m
+BRED	:=	\033[1;31m
 YELLOW	:=	\033[33m
 GREEN	:=	\033[32m
 BLUE	:=	\033[34m
 RESET	:=	\033[0m
-
-ERROR	= 0;
 
 SRCS	:= 	\
 			memory_manager/mm_area.c					\
@@ -30,6 +28,7 @@ SRCS	:= 	\
 			memory_manager/utils/mm_destruction_utils.c	\
 			memory_manager/utils/mm_hashmap_utils.c		\
 			memory_manager/safe_allocations.c			\
+			memory_manager/user_functions.c				\
 			\
 			src/main.c									\
 			src/error.c									\
@@ -46,14 +45,27 @@ SRCS	:= 	\
 
 OBJS	:= ${SRCS:.c=.o}
 
-all: clear $(LIBFT_A) $(NAME) 
+all: $(NAME)
 
+n:	clear
+	norminette
 n:	clear
 	norminette src/
 
 r:	re
 	./cub3D maps/map.cub
 
+a:	all
+	./cub3D maps/map.cub
+
+l:	all
+	lldb ./cub3D maps/map.cub
+
+r:	re
+	./cub3D maps/map.cub
+
+v:	all
+	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
 v:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
 
@@ -61,15 +73,13 @@ vs:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(RED) $< Compilation failure$(RESET)" && return 1)
+#@echo "$(CC) $(CFLAGS) -o $@ -c $<"
+	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
 
-$(LIBFT_A): $(LIBFT_DIR)
+$(LIBFT_A):
 	@echo "$(BLUE)$(NAME): archiving $(LIBFT_A)$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(BLUE)$(NAME): $(GREEN)$(LIBFT_A) archived !$(RESET)"
-
-$(LIBFT_DIR):
-	git submodule update --init --recursive $(LIBFT_DIR)
 
 $(MLX_A): $(MLX_DIR)
 	@echo "$(BLUE)$(NAME): versionning $(MLX_DIR) submodule$(RESET)"
@@ -86,10 +96,12 @@ $(MLX_DIR):
 	git submodule update --init --recursive $(MLX_DIR)
 
 
-$(NAME): $(OBJS)
-	@echo "$(BLUE)$(NAME): Compiling $$(OBJS) ${NAME}$(RESET)"
+$(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
+	@echo "$(BLUE)$(NAME): ${NAME} $(GREEN)OBJS compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): Linking ${NAME} $(RESET)"
+	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
-	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Compiled!$(RESET)"
+	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Linked !$(RESET)"
 
 clear:
 	clear

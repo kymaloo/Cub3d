@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:50 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:27:22 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:06:45 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include "memory_manager.h"
 # include "struct.h"
 
-int		check_map_format_cub(t_mm *mm, char *str);
+int     check_map_format_cub(t_game *game, char *str);
 int		check_white_space(char *str);
 int		strncmp_with_array(char *str, char **array, size_t n);
+int		init_tab_direction(t_mm *mm, t_parsing_map *parse);
+int		init_tab_fc(t_mm *mm, t_parsing_map *parse);
 int		init_tab_direction(t_mm *mm, t_parsing_map *parse);
 int		init_tab_fc(t_mm *mm, t_parsing_map *parse);
 int		open_map(char *str);
@@ -33,6 +35,7 @@ char	**stock_file(t_mm *mm, char *str);
 char	**extract_map(t_game *game, char **array);
 void	copy_map(t_game *game);
 int		is_white_space(char c);
+int		check_wall(t_mm *mm, t_parsing_map *parse);
 int		check_wall(t_mm *mm, t_parsing_map *parse);
 int		check_doublon_map(char **map, char *str);
 int		check_fc(t_game *game);

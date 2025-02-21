@@ -6,14 +6,14 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:29 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:10:15 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:06:13 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
-int	check_map_format_cub(t_mm *mm, char *str)
+int	check_map_format_cub(t_game *game, char *str)
 {
 	int	len_str;
 
@@ -98,6 +98,7 @@ int	check_doublon_map(char **map, char *str)
 }
 
 int	update_color(t_game *game, char **color, char *tmp)
+int	update_color(t_game *game, char **color, char *tmp)
 {
 	int	i;
 	int	j;
@@ -109,6 +110,7 @@ int	update_color(t_game *game, char **color, char *tmp)
 	if (!*color)
 	{
 		safe_free(game->mm, ZONE_1, tmp);
+		safe_free(game->mm, ZONE_1, tmp);
 		return (EXIT_FAILURE);
 	}
 	while (tmp[i])
@@ -118,6 +120,7 @@ int	update_color(t_game *game, char **color, char *tmp)
 		i++;
 	}
 	(*color)[j] = '\0';
+	safe_free(game->mm, ZONE_1, tmp);
 	safe_free(game->mm, ZONE_1, tmp);
 	return (EXIT_SUCCESS);
 }

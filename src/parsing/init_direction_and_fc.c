@@ -6,13 +6,14 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:41 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:18:19 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:06:30 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
+int	init_tab_direction(t_mm *mm, t_parsing_map *parse)
 int	init_tab_direction(t_mm *mm, t_parsing_map *parse)
 {
 	int	i;
@@ -30,9 +31,11 @@ int	init_tab_direction(t_mm *mm, t_parsing_map *parse)
 	parse->direction[i] = safe_strdup(mm, ZONE_PARSING_TMP, "EA ./");
 	i++;
 	parse->direction[i] = NULL;
+	parse->direction[i] = NULL;
 	return (EXIT_SUCCESS);
 }
 
+int	init_tab_fc(t_mm *mm, t_parsing_map *parse)
 int	init_tab_fc(t_mm *mm, t_parsing_map *parse)
 {
 	int	i;
@@ -46,9 +49,11 @@ int	init_tab_fc(t_mm *mm, t_parsing_map *parse)
 	parse->fc[i] = safe_strdup(mm, ZONE_PARSING_TMP, "C ");
 	i++;
 	parse->fc[i] = NULL;
+	parse->fc[i] = NULL;
 	return (EXIT_SUCCESS);
 }
 
+int	init_fc(t_game *game, char *str)
 int	init_fc(t_game *game, char *str)
 {
 	int		i;
@@ -72,6 +77,7 @@ int	init_fc(t_game *game, char *str)
 	return (close_map(fd));
 }
 
+int	init_direction(t_game *game, char *str, int dir, int fd)
 int	init_direction(t_game *game, char *str, int dir, int fd)
 {
 	int		i;

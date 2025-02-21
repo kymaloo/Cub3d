@@ -6,13 +6,14 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:44 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 15:17:34 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:06:35 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
+static int	init_direction_and_fc(t_game *game, char *str)
 static int	init_direction_and_fc(t_game *game, char *str)
 {
 	if (init_tab_direction(game->mm, game->parse) == EXIT_FAILURE)
@@ -77,9 +78,12 @@ int	init(t_game *game, char *str)
 	if (all_line_is_valid(game, game->parse->all_file) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_fc(game) == EXIT_FAILURE)
+	if (check_fc(game) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_format_fc(game->mm, game->parse) == EXIT_FAILURE)
+	if (check_format_fc(game->mm, game->parse) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	if (verif_colors(game) == EXIT_FAILURE)
 	if (verif_colors(game) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (init_map(game) == EXIT_FAILURE)
