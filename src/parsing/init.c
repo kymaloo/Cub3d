@@ -3,31 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:44 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:06:35 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:54:04 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
-static int	init_direction_and_fc(t_game *game, char *str)
-static int	init_direction_and_fc(t_game *game, char *str)
+static int	init_direction_and_fc(t_parsing_map *p)
 {
-	if (init_tab_direction(game->mm, game->parse) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Init Tab Direction Failed", EXIT_FAILURE));
-	if (init_tab_fc(game->mm, game->parse) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Init Tab Fc Failed", EXIT_FAILURE));
+	if (init_tab_direction(p) == EXIT_FAILURE)
+		mm_nuclear_exit(ft_error(WHERE, "Init Tab Direction Failed", EXIT_FAILURE));
+	if (init_tab_fc(p) == EXIT_FAILURE)
+		mm_nuclear_exit(ft_error(WHERE, "Init Tab Fc Failed", EXIT_FAILURE));
 	if (init_direction(game, str, 0, 0) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Init Direction Failed", EXIT_FAILURE));
+		mm_nuclear_exit(ft_error(WHERE, "Init Direction Failed", EXIT_FAILURE));
 	if (init_fc(game, str) == EXIT_FAILURE)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Init Fc Failed", EXIT_FAILURE));
+		mm_nuclear_exit(ft_error(WHERE, "Init Fc Failed", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -65,33 +60,33 @@ static void	is_dir_and_filled(t_game *game)
 		"Path floor is Null", EXIT_FAILURE));
 }
 
-int	init(t_game *game, char *str)
+int	init(t_infos_p *infos_p, char *str)
 {
-	if (check_map_format_cub(game->mm, str) == EXIT_FAILURE)
+	if (check_map_format_cub(str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (check_map_reel(game->mm, str) == EXIT_FAILURE)
+	if (check_map_reel(str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	game->parse->all_file = stock_file(game->mm, str);
+	infos_p->p->all_file = stock_file(str);
+
+
+	
 	if (init_direction_and_fc(game, str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	is_dir_and_filled(game);
 	if (all_line_is_valid(game, game->parse->all_file) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_fc(game) == EXIT_FAILURE)
-	if (check_fc(game) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_format_fc(game->mm, game->parse) == EXIT_FAILURE)
-	if (check_format_fc(game->mm, game->parse) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (verif_colors(game) == EXIT_FAILURE)
 	if (verif_colors(game) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (init_map(game) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	mm_area_free_elem(game->mm, ZONE_PARSING_TMP, game->parse->all_file);
+	mm_area_free_elem(game->mm, ZONE_1, game->parse->all_file);
 	if (check_wall(game->mm, game->parse) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	mm_area_delete(game->mm, ZONE_PARSING_TMP);
+	mm_area_delete(game->mm, ZONE_1);
 	return (EXIT_SUCCESS);
 }
 

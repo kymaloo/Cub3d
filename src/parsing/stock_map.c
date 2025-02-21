@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   stock_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:58 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:07:08 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:47:37 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
-int	count_line_in_file(t_mm *mm, char *str)
+int	count_line_in_file(char *str)
 {
 	int		fd;
 	int		count;
@@ -21,18 +21,18 @@ int	count_line_in_file(t_mm *mm, char *str)
 
 	fd = open_map(str);
 	count = 0;
-	line = safe_get_next_line(mm, ZONE_1, fd);
+	line = safe_get_next_line(ZONE_1, fd);
 	while (line != NULL)
 	{
-		safe_free(mm, ZONE_1, line);
+		safe_free(ZONE_1, line);
 		count++;
-		line = safe_get_next_line(mm, ZONE_1, fd);
+		line = safe_get_next_line(ZONE_1, fd);
 	}
 	close_map(fd);
 	return (count);
 }
 
-char	**stock_file(t_mm *mm, char *str)
+char	**stock_file(char *str)
 {
 	int		i;
 	int		fd;
@@ -41,13 +41,13 @@ char	**stock_file(t_mm *mm, char *str)
 
 	i = 0;
 	fd = open_map(str);
-	count = count_line_in_file(mm, str);
-	result = safe_malloc(mm, ZONE_PARSING_TMP, sizeof(char *) * (count + 1));
+	count = count_line_in_file(str);
+	result = safe_malloc(ZONE_1, sizeof(char *) * (count + 1));
 	if (!result)
 		return (NULL);
 	while (i < count)
 	{
-		result[i] = safe_get_next_line(mm, ZONE_PARSING_TMP, fd);
+		result[i] = safe_get_next_line(mm, ZONE_1, fd);
 		i++;
 	}
 	result[i] = NULL;

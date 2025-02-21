@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors_fc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:32 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:06:24 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:49:14 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	validate_color_format(char *color)
 int	check_format_fc(t_mm *mm, t_parsing_map *parse)
 {
 	if (validate_color_format(parse->color_ceiling) == EXIT_FAILURE)
-		mm_nuclear_exit(mm, ft_error(WHERE, \
+		nuclear_exit(ft_error(WHERE, \
 		"The ceiling isn't valid", EXIT_FAILURE));
 	if (validate_color_format(parse->color_floor) == EXIT_FAILURE)
-		mm_nuclear_exit(mm, ft_error(WHERE, \
+		nuclear_exit(ft_error(WHERE, \
 		"The floor isn't valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
@@ -71,19 +71,19 @@ int	validate_color_range(t_mm *mm, char *color)
 	int		i;
 	int		tmp;
 
-	splited = safe_split(mm, ZONE_PARSING_TMP, color, ',');
+	splited = safe_split(mm, ZONE_1, color, ',');
 	i = 0;
 	while (splited[i])
 	{
 		tmp = ft_atoi(splited[i]);
 		if (tmp < 0 || tmp > 255)
 		{
-			mm_area_free_elem(mm, ZONE_PARSING_TMP, splited);
+			mm_area_free_elem(mm, ZONE_1, splited);
 			return (EXIT_FAILURE);
 		}
 		i++;
 	}
-	mm_area_free_elem(mm, ZONE_PARSING_TMP, splited);
+	mm_area_free_elem(mm, ZONE_1, splited);
 	return (EXIT_SUCCESS);
 }
 

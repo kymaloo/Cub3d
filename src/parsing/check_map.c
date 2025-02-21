@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:29 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:06:13 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:43:46 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
-int	check_map_format_cub(t_game *game, char *str)
+int	check_map_format_cub(char *str)
 {
 	int	len_str;
 
@@ -23,10 +23,10 @@ int	check_map_format_cub(t_game *game, char *str)
 		if (ft_strncmp(&str[len_str - 4], ".cub", 4) == 0)
 			return (EXIT_SUCCESS);
 		else
-			mm_nuclear_exit(mm, ft_error(WHERE, \
+			nuclear_exit(ft_error(WHERE, \
 			"check_map_format_cub() failure", EXIT_FAILURE));
 	}
-	mm_nuclear_exit(mm, ft_error(WHERE, \
+	nuclear_exit(ft_error(WHERE, \
 	"check_map_format_cub() failure", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
@@ -96,8 +96,6 @@ int	check_doublon_map(char **map, char *str)
 	}
 	return (count);
 }
-
-int	update_color(t_game *game, char **color, char *tmp)
 int	update_color(t_game *game, char **color, char *tmp)
 {
 	int	i;

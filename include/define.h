@@ -4,7 +4,7 @@
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
 # define ZONE_1				"petit_chacalot"
-# define ZONE_PARSING_TMP	"bonjour"
+# define ZONE_1	"bonjour"
 # define ZONE_MLX			"zebi_la_mlx"
 # define ZONE_FDS			"oulah_les_Fds"
 

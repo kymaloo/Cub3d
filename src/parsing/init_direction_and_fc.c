@@ -3,116 +3,110 @@
 /*                                                        :::      ::::::::   */
 /*   init_direction_and_fc.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:41 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:06:30 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:58:40 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
-int	init_tab_direction(t_mm *mm, t_parsing_map *parse)
-int	init_tab_direction(t_mm *mm, t_parsing_map *parse)
+int	init_tab_direction(t_parsing_map *p)
 {
 	int	i;
 
 	i = 0;
-	parse->direction = safe_malloc(mm, ZONE_PARSING_TMP, sizeof(char *) * 6);
-	if (!parse->direction)
-		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure", MALLOC_ERROR));
-	parse->direction[i] = safe_strdup(mm, ZONE_PARSING_TMP, "NO ./");
+	p->direction = safe_malloc(ZONE_1, sizeof(char *) * 6);
+	if (!p->direction)
+		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+	p->direction[i] = safe_strdup(ZONE_1, "NO ./");
 	i++;
-	parse->direction[i] = safe_strdup(mm, ZONE_PARSING_TMP, "SO ./");
+	p->direction[i] = safe_strdup(ZONE_1, "SO ./");
 	i++;
-	parse->direction[i] = safe_strdup(mm, ZONE_PARSING_TMP, "WE ./");
+	p->direction[i] = safe_strdup(ZONE_1, "WE ./");
 	i++;
-	parse->direction[i] = safe_strdup(mm, ZONE_PARSING_TMP, "EA ./");
+	p->direction[i] = safe_strdup(ZONE_1, "EA ./");
 	i++;
-	parse->direction[i] = NULL;
-	parse->direction[i] = NULL;
+	p->direction[i] = NULL;
 	return (EXIT_SUCCESS);
 }
 
-int	init_tab_fc(t_mm *mm, t_parsing_map *parse)
-int	init_tab_fc(t_mm *mm, t_parsing_map *parse)
+int	init_tab_fc(t_parsing_map *p)
 {
 	int	i;
 
 	i = 0;
-	parse->fc = safe_malloc(mm, ZONE_PARSING_TMP, sizeof(char *) * 3);
-	if (!parse->fc)
-		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure", MALLOC_ERROR));
-	parse->fc[i] = safe_strdup(mm, ZONE_PARSING_TMP, "F ");
+	p->fc = safe_malloc(ZONE_1, sizeof(char *) * 3);
+	if (!p->fc)
+		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+	p->fc[i] = safe_strdup(ZONE_1, "F ");
 	i++;
-	parse->fc[i] = safe_strdup(mm, ZONE_PARSING_TMP, "C ");
+	p->fc[i] = safe_strdup(ZONE_1, "C ");
 	i++;
-	parse->fc[i] = NULL;
-	parse->fc[i] = NULL;
+	p->fc[i] = NULL;
 	return (EXIT_SUCCESS);
 }
 
-int	init_fc(t_game *game, char *str)
-int	init_fc(t_game *game, char *str)
+int	init_fc(t_infos_p *infos, char *str)
 {
 	int		i;
 	int		fd;
 	int		fc;
 
 	i = 0;
-	fc = count_fc_in_file(game, game->parse->fc);
+	fc = count_fc_in_file(infos, infos->p->fc);
 	if (fc != 2)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	while (game->parse->all_file[i])
+	while (infos->p->all_file[i])
 	{
-		if (ft_strncmp(game->parse->all_file[i], game->parse->fc[0], 2) == 0)
-			process_direction(game, game->parse->all_file[i], 4, fd);
-		else if (ft_strncmp(game->parse->all_file[i], \
-		game->parse->fc[1], 2) == 0)
-			process_direction(game, game->parse->all_file[i], 5, fd);
+		if (ft_strncmp(infos->p->all_file[i], infos->p->fc[0], 2) == 0)
+			process_direction(infos, infos->p->all_file[i], 4, fd);
+		else if (ft_strncmp(infos->p->all_file[i], \
+		infos->p->fc[1], 2) == 0)
+			process_direction(infos, infos->p->all_file[i], 5, fd);
 		i++;
 	}
 	return (close_map(fd));
 }
 
-int	init_direction(t_game *game, char *str, int dir, int fd)
-int	init_direction(t_game *game, char *str, int dir, int fd)
+int	init_direction(t_parsing_map *p, char *str, int dir, int fd)
 {
 	int		i;
 
 	i = 0;
-	dir = count_dir_in_file(game, game->parse->direction);
+	dir = count_dir_in_file(infos, infos->p->direction);
 	if (dir != 4)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	while (game->parse->all_file[i])
+	while (infos->p->all_file[i])
 	{
-		if (ft_strncmp(game->parse->all_file[i], \
-		game->parse->direction[0], 5) == 0)
-			process_direction(game, game->parse->all_file[i], 0, fd);
-		else if (ft_strncmp(game->parse->all_file[i], \
-		game->parse->direction[1], 5) == 0)
-			process_direction(game, game->parse->all_file[i], 1, fd);
-		else if (ft_strncmp(game->parse->all_file[i], \
-		game->parse->direction[2], 5) == 0)
-			process_direction(game, game->parse->all_file[i], 2, fd);
-		else if (ft_strncmp(game->parse->all_file[i], \
-		game->parse->direction[3], 5) == 0)
-			process_direction(game, game->parse->all_file[i], 3, fd);
+		if (ft_strncmp(infos->p->all_file[i], \
+		infos->p->direction[0], 5) == 0)
+			process_direction(infos, infos->p->all_file[i], 0, fd);
+		else if (ft_strncmp(infos->p->all_file[i], \
+		infos->p->direction[1], 5) == 0)
+			process_direction(infos, infos->p->all_file[i], 1, fd);
+		else if (ft_strncmp(infos->p->all_file[i], \
+		infos->p->direction[2], 5) == 0)
+			process_direction(infos, infos->p->all_file[i], 2, fd);
+		else if (ft_strncmp(infos->p->all_file[i], \
+		infos->p->direction[3], 5) == 0)
+			process_direction(infos, infos->p->all_file[i], 3, fd);
 		i++;
 	}
 	return (close_map(fd));
 }
 
-int	check_map_reel(t_mm *mm, char *str)
+int	check_map_reel(char *str)
 {
 	int	fd;
 
 	fd = open_map(str);
 	if (fd == -1)
-		mm_nuclear_exit(mm, ft_error(WHERE, \
+		nuclear_exit(ft_error(WHERE, \
 		"check_map_reel() failure", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }

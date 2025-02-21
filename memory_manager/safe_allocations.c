@@ -98,6 +98,7 @@ char	*safe_strdup_with_calloc(char *area, char *str, int size)
 	if (!new)
 		nuclear_exit(ft_error(WHERE, "strdup failure", MALLOC_ERROR));
 	memory_manager(ADD_ELEM, area, new);
+	return (new);
 }
 
 mlx_t *safe_mlx_init(char *area)

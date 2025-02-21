@@ -13,13 +13,6 @@ enum e_coord
 	Y = 1,
 };
 
-typedef struct s_player
-{
-	double	position[DIM];
-	double	direction[DIM];
-	double	plane[DIM];
-}	t_player;
-
 typedef struct s_ray
 {
 	double	position[DIM];

@@ -49,8 +49,6 @@ all: $(NAME)
 
 n:	clear
 	norminette
-n:	clear
-	norminette src/
 
 r:	re
 	./cub3D maps/map.cub
@@ -66,8 +64,6 @@ r:	re
 
 v:	all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
-v:	re
-	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./cub3D maps/map.cub
 
 vs:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
@@ -95,8 +91,8 @@ $(MLX_DIR):
 	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
 	git submodule update --init --recursive $(MLX_DIR)
 
-
-$(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
+#$(MLX_A)
+$(NAME): $(LIBFT_A) $(OBJS)
 	@echo "$(BLUE)$(NAME): ${NAME} $(GREEN)OBJS compiled !$(RESET)"
 	@echo "$(BLUE)$(NAME): Linking ${NAME} $(RESET)"
 	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"

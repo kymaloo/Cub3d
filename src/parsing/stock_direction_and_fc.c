@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stock_direction_and_fc.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:54 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:07:01 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:58:39 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,21 @@
 #include "parsing_interns.h"
 
 static void	save_path(t_mm *mm, t_parsing_map *parse, char *line, int dir_index)
-static void	save_path(t_mm *mm, t_parsing_map *parse, char *line, int dir_index)
 {
 	if (dir_index == 0)
-		parse->path_north = safe_strdup(mm, ZONE_1, line);
-		parse->path_north = safe_strdup(mm, ZONE_1, line);
+		parse->path_north = safe_strdup(ZONE_1, line);
 	else if (dir_index == 1)
-		parse->path_south = safe_strdup(mm, ZONE_1, line);
-		parse->path_south = safe_strdup(mm, ZONE_1, line);
+		parse->path_south = safe_strdup(ZONE_1, line);
 	else if (dir_index == 2)
-		parse->path_west = safe_strdup(mm, ZONE_1, line);
-		parse->path_west = safe_strdup(mm, ZONE_1, line);
+		parse->path_west = safe_strdup(ZONE_1, line);
 	else if (dir_index == 3)
-		parse->path_east = safe_strdup(mm, ZONE_1, line);
-		parse->path_east = safe_strdup(mm, ZONE_1, line);
+		parse->path_east = safe_strdup(ZONE_1, line);
 	else if (dir_index == 4)
-		parse->color_floor = safe_strdup(mm, ZONE_1, line);
-		parse->color_floor = safe_strdup(mm, ZONE_1, line);
+		parse->color_floor = safe_strdup(ZONE_1, line);
 	else if (dir_index == 5)
-		parse->color_ceiling = safe_strdup(mm, ZONE_1, line);
-		parse->color_ceiling = safe_strdup(mm, ZONE_1, line);
+		parse->color_ceiling = safe_strdup(ZONE_1, line);
 }
 
-static	int	check_doublon(t_mm *mm, char *direction, char *line, int fd)
 static	int	check_doublon(t_mm *mm, char *direction, char *line, int fd)
 {
 	printf("Error: Find duplicate for %s\n", direction);

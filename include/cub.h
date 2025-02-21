@@ -11,6 +11,6 @@
 # include "ft_error.h"
 # include "MLX42/MLX42.h"
 
-int	init(t_game *game, char *str);
+int	init(t_infos_p *infos_p, char *str);
 
 #endif

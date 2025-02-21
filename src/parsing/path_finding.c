@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:22 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:06:52 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:35:56 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	check_wall(t_mm *mm, t_parsing_map *parse)
 				find_last_floor(parse);
 				if (path_finding(parse->x_last_0, \
 				parse->y_last_0, parse->grid_copy) != 0)
-					mm_nuclear_exit(mm, ft_error(WHERE, \
+					nuclear_exit(ft_error(WHERE, \
 					"map not valid", EXIT_FAILURE));
 			}
 			j++;
