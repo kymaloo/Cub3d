@@ -3,61 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:44 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:54:04 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:41:57 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
-static int	init_direction_and_fc(t_parsing_map *p)
+static int	init_direction_and_fc(t_infos_p *infos_p, char *str)
 {
-	if (init_tab_direction(p) == EXIT_FAILURE)
-		mm_nuclear_exit(ft_error(WHERE, "Init Tab Direction Failed", EXIT_FAILURE));
-	if (init_tab_fc(p) == EXIT_FAILURE)
-		mm_nuclear_exit(ft_error(WHERE, "Init Tab Fc Failed", EXIT_FAILURE));
-	if (init_direction(game, str, 0, 0) == EXIT_FAILURE)
-		mm_nuclear_exit(ft_error(WHERE, "Init Direction Failed", EXIT_FAILURE));
-	if (init_fc(game, str) == EXIT_FAILURE)
-		mm_nuclear_exit(ft_error(WHERE, "Init Fc Failed", EXIT_FAILURE));
+	if (init_tab_direction(infos_p->p) == EXIT_FAILURE)
+		nuclear_exit(ft_error(WHERE, "Init Tab Direction Failed", \
+		EXIT_FAILURE));
+	if (init_tab_fc(infos_p->p) == EXIT_FAILURE)
+		nuclear_exit(ft_error(WHERE, "Init Tab Fc Failed", \
+		EXIT_FAILURE));
+	if (init_direction(infos_p, str, 0, 0) == EXIT_FAILURE)
+		nuclear_exit(ft_error(WHERE, "Init Direction Failed", \
+		EXIT_FAILURE));
+	if (init_fc(infos_p, str) == EXIT_FAILURE)
+		nuclear_exit(ft_error(WHERE, "Init Fc Failed", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
-static int	init_map(t_game *game)
+static int	init_map(t_infos_p *infos_p)
 {
-	game->parse->grid = extract_map(game, game->parse->all_file);
-	if (check_map(game->parse->grid) == EXIT_FAILURE)
+	infos_p->g->map = safe_calloc(ZONE_1, 1, sizeof(t_map));
+	infos_p->g->map->map = extract_map(infos_p, infos_p->p->all_file);
+	if (check_map(infos_p->g->map->map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (check_doublon_map(game->parse->grid, "NSEW") != 1)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"ONE PLEYER PLSSSS 🤓", EXIT_FAILURE));
-	copy_map(game);
+	if (check_doublon_map(infos_p->g->map->map, "NSEW") != 1)
+		nuclear_exit(ft_error(WHERE, "ONE PLEYER PLSSSS 🤓", EXIT_FAILURE));
+	find_pos_player(infos_p->g, infos_p->g->map->map);
+	copy_map(infos_p);
 	return (EXIT_SUCCESS);
 }
 
-static void	is_dir_and_filled(t_game *game)
+static void	is_dir_and_filled(t_textures *textures)
 {
-	if (game->parse->path_east == NULL)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Path east is Null", EXIT_FAILURE));
-	if (game->parse->path_west == NULL)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Path west is Null", EXIT_FAILURE));
-	if (game->parse->path_north == NULL)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Path north is Null", EXIT_FAILURE));
-	if (game->parse->path_south == NULL)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Path south is Null", EXIT_FAILURE));
-	if (game->parse->color_ceiling == NULL)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Path ceilling is Null", EXIT_FAILURE));
-	if (game->parse->color_floor == NULL)
-		mm_nuclear_exit(game->mm, ft_error(WHERE, \
-		"Path floor is Null", EXIT_FAILURE));
+	if (textures->path_east == NULL)
+		nuclear_exit(ft_error(WHERE, "Path east is Null", EXIT_FAILURE));
+	if (textures->path_west == NULL)
+		nuclear_exit(ft_error(WHERE, "Path west is Null", EXIT_FAILURE));
+	if (textures->path_north == NULL)
+		nuclear_exit(ft_error(WHERE, "Path north is Null", EXIT_FAILURE));
+	if (textures->path_south == NULL)
+		nuclear_exit(ft_error(WHERE, "Path south is Null", EXIT_FAILURE));
+	if (textures->color_ceiling == NULL)
+		nuclear_exit(ft_error(WHERE, "Path ceilling is Null", EXIT_FAILURE));
+	if (textures->color_floor == NULL)
+		nuclear_exit(ft_error(WHERE, "Path floor is Null", EXIT_FAILURE));
 }
 
 int	init(t_infos_p *infos_p, char *str)
@@ -67,30 +65,27 @@ int	init(t_infos_p *infos_p, char *str)
 	if (check_map_reel(str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	infos_p->p->all_file = stock_file(str);
-
-
-	
-	if (init_direction_and_fc(game, str) == EXIT_FAILURE)
+	if (init_direction_and_fc(infos_p, str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	is_dir_and_filled(game);
-	if (all_line_is_valid(game, game->parse->all_file) == EXIT_FAILURE)
+	is_dir_and_filled(infos_p->g->textures);
+	if (all_line_is_valid(infos_p->g->textures, infos_p->p->all_file) == 1)
 		return (EXIT_FAILURE);
-	if (check_fc(game) == EXIT_FAILURE)
+	if (check_fc(infos_p->g->textures, infos_p->p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (check_format_fc(game->mm, game->parse) == EXIT_FAILURE)
+	if (check_format_fc(infos_p->g->textures) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (verif_colors(game) == EXIT_FAILURE)
+	if (verif_colors(infos_p->g->textures) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (init_map(game) == EXIT_FAILURE)
+	if (init_map(infos_p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	mm_area_free_elem(game->mm, ZONE_1, game->parse->all_file);
-	if (check_wall(game->mm, game->parse) == EXIT_FAILURE)
+	memory_manager(DEL_ELEM, ZONE_1, infos_p->p->all_file);
+	if (check_wall(infos_p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	mm_area_delete(game->mm, ZONE_1);
+	print_map(infos_p->g->map->map);
 	return (EXIT_SUCCESS);
 }
 
-int	all_line_is_valid(t_game *game, char **array)
+int	all_line_is_valid(t_textures *textures, char **array)
 {
 	int	i;
 	int	size;
@@ -102,18 +97,17 @@ int	all_line_is_valid(t_game *game, char **array)
 		if (check_white_space(array[i]) == 0 || \
 		char_valid_for_map("01NSEWD\t ", array[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->path_north, size) == 0 || \
-		ft_strncmp(array[i], game->parse->path_south, size) == 0)
+		else if (ft_strncmp(array[i], textures->path_north, size) == 0
+			|| ft_strncmp(array[i], textures->path_south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->path_east, size) == 0 || \
-		ft_strncmp(array[i], game->parse->path_west, size) == 0)
+		else if (ft_strncmp(array[i], textures->path_east, size) == 0
+			|| ft_strncmp(array[i], textures->path_west, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->color_ceiling, size) == 0 || \
-		ft_strncmp(array[i], game->parse->color_floor, size) == 0)
+		else if (ft_strncmp(array[i], textures->color_ceiling, size) == 0
+			|| ft_strncmp(array[i], textures->color_floor, size) == 0)
 			i++;
 		else
-			mm_nuclear_exit(game->mm, ft_error(WHERE, \
-			"Line isn't valid", EXIT_FAILURE));
+			nuclear_exit(ft_error(WHERE, "Line isn't valid", EXIT_FAILURE));
 	}
 	return (EXIT_SUCCESS);
 }

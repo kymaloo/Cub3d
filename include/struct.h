@@ -14,12 +14,6 @@ typedef struct s_parsing_map
 	char	**all_file;
 	char	**direction;
 	char	**fc;
-	char	*path_north;
-	char	*path_south;
-	char	*path_east;
-	char	*path_west;
-	char	*color_floor;
-	char	*color_ceiling;
 	char	*color_floor_cp;
 	char	*color_ceiling_cp;
 	int		x_last_0;
@@ -34,13 +28,15 @@ typedef	struct s_textures
 	char	*path_west;			//fill me
 	char	*color_floor;		//fill me
 	char	*color_ceiling;		//fill me
+	mlx_texture_t	*player;
 }	t_textures;
 
 typedef	struct s_map
 {
-	char	**map; //fill me
+	char	**map; //fill me senpai >///<
 	int		x_max; //fill me
 	int		y_max; //fill me
+	int		tile_size;
 }	t_map;
 
 typedef struct s_player
@@ -49,6 +45,7 @@ typedef struct s_player
 	char	facing;			//fill me (N S E ou W)
 	double	direction[DIM];
 	double	plane[DIM];
+	double	radian;
 }	t_player;
 
 typedef	struct s_time
@@ -60,11 +57,14 @@ typedef	struct s_time
 
 typedef struct s_game
 {
+	int					color;
 	mlx_t				*mlx;
-	t_player			player;
-	t_map				map;
-	t_textures			textures;
-	t_time				time;
+	t_player			*player;
+	t_map				*map;
+	t_textures			*textures;
+	t_time				*time;
+	mlx_image_t			*img_window;
+	mlx_image_t			*player_img;
 }			t_game;
 
 typedef struct s_infos_p
@@ -72,6 +72,5 @@ typedef struct s_infos_p
 	t_parsing_map	*p;
 	t_game			*g;
 } t_infos_p;
-
 
 #endif

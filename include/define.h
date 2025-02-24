@@ -4,12 +4,20 @@
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
 # define ZONE_1				"petit_chacalot"
-# define ZONE_1	"bonjour"
 # define ZONE_MLX			"zebi_la_mlx"
 # define ZONE_FDS			"oulah_les_Fds"
 
-# define WIDTH				3840
-# define HEIGHT				2160
+# define WIDTH				1920
+# define HEIGHT				1080
+
+# define FOV				70
+
+# define M_PI				3.14159265358979323846
+
+# define C_BLACK			0x000000FF
+# define C_BROWN			0x4B3A26FF
+# define C_BLUE				0x0000FFFF
+# define C_WHITE			0xFFFFFFFF
 
 enum e_error
 {

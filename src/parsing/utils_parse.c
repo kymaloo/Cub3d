@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:09:01 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:07:13 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:18:52 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,37 @@ int	is_white_space(char c)
 	return (1);
 }
 
-int	get_size_of_array(t_game *game, char **array, int i)
+int	get_size_of_array(t_textures *textures, t_parsing_map *p, char **t, int i)
 {
 	int	j;
 	int	size;
 
 	i = 0;
-	while (array[i])
+	while (t[i])
 	{
-		size = ft_strlen_int(array[i]);
-		if (check_white_space(array[i]) == 0)
+		size = ft_strlen_int(t[i]);
+		if (check_white_space(t[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->path_north, size) == 0
-			|| ft_strncmp(array[i], game->parse->path_south, size) == 0)
+		else if (ft_strncmp(t[i], textures->path_north, size) == 0
+			|| ft_strncmp(t[i], textures->path_south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->path_east, size) == 0
-			|| ft_strncmp(array[i], game->parse->path_west, size) == 0)
+		else if (ft_strncmp(t[i], textures->path_east, size) == 0
+			|| ft_strncmp(t[i], textures->path_west, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->color_ceiling_cp, size) == 0
-			|| ft_strncmp(array[i], game->parse->color_floor_cp, size) == 0)
+		else if (ft_strncmp(t[i], p->color_ceiling_cp, size) == 0
+			|| ft_strncmp(t[i], p->color_floor_cp, size) == 0)
 			i++;
 		else
 			break ;
 	}
 	j = i;
-	while (array[i])
+	while (t[i])
 		i++;
 	return (i - j);
 }
 
-int	get_index_before_array(t_game *game, char **array)
+int	get_index_before_array(t_infos_p *infos_p, char **array, int i)
 {
-	int	i;
 	int	size;
 
 	i = 0;
@@ -72,14 +71,18 @@ int	get_index_before_array(t_game *game, char **array)
 		size = ft_strlen_int(array[i]);
 		if (check_white_space(array[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->path_north, size) == 0
-			|| ft_strncmp(array[i], game->parse->path_south, size) == 0)
+		else if (ft_strncmp(array[i], \
+		infos_p->g->textures->path_north, size) == 0
+			|| ft_strncmp(array[i], \
+			infos_p->g->textures->path_south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->path_east, size) == 0
-			|| ft_strncmp(array[i], game->parse->path_west, size) == 0)
+		else if (ft_strncmp(array[i], \
+		infos_p->g->textures->path_east, size) == 0
+			|| ft_strncmp(array[i], infos_p->g->textures->path_west, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], game->parse->color_ceiling_cp, size) == 0
-			|| ft_strncmp(array[i], game->parse->color_floor_cp, size) == 0)
+		else if (ft_strncmp(array[i], \
+		infos_p->p->color_ceiling_cp, size) == 0
+			|| ft_strncmp(array[i], infos_p->p->color_floor_cp, size) == 0)
 			i++;
 		else
 			break ;
@@ -87,22 +90,20 @@ int	get_index_before_array(t_game *game, char **array)
 	return (i);
 }
 
-int	get_line_size(t_game *game, char **array)
+void	get_line_size(t_infos_p *infos_p, char **array)
 {
 	int	i;
 	int	size;
-	int	len;
 
 	i = 0;
-	size = get_index_before_array(game, array);
+	size = get_index_before_array(infos_p, array, 0);
 	while (i != size)
 		i++;
-	len = ft_strlen_int(array[i]);
+	infos_p->g->map->x_max = ft_strlen_int(array[i]);
 	while (array[i])
 	{
-		if (len < ft_strlen_int(array[i]))
-			len = ft_strlen_int(array[i]);
+		if (infos_p->g->map->x_max < ft_strlen_int(array[i]))
+			infos_p->g->map->x_max = ft_strlen_int(array[i]);
 		i++;
 	}
-	return (len);
 }

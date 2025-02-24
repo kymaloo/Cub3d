@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_direction_and_fc.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:41 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:58:40 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:11:59 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,52 +49,51 @@ int	init_tab_fc(t_parsing_map *p)
 	return (EXIT_SUCCESS);
 }
 
-int	init_fc(t_infos_p *infos, char *str)
+int	init_fc(t_infos_p *infos_p, char *str)
 {
 	int		i;
 	int		fd;
 	int		fc;
 
 	i = 0;
-	fc = count_fc_in_file(infos, infos->p->fc);
+	fc = count_fc_in_file(infos_p->p, infos_p->p->fc);
 	if (fc != 2)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	while (infos->p->all_file[i])
+	while (infos_p->p->all_file[i])
 	{
-		if (ft_strncmp(infos->p->all_file[i], infos->p->fc[0], 2) == 0)
-			process_direction(infos, infos->p->all_file[i], 4, fd);
-		else if (ft_strncmp(infos->p->all_file[i], \
-		infos->p->fc[1], 2) == 0)
-			process_direction(infos, infos->p->all_file[i], 5, fd);
+		if (ft_strncmp(infos_p->p->all_file[i], infos_p->p->fc[0], 2) == 0)
+			process_direction(infos_p, infos_p->p->all_file[i], 4, fd);
+		else if (ft_strncmp(infos_p->p->all_file[i], infos_p->p->fc[1], 2) == 0)
+			process_direction(infos_p, infos_p->p->all_file[i], 5, fd);
 		i++;
 	}
 	return (close_map(fd));
 }
 
-int	init_direction(t_parsing_map *p, char *str, int dir, int fd)
+int	init_direction(t_infos_p *infos_p, char *str, int dir, int fd)
 {
 	int		i;
 
 	i = 0;
-	dir = count_dir_in_file(infos, infos->p->direction);
+	dir = count_dir_in_file(infos_p->p, infos_p->p->direction);
 	if (dir != 4)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	while (infos->p->all_file[i])
+	while (infos_p->p->all_file[i])
 	{
-		if (ft_strncmp(infos->p->all_file[i], \
-		infos->p->direction[0], 5) == 0)
-			process_direction(infos, infos->p->all_file[i], 0, fd);
-		else if (ft_strncmp(infos->p->all_file[i], \
-		infos->p->direction[1], 5) == 0)
-			process_direction(infos, infos->p->all_file[i], 1, fd);
-		else if (ft_strncmp(infos->p->all_file[i], \
-		infos->p->direction[2], 5) == 0)
-			process_direction(infos, infos->p->all_file[i], 2, fd);
-		else if (ft_strncmp(infos->p->all_file[i], \
-		infos->p->direction[3], 5) == 0)
-			process_direction(infos, infos->p->all_file[i], 3, fd);
+		if (ft_strncmp(infos_p->p->all_file[i], \
+		infos_p->p->direction[0], 5) == 0)
+			process_direction(infos_p, infos_p->p->all_file[i], 0, fd);
+		else if (ft_strncmp(infos_p->p->all_file[i], \
+		infos_p->p->direction[1], 5) == 0)
+			process_direction(infos_p, infos_p->p->all_file[i], 1, fd);
+		else if (ft_strncmp(infos_p->p->all_file[i], \
+		infos_p->p->direction[2], 5) == 0)
+			process_direction(infos_p, infos_p->p->all_file[i], 2, fd);
+		else if (ft_strncmp(infos_p->p->all_file[i], \
+		infos_p->p->direction[3], 5) == 0)
+			process_direction(infos_p, infos_p->p->all_file[i], 3, fd);
 		i++;
 	}
 	return (close_map(fd));
@@ -108,5 +107,6 @@ int	check_map_reel(char *str)
 	if (fd == -1)
 		nuclear_exit(ft_error(WHERE, \
 		"check_map_reel() failure", EXIT_FAILURE));
+	close_map(fd);
 	return (EXIT_SUCCESS);
 }

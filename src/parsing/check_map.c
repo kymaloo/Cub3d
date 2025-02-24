@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:29 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:43:46 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:08:25 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,18 @@ int	check_doublon_map(char **map, char *str)
 	}
 	return (count);
 }
-int	update_color(t_game *game, char **color, char *tmp)
+
+int	update_color(char **color, char *tmp)
 {
 	int	i;
 	int	j;
 
 	i = 2;
 	j = 0;
-	*color = safe_malloc(game->mm, \
-	ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
+	*color = safe_malloc(ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
 	if (!*color)
 	{
-		safe_free(game->mm, ZONE_1, tmp);
-		safe_free(game->mm, ZONE_1, tmp);
+		safe_free(ZONE_1, tmp);
 		return (EXIT_FAILURE);
 	}
 	while (tmp[i])
@@ -118,7 +117,6 @@ int	update_color(t_game *game, char **color, char *tmp)
 		i++;
 	}
 	(*color)[j] = '\0';
-	safe_free(game->mm, ZONE_1, tmp);
-	safe_free(game->mm, ZONE_1, tmp);
+	safe_free(ZONE_1, tmp);
 	return (EXIT_SUCCESS);
 }

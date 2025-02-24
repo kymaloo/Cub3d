@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 16:04:26 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:30:12 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	*safe_get_next_line(char *area, int fd);
 char	**safe_split(char *area, const char *s, char c);
 char	*safe_substr(char *area, const char *str, unsigned int start, size_t len);
 mlx_t	*safe_mlx_init(char *area);
+char	*safe_strdup_with_calloc(char *area, char *str, int size);
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.

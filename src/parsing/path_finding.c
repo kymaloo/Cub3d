@@ -3,37 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   path_finding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:22 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:35:56 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:19:10 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
-static void	find_last_floor(t_parsing_map *parse)
-static void	find_last_floor(t_parsing_map *parse)
+static void	find_last_floor(t_parsing_map *p)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (parse->grid_copy[i])
-	while (parse->grid_copy[i])
+	while (p->grid_copy[i])
 	{
 		j = 0;
-		while (parse->grid_copy[i][j])
-		while (parse->grid_copy[i][j])
+		while (p->grid_copy[i][j])
 		{
-			if (parse->grid_copy[i][j] == '0')
-			if (parse->grid_copy[i][j] == '0')
+			if (p->grid_copy[i][j] == '0')
 			{
-				parse->x_last_0 = i;
-				parse->y_last_0 = j;
-				parse->x_last_0 = i;
-				parse->y_last_0 = j;
+				p->x_last_0 = i;
+				p->y_last_0 = j;
 				return ;
 			}
 			j++;
@@ -77,26 +71,22 @@ static int	path_finding(int x, int y, char **cells)
 	return (end);
 }
 
-int	check_wall(t_mm *mm, t_parsing_map *parse)
-int	check_wall(t_mm *mm, t_parsing_map *parse)
+int	check_wall(t_infos_p *infos_p)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (parse->grid_copy[i])
-	while (parse->grid_copy[i])
+	while (infos_p->p->grid_copy[i])
 	{
 		j = 0;
-		while (parse->grid_copy[i][j])
-		while (parse->grid_copy[i][j])
+		while (infos_p->p->grid_copy[i][j])
 		{
-			if (isset(parse->grid_copy[i][j], "NSEW0") == true)
-			if (isset(parse->grid_copy[i][j], "NSEW0") == true)
+			if (isset(infos_p->p->grid_copy[i][j], "NSEW0") == true)
 			{
-				find_last_floor(parse);
-				if (path_finding(parse->x_last_0, \
-				parse->y_last_0, parse->grid_copy) != 0)
+				find_last_floor(infos_p->p);
+				if (path_finding(infos_p->p->x_last_0, \
+				infos_p->p->y_last_0, infos_p->p->grid_copy) != 0)
 					nuclear_exit(ft_error(WHERE, \
 					"map not valid", EXIT_FAILURE));
 			}
@@ -105,4 +95,29 @@ int	check_wall(t_mm *mm, t_parsing_map *parse)
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+void	find_pos_player(t_game *game, char **grid)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (grid[i])
+	{
+		j = 0;
+		while (grid[i][j])
+		{
+			if (grid[i][j] == 'N' || grid[i][j] == 'S'
+				|| grid[i][j] == 'E' || grid[i][j] == 'W')
+			{
+				game->player->facing = grid[i][j];
+				game->player->position[X] = j;
+				game->player->position[Y] = i;
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
 }

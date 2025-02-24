@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stock_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:58 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/21 16:47:37 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/24 16:17:25 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**stock_file(char *str)
 		return (NULL);
 	while (i < count)
 	{
-		result[i] = safe_get_next_line(mm, ZONE_1, fd);
+		result[i] = safe_get_next_line(ZONE_1, fd);
 		i++;
 	}
 	result[i] = NULL;
@@ -55,7 +55,7 @@ char	**stock_file(char *str)
 	return (result);
 }
 
-char	**extract_map(t_game *game, char **array)
+char	**extract_map(t_infos_p *infos_p, char **array)
 {
 	int		i;
 	int		j;
@@ -65,17 +65,18 @@ char	**extract_map(t_game *game, char **array)
 
 	i = 0;
 	j = 0;
-	size = get_size_of_array(game, array, 0);
-	len = get_line_size(game, array);
-	result = safe_calloc(game->mm, ZONE_1, 1, (sizeof(char *) * (size + 1)));
+	size = get_size_of_array(infos_p->g->textures, infos_p->p, array, 0);
+	infos_p->g->map->y_max = size;
+	get_line_size(infos_p, array);
+	len = infos_p->g->map->x_max;
+	result = safe_calloc(ZONE_1, 1, (sizeof(char *) * (size + 1)));
 	if (!result)
 		return (NULL);
-	while (i != get_index_before_array(game, array))
+	while (i != get_index_before_array(infos_p, array, 0))
 		i++;
 	while (array[i])
 	{
-		result[j] = safe_strdup_with_calloc(game->mm, \
-		ZONE_1, array[i], len + 1);
+		result[j] = safe_strdup_with_calloc(ZONE_1, array[i], len + 1);
 		i++;
 		j++;
 	}
@@ -83,26 +84,25 @@ char	**extract_map(t_game *game, char **array)
 	return (result);
 }
 
-void	copy_map(t_game *game)
+void	copy_map(t_infos_p *infos_p)
 {
 	int		i;
 	int		len;
 	int		size;
 
 	i = 0;
-	size = get_size_of_array(game, game->parse->grid, 0);
-	len = get_line_size(game, game->parse->all_file);
-	game->parse->grid_copy = safe_calloc(game->mm, ZONE_1, \
-	1, sizeof(char *) * (size + 1));
-	if (!game->parse->grid_copy)
+	size = infos_p->g->map->y_max;
+	len = infos_p->g->map->x_max;
+	infos_p->p->grid_copy = safe_calloc(ZONE_1, 1, sizeof(char *) * (size + 1));
+	if (!infos_p->p->grid_copy)
 		return ;
-	while (game->parse->grid[i])
+	while (infos_p->g->map->map[i])
 	{
-		game->parse->grid_copy[i] = safe_strdup_with_calloc(game->mm, \
-		ZONE_1, game->parse->grid[i], len + 1);
+		infos_p->p->grid_copy[i] = safe_strdup_with_calloc(ZONE_1, \
+		infos_p->g->map->map[i], len + 1);
 		i++;
 	}
-	game->parse->grid_copy[i] = NULL;
+	infos_p->p->grid_copy[i] = NULL;
 }
 
 int	char_valid_for_map(char *cmp, char *str)
