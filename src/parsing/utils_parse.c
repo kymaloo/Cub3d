@@ -21,7 +21,7 @@ int	is_white_space(char c)
 	return (1);
 }
 
-int	get_size_of_array(t_textures *textures, t_parsing_map *p, char **t, int i)
+int	get_size_of_array(t_texture *texture, t_parsing_map *p, char **t, int i)
 {
 	int	j;
 	int	size;
@@ -32,11 +32,11 @@ int	get_size_of_array(t_textures *textures, t_parsing_map *p, char **t, int i)
 		size = ft_strlen_int(t[i]);
 		if (check_white_space(t[i]) == 0)
 			i++;
-		else if (ft_strncmp(t[i], textures->path->path_north, size) == 0
-			|| ft_strncmp(t[i], textures->path->path_south, size) == 0)
+		else if (ft_strncmp(t[i], texture->path->north, size) == 0
+			|| ft_strncmp(t[i], texture->path->south, size) == 0)
 			i++;
-		else if (ft_strncmp(t[i], textures->path->path_east, size) == 0
-			|| ft_strncmp(t[i], textures->path->path_west, size) == 0)
+		else if (ft_strncmp(t[i], texture->path->east, size) == 0
+			|| ft_strncmp(t[i], texture->path->west, size) == 0)
 			i++;
 		else if (ft_strncmp(t[i], p->color_ceiling_cp, size) == 0
 			|| ft_strncmp(t[i], p->color_floor_cp, size) == 0)
@@ -61,13 +61,13 @@ int	get_index_before_array(t_infos_p *infos_p, char **array, int i)
 		if (check_white_space(array[i]) == 0)
 			i++;
 		else if (ft_strncmp(array[i], \
-		infos_p->g->textures->path->path_north, size) == 0
+		infos_p->g->texture->path->north, size) == 0
 			|| ft_strncmp(array[i], \
-			infos_p->g->textures->path->path_south, size) == 0)
+			infos_p->g->texture->path->south, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], \
-		infos_p->g->textures->path->path_east, size) == 0
-			|| ft_strncmp(array[i], infos_p->g->textures->path->path_west, size) == 0)
+		infos_p->g->texture->path->east, size) == 0
+			|| ft_strncmp(array[i], infos_p->g->texture->path->west, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], \
 		infos_p->p->color_ceiling_cp, size) == 0

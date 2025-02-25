@@ -20,29 +20,51 @@ typedef struct s_parsing_map
 	int		y_last_0;
 }	t_parsing_map;
 
-typedef	struct s_textures
+typedef	struct s_mlx_texture
 {
-	char	*path_north;		//fill me
-	char	*path_south;		//fill me
-	char	*path_east;			//fill me
-	char	*path_west;			//fill me
-	char	*color_floor;		//fill me
-	char	*color_ceiling;		//fill me
 	mlx_texture_t	*player;
-}	t_textures;
+}	t_mlx_texture;
+
+typedef	struct s_image
+{
+	mlx_image_t			*img_window;
+	mlx_image_t			*player_img;
+}	t_image;
+
+typedef	struct s_colors
+{
+	char	*color_floor;
+	char	*color_ceiling;
+}	t_colors;
+
+typedef	struct s_path
+{
+	char	*north;
+	char	*south;
+	char	*east;
+	char	*west;
+}	t_path;
+
+typedef	struct s_texture
+{
+	mlx_texture_t	*player;
+	t_image			*image;
+	t_colors		*colors;
+	t_path			*path;
+}	t_texture;
 
 typedef	struct s_map
 {
-	char	**map; //fill me senpai >///<
-	int		x_max; //fill me
-	int		y_max; //fill me
+	char	**map;
+	int		x_max;
+	int		y_max;
 	int		tile_size;
 }	t_map;
 
 typedef struct s_player
 {
-	double	position[DIM];	//fill me
-	char	facing;			//fill me (N S E ou W)
+	double	position[DIM];
+	char	facing;
 	double	direction[DIM];
 	double	plane[DIM];
 	double	radian;
@@ -61,10 +83,8 @@ typedef struct s_game
 	mlx_t				*mlx;
 	t_player			*player;
 	t_map				*map;
-	t_textures			*textures;
+	t_texture			*texture;
 	t_time				*time;
-	mlx_image_t			*img_window;
-	mlx_image_t			*player_img;
 }			t_game;
 
 typedef struct s_infos_p

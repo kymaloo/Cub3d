@@ -54,7 +54,7 @@ char	**extract_map(t_infos_p *infos_p, char **array)
 
 	i = 0;
 	j = 0;
-	size = get_size_of_array(infos_p->g->textures, infos_p->p, array, 0);
+	size = get_size_of_array(infos_p->g->texture, infos_p->p, array, 0);
 	infos_p->g->map->y_max = size;
 	get_line_size(infos_p, array);
 	len = infos_p->g->map->x_max;

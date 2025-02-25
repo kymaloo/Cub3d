@@ -22,7 +22,7 @@ static void	draw_square(t_game *g, int x, int y, int size)
 		j = 0;
 		while (j < size)
 		{
-			mlx_put_pixel(g->textures->image->img_window, x + i, y + j, g->color);
+			mlx_put_pixel(g->texture->image->img_window, x + i, y + j, g->color);
 			j++;
 		}
 		i++;

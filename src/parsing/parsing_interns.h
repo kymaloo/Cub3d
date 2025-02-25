@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:50 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/24 16:16:47 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:30:40 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	copy_map(t_infos_p *infos);
 int		is_white_space(char c);
 int		check_wall(t_infos_p *infos_p);
 int		check_doublon_map(char **map, char *str);
-int		check_fc(t_textures *textures, t_parsing_map *p);
-int		verif_colors(t_textures *textures);
-int		check_format_fc(t_textures *textures);
+int		check_fc(t_texture *texture, t_parsing_map *p);
+int		verif_colors(t_texture *texture);
+int		check_format_fc(t_texture *texture);
 int		validate_color_range(char *color);
 int		validate_color_format(char *color);
 int		update_color(char **color, char *tmp);
@@ -45,8 +45,8 @@ int		check_map_reel(char *str);
 int		count_dir_in_file(t_parsing_map *p, char **dir);
 int		count_fc_in_file(t_parsing_map *p, char **dir);
 int		char_valid_for_map(char *cmp, char *str);
-int		all_line_is_valid(t_textures *textures, char **array);
-int		get_size_of_array(t_textures *textures, \
+int		all_line_is_valid(t_texture *texture, char **array);
+int		get_size_of_array(t_texture *texture, \
 		t_parsing_map *p, char **t, int i);
 int		get_index_before_array(t_infos_p *infos, char **array, int i);
 void	get_line_size(t_infos_p *infos, char **array);

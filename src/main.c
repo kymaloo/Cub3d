@@ -22,11 +22,12 @@ void	init_mlx(t_game *game)
 		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
 	img = mlx_new_image(game->mlx, 1920, 1080);
 	mlx_image_to_window(game->mlx, img, 0, 0);
-	game->textures->image->img_window = img;
+	game->texture->image->img_window = img;
 	game->map->tile_size = 16;
-	game->textures->player = mlx_load_png("images/p3_stand1.png");
-	game->textures->image->player_img = mlx_texture_to_image(game->mlx, game->textures->player);
-	mlx_image_to_window(game->mlx, game->textures->image->player_img, game->player->position[X] * 16, game->player->position[Y] * 16);
+	game->texture->player = mlx_load_png("images/p3_stand1.png");
+	game->texture->image->player_img = mlx_texture_to_image(game->mlx, game->texture->player);
+	mlx_image_to_window(game->mlx, game->texture->image->player_img, game->player->position[X] * 16, game->player->position[Y] * 16);
+	stock_radian(game->player);
 }
 
 // draw_screen(t_game *g)
@@ -151,7 +152,6 @@ void	init_mlx(t_game *game)
 // 	// g->time.old = g->time.now;
 // 	// g->time.now = ;
 // 	// g->time.taken_to_draw_frame = g->time.now - g->time.old;
-
 // }
 
 int	main(int argc, char **argv)
@@ -164,10 +164,7 @@ int	main(int argc, char **argv)
 	create_memory_manager(&infos_p);
 	if (init(infos_p, argv[1]) != EXIT_SUCCESS)
 	  	nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
-	stock_radian(infos_p->g->player);
-	printf("%f\n", infos_p->g->player->radian);
 	init_mlx(infos_p->g);
-
 	if (mlx_loop_hook(infos_p->g->mlx, &ft_hook, infos_p->g))
 			mlx_loop(infos_p->g->mlx);
 	mlx_terminate(infos_p->g->mlx);
@@ -201,13 +198,13 @@ void	print_minimap(t_game *g)
 	draw_map(g);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_M))
 	{
-		g->textures->image->player_img->enabled = true;
-		g->textures->image->img_window->enabled = true;
+		g->texture->image->player_img->enabled = true;
+		g->texture->image->img_window->enabled = true;
 	}
 	else if (mlx_is_key_down(g->mlx, MLX_KEY_N))
 	{
-		g->textures->image->player_img->enabled = false;
-		g->textures->image->img_window->enabled = false;
+		g->texture->image->player_img->enabled = false;
+		g->texture->image->img_window->enabled = false;
 	}
 }
 
@@ -226,10 +223,10 @@ void	create_memory_manager(t_infos_p **infos_p)
 	(*infos_p)->p = parse;
 	(*infos_p)->g = game;
 	(*infos_p)->g->player = safe_calloc(ZONE_1, 1, sizeof(t_player));
-	(*infos_p)->g->textures = safe_calloc(ZONE_1, 1, sizeof(t_textures));
-	(*infos_p)->g->textures->path = safe_calloc(ZONE_1, 1, sizeof(t_path));
-	(*infos_p)->g->textures->colors = safe_calloc(ZONE_1, 1, sizeof(t_colors));
-	(*infos_p)->g->textures->image = safe_calloc(ZONE_1, 1, sizeof(t_image));
+	(*infos_p)->g->texture = safe_calloc(ZONE_1, 1, sizeof(t_texture));
+	(*infos_p)->g->texture->path = safe_calloc(ZONE_1, 1, sizeof(t_path));
+	(*infos_p)->g->texture->colors = safe_calloc(ZONE_1, 1, sizeof(t_colors));
+	(*infos_p)->g->texture->image = safe_calloc(ZONE_1, 1, sizeof(t_image));
 }
 
 void	stock_radian(t_player *player)
