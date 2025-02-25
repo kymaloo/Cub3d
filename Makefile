@@ -42,6 +42,9 @@ SRCS	:= 	\
 			src/parsing/stock_map.c						\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
+			\
+			src/exec/minimap.c							\
+			src/exec/move.c							\
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -69,7 +72,6 @@ vs:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
 
 %.o: %.c
-#@echo "$(CC) $(CFLAGS) -o $@ -c $<"
 	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
 
 $(LIBFT_A):
@@ -79,9 +81,9 @@ $(LIBFT_A):
 
 $(MLX_A): $(MLX_DIR)
 	@echo "$(BLUE)$(NAME): versionning $(MLX_DIR) submodule$(RESET)"
-	git submodule update --init --recursive $(MLX_DIR)
+	@git submodule update --init --recursive $(MLX_DIR)
 	@echo "$(BLUE)$(NAME): setting $(MLX_DIR) submodule to ce254c3$(RESET)"
-	cd $(MLX_DIR) && git checkout $(MLX_VERSION_GIT_HASH) && cd ..
+	@cd $(MLX_DIR) && git checkout $(MLX_VERSION_GIT_HASH) && cd ..
 	@echo "$(BLUE)$(NAME): archiving $(MLX_A)$(RESET)"
 	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
 	@echo "$(BLUE)$(NAME): $(GREEN)$(MLX_A) archived !$(RESET)"
@@ -89,7 +91,7 @@ $(MLX_A): $(MLX_DIR)
 $(MLX_DIR):
 	@echo "$(BLUE)$(NAME): $(YELLOW)$(MLX_DIR) missing$(RESET)"
 	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
-	git submodule update --init --recursive $(MLX_DIR)
+	@git submodule update --init --recursive $(MLX_DIR)
 
 #$(MLX_A)
 $(NAME): $(LIBFT_A) $(OBJS)
@@ -100,7 +102,7 @@ $(NAME): $(LIBFT_A) $(OBJS)
 	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Linked !$(RESET)"
 
 clear:
-	clear
+	@clear
 
 clean:
 	@echo "$(BLUE)$(NAME): Cleaning object files$(RESET)"

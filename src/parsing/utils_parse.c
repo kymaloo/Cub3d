@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils_parse.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 15:09:01 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/24 16:18:52 by trgaspar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
@@ -43,11 +32,11 @@ int	get_size_of_array(t_textures *textures, t_parsing_map *p, char **t, int i)
 		size = ft_strlen_int(t[i]);
 		if (check_white_space(t[i]) == 0)
 			i++;
-		else if (ft_strncmp(t[i], textures->path_north, size) == 0
-			|| ft_strncmp(t[i], textures->path_south, size) == 0)
+		else if (ft_strncmp(t[i], textures->path->path_north, size) == 0
+			|| ft_strncmp(t[i], textures->path->path_south, size) == 0)
 			i++;
-		else if (ft_strncmp(t[i], textures->path_east, size) == 0
-			|| ft_strncmp(t[i], textures->path_west, size) == 0)
+		else if (ft_strncmp(t[i], textures->path->path_east, size) == 0
+			|| ft_strncmp(t[i], textures->path->path_west, size) == 0)
 			i++;
 		else if (ft_strncmp(t[i], p->color_ceiling_cp, size) == 0
 			|| ft_strncmp(t[i], p->color_floor_cp, size) == 0)
@@ -72,13 +61,13 @@ int	get_index_before_array(t_infos_p *infos_p, char **array, int i)
 		if (check_white_space(array[i]) == 0)
 			i++;
 		else if (ft_strncmp(array[i], \
-		infos_p->g->textures->path_north, size) == 0
+		infos_p->g->textures->path->path_north, size) == 0
 			|| ft_strncmp(array[i], \
-			infos_p->g->textures->path_south, size) == 0)
+			infos_p->g->textures->path->path_south, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], \
-		infos_p->g->textures->path_east, size) == 0
-			|| ft_strncmp(array[i], infos_p->g->textures->path_west, size) == 0)
+		infos_p->g->textures->path->path_east, size) == 0
+			|| ft_strncmp(array[i], infos_p->g->textures->path->path_west, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], \
 		infos_p->p->color_ceiling_cp, size) == 0

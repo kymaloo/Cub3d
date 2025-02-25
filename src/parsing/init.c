@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 15:08:44 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/24 16:41:57 by trgaspar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
@@ -44,17 +33,17 @@ static int	init_map(t_infos_p *infos_p)
 
 static void	is_dir_and_filled(t_textures *textures)
 {
-	if (textures->path_east == NULL)
+	if (textures->path->path_east == NULL)
 		nuclear_exit(ft_error(WHERE, "Path east is Null", EXIT_FAILURE));
-	if (textures->path_west == NULL)
+	if (textures->path->path_west == NULL)
 		nuclear_exit(ft_error(WHERE, "Path west is Null", EXIT_FAILURE));
-	if (textures->path_north == NULL)
+	if (textures->path->path_north == NULL)
 		nuclear_exit(ft_error(WHERE, "Path north is Null", EXIT_FAILURE));
-	if (textures->path_south == NULL)
+	if (textures->path->path_south == NULL)
 		nuclear_exit(ft_error(WHERE, "Path south is Null", EXIT_FAILURE));
-	if (textures->color_ceiling == NULL)
+	if (textures->colors->color_ceiling == NULL)
 		nuclear_exit(ft_error(WHERE, "Path ceilling is Null", EXIT_FAILURE));
-	if (textures->color_floor == NULL)
+	if (textures->colors->color_floor == NULL)
 		nuclear_exit(ft_error(WHERE, "Path floor is Null", EXIT_FAILURE));
 }
 
@@ -97,14 +86,14 @@ int	all_line_is_valid(t_textures *textures, char **array)
 		if (check_white_space(array[i]) == 0 || \
 		char_valid_for_map("01NSEWD\t ", array[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], textures->path_north, size) == 0
-			|| ft_strncmp(array[i], textures->path_south, size) == 0)
+		else if (ft_strncmp(array[i], textures->path->path_north, size) == 0
+			|| ft_strncmp(array[i], textures->path->path_south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], textures->path_east, size) == 0
-			|| ft_strncmp(array[i], textures->path_west, size) == 0)
+		else if (ft_strncmp(array[i], textures->path->path_east, size) == 0
+			|| ft_strncmp(array[i], textures->path->path_west, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], textures->color_ceiling, size) == 0
-			|| ft_strncmp(array[i], textures->color_floor, size) == 0)
+		else if (ft_strncmp(array[i], textures->colors->color_ceiling, size) == 0
+			|| ft_strncmp(array[i], textures->colors->color_floor, size) == 0)
 			i++;
 		else
 			nuclear_exit(ft_error(WHERE, "Line isn't valid", EXIT_FAILURE));

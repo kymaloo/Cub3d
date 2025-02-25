@@ -2,23 +2,27 @@
 
 void	ft_move_perso(t_game *g)
 {
-	g->player->position[X] = g->player_img->instances[0].x;
-	g->player->position[Y] = g->player_img->instances[0].y;
+	g->player->position[X] = g->textures->image->player_img->instances[0].x;
+	g->player->position[Y] = g->textures->image->player_img->instances[0].y;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_W))
 	{
-		g->player_img->instances[0].y -= 5;
+		g->textures->image->player_img->instances[0].x -= cos(g->player->radian) * 5;
+		g->textures->image->player_img->instances[0].y -= sin(g->player->radian) * 5;
 	}
 	if (mlx_is_key_down(g->mlx, MLX_KEY_S))
 	{
-		g->player_img->instances[0].y += 5;
+		g->textures->image->player_img->instances[0].x += cos(g->player->radian) * 5;
+		g->textures->image->player_img->instances[0].y += sin(g->player->radian) * 5;
 	}
 	if (mlx_is_key_down(g->mlx, MLX_KEY_A))
 	{
-		g->player_img->instances[0].x -= 5;
+		g->textures->image->player_img->instances[0].x += cos(g->player->radian + M_PI/2) * 5;
+		g->textures->image->player_img->instances[0].y += sin(g->player->radian + M_PI/2) * 5;
 	}
 	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
 	{
-		g->player_img->instances[0].x += 5;
+		g->textures->image->player_img->instances[0].x += cos(g->player->radian - M_PI/2) * 5;
+		g->textures->image->player_img->instances[0].y += sin(g->player->radian - M_PI/2) * 5;
 	}
 }
 

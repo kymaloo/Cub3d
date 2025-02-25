@@ -22,11 +22,11 @@ void	init_mlx(t_game *game)
 		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
 	img = mlx_new_image(game->mlx, 1920, 1080);
 	mlx_image_to_window(game->mlx, img, 0, 0);
-	game->img_window = img;
+	game->textures->image->img_window = img;
 	game->map->tile_size = 16;
 	game->textures->player = mlx_load_png("images/p3_stand1.png");
-	game->player_img = mlx_texture_to_image(game->mlx, game->textures->player);
-	mlx_image_to_window(game->mlx, game->player_img, game->player->position[X] * 16, game->player->position[Y] * 16);
+	game->textures->image->player_img = mlx_texture_to_image(game->mlx, game->textures->player);
+	mlx_image_to_window(game->mlx, game->textures->image->player_img, game->player->position[X] * 16, game->player->position[Y] * 16);
 }
 
 // draw_screen(t_game *g)
@@ -190,6 +190,10 @@ void	ft_hook(void *gamed)
 	ft_move_perso(game);
 	ft_close_window(game);
 	print_minimap(game);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+		game->player->radian += 0.05;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+		game->player->radian -= 0.05;
 }
 
 void	print_minimap(t_game *g)
@@ -197,13 +201,13 @@ void	print_minimap(t_game *g)
 	draw_map(g);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_M))
 	{
-		g->player_img->enabled = true;
-		g->img_window->enabled = true;
+		g->textures->image->player_img->enabled = true;
+		g->textures->image->img_window->enabled = true;
 	}
 	else if (mlx_is_key_down(g->mlx, MLX_KEY_N))
 	{
-		g->player_img->enabled = false;
-		g->img_window->enabled = false;
+		g->textures->image->player_img->enabled = false;
+		g->textures->image->img_window->enabled = false;
 	}
 }
 
@@ -223,6 +227,9 @@ void	create_memory_manager(t_infos_p **infos_p)
 	(*infos_p)->g = game;
 	(*infos_p)->g->player = safe_calloc(ZONE_1, 1, sizeof(t_player));
 	(*infos_p)->g->textures = safe_calloc(ZONE_1, 1, sizeof(t_textures));
+	(*infos_p)->g->textures->path = safe_calloc(ZONE_1, 1, sizeof(t_path));
+	(*infos_p)->g->textures->colors = safe_calloc(ZONE_1, 1, sizeof(t_colors));
+	(*infos_p)->g->textures->image = safe_calloc(ZONE_1, 1, sizeof(t_image));
 }
 
 void	stock_radian(t_player *player)
