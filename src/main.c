@@ -24,6 +24,8 @@ void	init_mlx(t_game *game)
 	mlx_image_to_window(game->mlx, img, 0, 0);
 	game->texture->image->img_window = img;
 	game->map->tile_size = 16;
+	game->texture->image->minimap = mlx_new_image(game->mlx, 360, 360);
+	//game->texture->image->minimap->instances[1];
 	game->texture->player = mlx_load_png("images/p3_stand1.png");
 	game->texture->image->player_img = mlx_texture_to_image(game->mlx, game->texture->player);
 	mlx_image_to_window(game->mlx, game->texture->image->player_img, game->player->position[X] * 16, game->player->position[Y] * 16);
@@ -186,7 +188,6 @@ void	ft_hook(void *gamed)
 	game = gamed;
 	ft_move_perso(game);
 	ft_close_window(game);
-	print_minimap(game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		game->player->radian += 0.05;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))

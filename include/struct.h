@@ -29,6 +29,7 @@ typedef	struct s_image
 {
 	mlx_image_t			*img_window;
 	mlx_image_t			*player_img;
+	mlx_image_t			*minimap;
 }	t_image;
 
 typedef	struct s_colors

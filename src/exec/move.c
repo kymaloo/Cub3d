@@ -4,6 +4,7 @@ static void	move_top(t_game *g)
 {
 	if (mlx_is_key_down(g->mlx, MLX_KEY_W))
 	{
+		print_minimap(g);
 		if (is_wall(g->map->map, (g->player->position[X] - \
 			cos(g->player->radian) * 10) / 16, g->player->position[Y] / 16))
 			g->texture->image->player_img->instances[0].x -= \
@@ -19,6 +20,7 @@ static void	move_bot(t_game *g)
 {
 	if (mlx_is_key_down(g->mlx, MLX_KEY_S))
 	{
+		print_minimap(g);
 		if (is_wall(g->map->map, (g->player->position[X] + \
 			cos(g->player->radian) * 10) / 16, g->player->position[Y] / 16))
 			g->texture->image->player_img->instances[0].x += \
@@ -34,6 +36,7 @@ static void	move_left(t_game *g)
 {
 	if (mlx_is_key_down(g->mlx, MLX_KEY_A))
 	{
+		print_minimap(g);
 		if (is_wall(g->map->map, (g->player->position[X] + \
 			cos(g->player->radian + M_PI / 2) * 10) / 16, \
 		g->player->position[Y] / 16))
@@ -51,6 +54,7 @@ static void	move_right(t_game *g)
 {
 	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
 	{
+		print_minimap(g);
 		if (is_wall(g->map->map, (g->player->position[X] - \
 			cos(g->player->radian + M_PI / 2) * 10) / 16, \
 			g->player->position[Y] / 16))

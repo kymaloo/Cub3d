@@ -14,10 +14,11 @@
 
 # define M_PI				3.14159265358979323846
 
-# define C_BLACK			0x000000FF
-# define C_BROWN			0x4B3A26FF
+# define C_WALL_BLACK		0x000000FF
+# define C__FLOOR_BROWN		0x4B3A26FF
 # define C_BLUE				0x0000FFFF
 # define C_WHITE			0xFFFFFFFF
+# define C_GREY_INVALID		0xD3D3D3FF
 
 enum e_error
 {

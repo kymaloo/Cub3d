@@ -1,14 +1,20 @@
 #include "cub.h"
 
-static int	check_colors_for_map(char c)
+static int	check_colors_for_map(int y, int x, t_map *map_infos)
 {
+	int	max[DIM];
+
+	max[X] = map_infos->x_max;
+	max[Y] = map_infos->y_max;
+	if ()
+
 	if (c == '1')
-		return (C_BLACK);
+		return (C_WALL_BLACK);
 	if (c == '0')
-		return (C_BROWN);
+		return (C__FLOOR_BROWN);
 	if (c == 'D')
 		return (C_BLUE);
-	return (0);
+	return (C_GREY_INVALID);
 }
 
 static void	draw_square(t_game *g, int x, int y, int size)
@@ -34,21 +40,58 @@ void	draw_map(t_game *g)
 {
 	int	x;
 	int	y;
+	int	xp;
+	int	yp;
+
+	xp = (g->player->position[X] / 16) - 5;
+	yp = (g->player->position[Y] / 16) - 5;
+	y = (g->player->position[Y] / 16) - 5;
+	// while (count != 10)
+	// {
+	// 	x = (g->player->position[X] / 16) - 5;
+	// 	count2 = 0;
+	// 	while (count2 != 10)
+	// 	{
+	// 		g->color = check_colors_for_map(g->map->map[y][x]);
+	// 		draw_square(g, x * g->map->tile_size, y * g->map->tile_size, g->map->tile_size);
+	// 		x++;
+	// 		count2++;
+	// 	}
+	// 	count++;
+	// 	y++;
+	// }
 
 	y = 0;
-	while (g->map->map[y])
+	printf("[Y  ][X  ]\n");
+	while (y != 16)
 	{
 		x = 0;
-		while (g->map->map[y][x])
-		{
-			g->color = check_colors_for_map(g->map->map[y][x]);
-			if (g->color != 0)
-				draw_square(g, x * g->map->tile_size, \
-				y * g->map->tile_size, g->map->tile_size);
+		while (x != 1)
+		{																								
+			printf("[%-3d][%-3d]\n", yp, xp);
+			g->color = check_colors_for_map(yp, xp g->map->map);
+			draw_square(g, x * g->map->tile_size, y * g->map->tile_size, g->map->tile_size);
 			x++;
+			xp++;
 		}
 		y++;
+		yp++;
 	}
+
+	// y = 0;
+	// while (g->map->map[y])
+	// {
+	// 	x = 0;
+	// 	while (g->map->map[y][x])
+	// 	{
+	// 		g->color = check_colors_for_map(g->map->map[y][x]);
+	// 		if (g->color != 0)
+	// 			draw_square(g, x * g->map->tile_size, \
+	// 			y * g->map->tile_size, g->map->tile_size);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
 }
 
 int	is_wall(char **map, int x, int y)
