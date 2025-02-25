@@ -25,7 +25,7 @@ static void	find_last_floor(t_parsing_map *p)
 	}
 }
 
-static bool	isset(char c, char *set)
+bool	isset(char c, char *set)
 {
 	int	i;
 

@@ -1,83 +1,75 @@
 #include "cub.h"
 
-void	ft_move_perso(t_game *g)
+static void	move_top(t_game *g)
 {
-	g->player->position[X] = g->texture->image->player_img->instances[0].x;
-	g->player->position[Y] = g->texture->image->player_img->instances[0].y;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_W))
 	{
-		g->texture->image->player_img->instances[0].x -= cos(g->player->radian) * 5;
-		g->texture->image->player_img->instances[0].y -= sin(g->player->radian) * 5;
+		if (is_wall(g->map->map, (g->player->position[X] - \
+			cos(g->player->radian) * 10) / 16, g->player->position[Y] / 16))
+			g->texture->image->player_img->instances[0].x -= \
+			cos(g->player->radian) * 5;
+		if (is_wall(g->map->map, g->player->position[X] / 16, \
+			(g->player->position[Y] - sin(g->player->radian) * 10) / 16))
+			g->texture->image->player_img->instances[0].y -= \
+			sin(g->player->radian) * 5;
 	}
+}
+
+static void	move_bot(t_game *g)
+{
 	if (mlx_is_key_down(g->mlx, MLX_KEY_S))
 	{
-		g->texture->image->player_img->instances[0].x += cos(g->player->radian) * 5;
-		g->texture->image->player_img->instances[0].y += sin(g->player->radian) * 5;
+		if (is_wall(g->map->map, (g->player->position[X] + \
+			cos(g->player->radian) * 10) / 16, g->player->position[Y] / 16))
+			g->texture->image->player_img->instances[0].x += \
+			cos(g->player->radian) * 5;
+		if (is_wall(g->map->map, g->player->position[X] / 16, \
+			(g->player->position[Y] + sin(g->player->radian) * 10) / 16))
+			g->texture->image->player_img->instances[0].y += \
+			sin(g->player->radian) * 5;
 	}
+}
+
+static void	move_left(t_game *g)
+{
 	if (mlx_is_key_down(g->mlx, MLX_KEY_A))
 	{
-		g->texture->image->player_img->instances[0].x += cos(g->player->radian + M_PI/2) * 5;
-		g->texture->image->player_img->instances[0].y += sin(g->player->radian + M_PI/2) * 5;
+		if (is_wall(g->map->map, (g->player->position[X] + \
+			cos(g->player->radian + M_PI / 2) * 10) / 16, \
+		g->player->position[Y] / 16))
+			g->texture->image->player_img->instances[0].x += \
+			cos(g->player->radian + M_PI / 2) * 5;
+		if (is_wall(g->map->map, g->player->position[X] / 16, \
+			(g->player->position[Y] + sin(g->player->radian + M_PI / 2) \
+			* 10) / 16))
+			g->texture->image->player_img->instances[0].y += \
+			sin(g->player->radian + M_PI / 2) * 5;
 	}
+}
+
+static void	move_right(t_game *g)
+{
 	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
 	{
-		g->texture->image->player_img->instances[0].x += cos(g->player->radian - M_PI/2) * 5;
-		g->texture->image->player_img->instances[0].y += sin(g->player->radian - M_PI/2) * 5;
+		if (is_wall(g->map->map, (g->player->position[X] - \
+			cos(g->player->radian + M_PI / 2) * 10) / 16, \
+			g->player->position[Y] / 16))
+			g->texture->image->player_img->instances[0].x -= \
+			cos(g->player->radian + M_PI / 2) * 5;
+		if (is_wall(g->map->map, g->player->position[X] / 16, \
+			(g->player->position[Y] - sin(g->player->radian + M_PI / 2) * \
+			10) / 16))
+			g->texture->image->player_img->instances[0].y -= \
+			sin(g->player->radian + M_PI / 2) * 5;
 	}
 }
 
-int	ft_check_collision_top(t_game *g)
+void	ft_move_perso(t_game *g)
 {
-	int	x;
-	int	y;
-
-	x = g->player->position[X];
-	y = g->player->position[Y];
-	if (g->map->map[(y - 8) / 16] \
-		[x / 16] == '1' || g->map->map[(y - 8) / 16] \
-		[(x + 60) / 16] == '1')
-		return (-1);
-	return (0);
-}
-
-int	ft_check_collision_bot(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->player->position[X];
-	y = g->player->position[Y];
-	if (g->map->map[(y + 68) / 16] \
-		[x / 16] == '1' || g->map->map[(y + 68) / 16] \
-		[(x + 60) / 16] == '1')
-		return (-1);
-	return (0);
-}
-
-int	ft_check_collision_left(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->player->position[X];
-	y = g->player->position[Y];
-	if (g->map->map[y / 16] \
-		[(x - 8) / 16] == '1' || g->map->map[(y + 60) / 16] \
-		[(x - 8) / 16] == '1')
-		return (-1);
-	return (0);
-}
-
-int	ft_check_collision_right(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->player->position[X];
-	y = g->player->position[Y];
-	if (g->map->map[y / 16] \
-		[(x + 68) / 16] == '1' || g->map->map[(y + 60) / 16] \
-		[(x + 68) / 16] == '1')
-		return (-1);
-	return (0);
+	g->player->position[X] = g->texture->image->player_img->instances[0].x + 8;
+	g->player->position[Y] = g->texture->image->player_img->instances[0].y + 8;
+	move_top(g);
+	move_bot(g);
+	move_left(g);
+	move_right(g);
 }

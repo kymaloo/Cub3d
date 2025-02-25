@@ -53,9 +53,6 @@ all: $(NAME)
 n:	clear
 	norminette
 
-r:	re
-	./cub3D maps/map.cub
-
 a:	all
 	./cub3D maps/map.cub
 
@@ -116,4 +113,4 @@ fclean: clean
 
 re: clear fclean all
 
-.PHONY: all, clean, fclean, re, n, r, v, clear
+.PHONY: all, clean, fclean, re, n, v, clear

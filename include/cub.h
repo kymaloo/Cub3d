@@ -17,11 +17,10 @@ void draw_map(t_game *g);
 void ft_hook(void *gamed);
 void print_minimap(t_game *g);
 void	ft_move_perso(t_game *g);
-int	ft_check_collision_top(t_game *g);
-int	ft_check_collision_bot(t_game *g);
-int	ft_check_collision_left(t_game *g);
-int	ft_check_collision_right(t_game *g);
 void	create_memory_manager(t_infos_p **infos_p);
 void	stock_radian(t_player *player);
+bool	isset(char c, char *set);
+void	print_map(char **map);
+int	is_wall(char **map, int x, int y);
 
 #endif

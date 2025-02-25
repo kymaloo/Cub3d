@@ -22,7 +22,8 @@ static void	draw_square(t_game *g, int x, int y, int size)
 		j = 0;
 		while (j < size)
 		{
-			mlx_put_pixel(g->texture->image->img_window, x + i, y + j, g->color);
+			mlx_put_pixel(g->texture->image->img_window, \
+				x + i, y + j, g->color);
 			j++;
 		}
 		i++;
@@ -48,4 +49,11 @@ void	draw_map(t_game *g)
 		}
 		y++;
 	}
+}
+
+int	is_wall(char **map, int x, int y)
+{
+	if (isset(map[y][x], "1D") == false)
+		return (1);
+	return (0);
 }
