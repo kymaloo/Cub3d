@@ -19,4 +19,7 @@ typedef struct s_ray
 	double	direction[DIM];
 }	t_ray;
 
+void	init_coords(int *coords, int x, int y);
+void	rotate_vector(double *v, double angle_rad);
+
 #endif

@@ -1,4 +1,3 @@
-#include "engine_3d.h"
 #include "cub.h"
 
 /**
@@ -14,11 +13,8 @@
  * @param vect 		2D vector
  * @param angle_rad angle in radians
  */
-void	rotate_vector(t_vect2D *vect, double angle_rad)
+void	rotate_vector(double *v, double angle_rad)
 {
-	double	*v;
-
-	v = vect->coords;
 	v[X] = v[X] * cos(angle_rad) - v[Y] * sin(angle_rad);
 	v[Y] = v[X] * sin(angle_rad) + v[Y] * cos(angle_rad);
 }

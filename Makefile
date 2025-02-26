@@ -43,8 +43,12 @@ SRCS	:= 	\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
 			\
+			src/engine_3D/coords.c						\
+			src/engine_3D/rotations.c					\
+			\
 			src/exec/minimap.c							\
-			src/exec/move.c							\
+			src/exec/radar.c							\
+			src/exec/move.c								\
 
 OBJS	:= ${SRCS:.c=.o}
 

@@ -14,6 +14,33 @@ void	print_map(char **map)
 	}
 }
 
+void	print_map_highlight(char **map, int hl_x, int hl_y)
+{
+	int x;
+	int	y;
+
+	y = 0;
+	while (map[y] != NULL)
+	{
+		if (y != hl_y)
+			printf("%s\n", map[y]);
+		else
+		{
+			x = 0;
+			while(map[y][x])
+			{
+				if (x != hl_x)
+					printf("%c", map[y][x]);
+				else
+					printf(BBLUE"%c"RESET, map[y][x]);
+				x++;
+			}
+			printf("\n");
+		}
+		y++;
+	}
+}
+
 int	is_white_space(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
@@ -47,7 +74,7 @@ int	get_size_of_array(t_texture *texture, t_parsing_map *p, char **t, int i)
 	j = i;
 	while (t[i])
 		i++;
-	return (i - j);
+	return (i - j - 1);
 }
 
 int	get_index_before_array(t_infos_p *infos_p, char **array, int i)

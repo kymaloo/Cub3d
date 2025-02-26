@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_interns.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:50 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/25 10:30:40 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:52:15 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,9 @@ int		get_size_of_array(t_texture *texture, \
 int		get_index_before_array(t_infos_p *infos, char **array, int i);
 void	get_line_size(t_infos_p *infos, char **array);
 void	find_pos_player(t_game *game, char **grid);
+
+
+//DEBUG
+void	print_map_highlight(char **map, int hl_x, int hl_y);
 
 #endif

@@ -4,8 +4,8 @@
 # include "memory_manager.h"
 # include "engine_3d.h"
 
-# define GRID_X 64
-# define GRID_Y 64
+# define GRID_SIZE_X	16
+# define GRID_SIZE_Y	16
 
 typedef struct s_parsing_map
 {
