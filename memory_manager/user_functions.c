@@ -21,10 +21,10 @@ void	memory_manager(t_mm_opcode opcode, char *area_name, void *data)
 		mm_create(&mm);
 	else if (opcode == DESTROY)
 		mm_destroy(mm);
-		else if (opcode == MM_AREA_CREATE)
-			mm_area_create(mm, area_name, ((t_area_create_data*) data));
-		else if (opcode == AREA_DELETE)
-			mm_area_delete(mm, area_name);
+	else if (opcode == MM_AREA_CREATE)
+		mm_area_create(mm, area_name, ((t_area_create_data*) data));
+	else if (opcode == AREA_DELETE)
+		mm_area_delete(mm, area_name);
 	else if (opcode == ADD_ELEM)
 		mm_area_add_elem(mm, area_name, data);
 	else if (opcode == DEL_ELEM)
