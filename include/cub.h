@@ -13,6 +13,7 @@
 # include "MLX42/MLX42.h"
 # include "radar.h"
 # include "engine_3d.h"
+# include <sys/time.h>
 
 int		init(t_infos_p *infos_p, char *str);
 void	draw_map(t_game *g);

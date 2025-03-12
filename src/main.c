@@ -32,6 +32,7 @@ void	init_mlx(t_game *game)
 	stock_radian(game->player);
 }
 
+
 int	main(int argc, char **argv)
 {
 	t_infos_p *infos_p;
@@ -57,18 +58,6 @@ static void	ft_close_window(t_game *game)
 		mlx_close_window(game->mlx);
 }
 
-void	ft_hook(void *gamed)
-{
-	t_game	*game;
-
-	game = gamed;
-	ft_move_perso(game);
-	ft_close_window(game);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		game->player->radian += 0.05;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		game->player->radian -= 0.05;
-}
 
 void	print_minimap(t_game *g)
 {
@@ -109,11 +98,11 @@ void	create_memory_manager(t_infos_p **infos_p)
 void	stock_radian(t_player *player)
 {
 	if (player->facing == 'N')
-		player->radian = (M_PI / 2);
+		player->angle = (M_PI / 2);
 	if (player->facing == 'S')
-		player->radian = (-M_PI / 2);
+		player->angle = (-M_PI / 2);
 	if (player->facing == 'E')
-		player->radian = (2 * M_PI);
+		player->angle = (2 * M_PI);
 	if (player->facing == 'W')
-		player->radian = (M_PI);
+		player->angle = (M_PI);
 }

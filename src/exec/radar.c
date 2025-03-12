@@ -26,7 +26,7 @@ int	map_block_color(t_map *map, int x, int y)
 
 static void	draw_square_tab(mlx_image_t *img_window, int square_color, int where_to_draw[], int len_square_side)
 {
-	int	draw_coords[DIM];
+	int	draw_coords[NB_DIM];
 	int	i;
 	int	j;
 
@@ -49,9 +49,9 @@ static void	draw_square_tab(mlx_image_t *img_window, int square_color, int where
 
 void	draw_radar_from(t_game *g, int radar_top_left[])
 {
-	int	block_player[DIM];
-	int	block_to_draw[DIM];
-	int	draw_where[DIM];
+	int	block_player[NB_DIM];
+	int	block_to_draw[NB_DIM];
+	int	draw_where[NB_DIM];
 	
 	block_player[Y] = (int) g->player->position[Y] / RADAR_SQUARE_SIDE;
 	block_player[X] = (int) g->player->position[X] / RADAR_SQUARE_SIDE;
@@ -96,7 +96,7 @@ void drawDisc(t_game *g, int center[], int radius, int color) {
 
 void	draw_radar_player(t_game *g)
 {
-	int	center[DIM];
+	int	center[NB_DIM];
 
 	center[Y] = (RADAR_BLOCKS_RADIUS + 1) * RADAR_SQUARE_SIDE;
 	center[X] = (RADAR_BLOCKS_RADIUS + 1) * RADAR_SQUARE_SIDE;
@@ -105,9 +105,9 @@ void	draw_radar_player(t_game *g)
 
 void	draw_radar(t_game *g)
 {
-	int	radar_pos[DIM];
-	int	player_pos[DIM];
-	int	where_to_draw[DIM];
+	int	radar_pos[NB_DIM];
+	int	player_pos[NB_DIM];
+	int	where_to_draw[NB_DIM];
 
 	init_coords(radar_pos, RADAR_POS_X, RADAR_POS_Y); //verifier arpes parsing
 	where_to_draw[X] = (radar_pos[X] + RADAR_BLOCKS_RADIUS + 1) * RADAR_SQUARE_SIDE;

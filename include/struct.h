@@ -4,8 +4,9 @@
 # include "memory_manager.h"
 # include "engine_3d.h"
 
-# define GRID_SIZE_X	16
-# define GRID_SIZE_Y	16
+# define GRID_SIZE_X	32
+# define GRID_SIZE_Y	32
+
 
 typedef struct s_parsing_map
 {
@@ -64,18 +65,17 @@ typedef	struct s_map
 
 typedef struct s_player
 {
-	double	position[DIM];
-	char	facing;
-	double	direction[DIM];
-	double	plane[DIM];
-	double	radian;
+	char		facing;
+	double		position[NB_DIM];
+	t_camera	camera;
+	double		angle;
 }	t_player;
 
 typedef	struct s_time
 {
-	double	now;
-	double	old;
-	double	taken_to_draw_frame;
+	struct timeval	now;
+	struct timeval	old;
+	suseconds_t	time_taken_to_draw_frame;
 }	t_time;
 
 typedef struct s_game

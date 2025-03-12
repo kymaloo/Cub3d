@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 18:30:12 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:24:01 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_area_node
 typedef struct s_memory_manager
 {
 	t_area_node		*areas;
-} t_memory_manager,	t_mm;
+}	t_memory_manager,	t_mm;
 
 typedef	enum e_mm_opcode
 {

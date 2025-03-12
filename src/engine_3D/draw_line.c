@@ -6,17 +6,25 @@
  */
 typedef	 struct s_bresenham
 {
-	int	differential[DIM];
+	int	differential[NB_DIM];
 	int	decision_parameter;
-	int	current[DIM];
-	int	end[DIM];
+	int	current[NB_DIM];
+	int	end[NB_DIM];
 } t_bresenham;
 
 /**
  * @brief does the bresenham's optimised algorithm to traverse each step of the digitalised line: drawing each pixel.
  * 
  * Plot the starting point
+ * Loop until we reach the end point
  * 
+ * depending on decision parameter:
+ * if decision_parameter >= 0
+ * either Y step up or Y step down depending on if I'm above end[Y] or not (step toward end[Y])
+ * 
+ * X step right
+ * 
+ * TODO replace printf of coord by MLX putpixel
  * 
  * @param b 
  * @param start_point 
@@ -24,12 +32,10 @@ typedef	 struct s_bresenham
  */
 bresenham_steps(t_bresenham *b, int start_point[], int end_point[])
 {
-	
-	printf("(%d, %d)\n", b->current[X], b->current[Y]);
+	printf("(%d, %d)\n", b->current[X], b->current[Y]); //plot first point
 	put_the_pixel();
-
 	while (b->current[X] < b->end[X])
-	{						// Loop until we reach the end point
+	{
 		if (b->decision_parameter >= 0)
 		{					// Decision parameter
 			if ((b->current[Y] < b->end[Y]))	// Increment or decrement b->current[Y]
@@ -37,10 +43,11 @@ bresenham_steps(t_bresenham *b, int start_point[], int end_point[])
 			else 
 				(b->current[Y] -= 1);
 			b->decision_parameter = b->decision_parameter + 2 * (b->differential[Y] - b->differential[X]);	// Update decision parameter
-		} else {
+		}
+		else
+		{
 			b->decision_parameter = b->decision_parameter + 2 * b->differential[Y];			// Update decision parameter
 		}
-		
 		b->current[X]++;						// Increment b->current[X]-coordinate
 		printf("(%d, %d)\n", b->current[X], b->current[Y]); // Plot the next point
 	}
@@ -71,11 +78,9 @@ bresenham_ini(t_bresenham *b, int start_point[], int end_point[])
 {
 	b->differential[X] = abs(end_point[X] - start_point[X]);
 	b->differential[Y] = abs(end_point[Y] - start_point[Y]);
-
 	b->decision_parameter = 2 * b->differential[Y] - b->differential[X];
 	b->current[X] = start_point[X];
 	b->current[Y] = start_point[Y];
-	
 	if (start_point[X] > end_point[X])
 	{
 		b->current[X] = end_point[X];
@@ -106,31 +111,6 @@ void draw_line(int start_point[], int end_point[])
 
 	bresenham_ini(&b, start_point, end_point);
 	bresenham_steps(&b, start_point, end_point);
-
-}
-
-#include <stdio.h>
-#include <stdlib.h>
-
-void drawLine(int x1, int y1, int x2, int y2) {
-	int dx, dy, p, x, y, endX, endY;
-	
-	dx = abs(x2 - x1);     // Calculate difference in x
-	dy = abs(y2 - y1);     // Calculate difference in y
-	
-	p = 2 * dy - dx;       // Initial decision parameter
-	x = x1;                 // Starting x-coordinate
-	y = y1;                 // Starting y-coordinate
-	
-	if (x1 > x2) {         // If the line goes from right to left
-		x = x2;             // Swap the starting points
-		y = y2;
-		endX = x1;
-		endY = y1;
-	} else {
-		endX = x2;
-		endY = y2;
-	}
 }
 
 int main() {

@@ -96,11 +96,11 @@ $(MLX_DIR):
 
 #$(MLX_A)
 $(NAME): $(LIBFT_A) $(OBJS)
-	@echo "$(BLUE)$(NAME): ${NAME} $(GREEN)OBJS compiled !$(RESET)"
-	@echo "$(BLUE)$(NAME): Linking ${NAME} $(RESET)"
+	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
 	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
-	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Linked !$(RESET)"
+	@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
 
 clear:
 	@clear
@@ -114,6 +114,14 @@ fclean: clean
 	@echo "$(BLUE)$(NAME): Cleaning $(NAME)$(RESET)"
 	@rm -rf $(NAME)
 	@make -C $(LIBFT_DIR) fclean
+
+gprof: $(LIBFT_A) $(OBJS)
+	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): Linking $(NAME) with -gp $(RESET)"
+	@echo "$(CC) $(CFLAGS) -gp $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
+	@$(CC) $(CFLAGS) -gp $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
+	@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
+	./$(NAME) ./maps/map.cub && gprof $(NAME) gmon.out > analysis.txt && cat analysis.txt
 
 re: clear fclean all
 
