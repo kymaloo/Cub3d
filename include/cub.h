@@ -1,3 +1,4 @@
+
 #ifndef CUB_H
 # define CUB_H
 
@@ -14,13 +15,20 @@
 # include "radar.h"
 # include "engine_3d.h"
 # include <sys/time.h>
+# include "game_loop.h"
 
-int		init(t_infos_p *infos_p, char *str);
+# ifdef DEBUG
+#  if DEBUG == EXPLOSIVES
+#   include "explosives.h"
+#  endif
+# endif
+
+int		parse_map_init_game_infos(t_game *infos_p, char *str);
 void	draw_map(t_game *g);
 void	ft_hook(void *gamed);
 void	print_minimap(t_game *g);
 void	ft_move_perso(t_game *g);
-void	create_memory_manager(t_infos_p **infos_p);
+void	create_memory_manager();
 void	stock_radian(t_player *player);
 bool	isset(char c, char *set);
 void	print_map(char **map);

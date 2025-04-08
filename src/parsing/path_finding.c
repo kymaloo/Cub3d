@@ -48,7 +48,7 @@ static void flood_fill_rec(int x, int y, t_infos_p *ip, int i)
 	legal_grid_chars = "NSEW01D";
 	cells = ip->p->grid_copy;
 
-	if (x < 0 || x > ip->g->map->x_max || y < 0 || y > ip->g->map->y_max)
+	if (x < 0 || x > ip->g->map.x_max || y < 0 || y > ip->g->map.y_max)
 		nuclear_exit(ft_error(WHERE, "map walling not valid: entering illegal coords territory (very scary stuff)", EXIT_FAILURE));
 	if (isset(cells[y][x], legal_grid_chars) == false)
 		nuclear_exit(ft_error(WHERE, "map walling not valid: illegal char used", EXIT_FAILURE));
@@ -105,9 +105,9 @@ void	find_pos_player(t_game *game, char **grid)
 			if (grid[i][j] == 'N' || grid[i][j] == 'S'
 				|| grid[i][j] == 'E' || grid[i][j] == 'W')
 			{
-				game->player->facing = grid[i][j];
-				game->player->position[X] = j;
-				game->player->position[Y] = i;
+				game->player.facing = grid[i][j];
+				game->player.position[X] = j;
+				game->player.position[Y] = i;
 				break ;
 			}
 			j++;

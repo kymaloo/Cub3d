@@ -54,10 +54,10 @@ char	**extract_map(t_infos_p *infos_p, char **array)
 
 	i = 0;
 	j = 0;
-	size = get_size_of_array(infos_p->g->texture, infos_p->p, array, 0);
-	infos_p->g->map->y_max = size;
+	size = get_size_of_array(&infos_p->g->mlx_infos, infos_p->p, array, 0);
+	infos_p->g->map.y_max = size;
 	get_line_size(infos_p, array);
-	len = infos_p->g->map->x_max;
+	len = infos_p->g->map.x_max;
 	result = safe_calloc(ZONE_1, 1, (sizeof(char *) * (size + 1)));
 	if (!result)
 		return (NULL);
@@ -80,15 +80,15 @@ void	copy_map(t_infos_p *infos_p)
 	int		size;
 
 	i = 0;
-	size = infos_p->g->map->y_max;
-	len = infos_p->g->map->x_max;
+	size = infos_p->g->map.y_max;
+	len = infos_p->g->map.x_max;
 	infos_p->p->grid_copy = safe_calloc(ZONE_1, 1, sizeof(char *) * (size + 1));
 	if (!infos_p->p->grid_copy)
 		return ;
-	while (infos_p->g->map->map[i])
+	while (infos_p->g->map.map[i])
 	{
 		infos_p->p->grid_copy[i] = safe_strdup_with_calloc(ZONE_1, \
-		infos_p->g->map->map[i], len + 1);
+		infos_p->g->map.map[i], len + 1);
 		i++;
 	}
 	infos_p->p->grid_copy[i] = NULL;

@@ -46,15 +46,14 @@ static void	draw_square_tab(mlx_image_t *img_window, int square_color, int where
 	}
 }
 
-
 void	draw_radar_from(t_game *g, int radar_top_left[])
 {
 	int	block_player[NB_DIM];
 	int	block_to_draw[NB_DIM];
 	int	draw_where[NB_DIM];
 	
-	block_player[Y] = (int) g->player->position[Y] / RADAR_SQUARE_SIDE;
-	block_player[X] = (int) g->player->position[X] / RADAR_SQUARE_SIDE;
+	block_player[Y] = (int) g->player.position[Y] / RADAR_SQUARE_SIDE;
+	block_player[X] = (int) g->player.position[X] / RADAR_SQUARE_SIDE;
 	draw_where[Y] = radar_top_left[X];
 	
 	block_to_draw[Y] = block_player[Y] - RADAR_BLOCKS_RADIUS;
@@ -64,8 +63,8 @@ void	draw_radar_from(t_game *g, int radar_top_left[])
 		draw_where[X] = radar_top_left[Y];
 		while(block_to_draw[X] < block_player[X] + RADAR_BLOCKS_RADIUS + 1)
 		{
-			draw_square_tab(g->texture->image->img_window, \
-				map_block_color(g->map, block_to_draw[X], block_to_draw[Y]), \
+			draw_square_tab(g->mlx_infos.images.next_frame, \
+				map_block_color(&g->map, block_to_draw[X], block_to_draw[Y]), \
 				draw_where, RADAR_SQUARE_SIDE);
 				block_to_draw[X]++;
 				draw_where[X]+= RADAR_SQUARE_SIDE;
@@ -85,7 +84,7 @@ void drawDisc(t_game *g, int center[], int radius, int color) {
 		int x = -x_max;
 		while (x <= x_max)
 		{
-			mlx_put_pixel(g->texture->image->img_window, center[X] + x, \
+			mlx_put_pixel(g->mlx_infos.images.next_frame, center[X] + x, \
 				center[Y] + y, color);
 			x++;
 		}
@@ -114,7 +113,7 @@ void	draw_radar(t_game *g)
 	where_to_draw[Y] = (radar_pos[Y] + RADAR_BLOCKS_RADIUS + 1) * RADAR_SQUARE_SIDE;
 
 	draw_radar_from(g, radar_pos);
-	init_coords(player_pos, g->player->position[X],  g->player->position[Y]);
-	draw_square_tab(g->texture->image->img_window, 0x0002255FF, where_to_draw, RADAR_SQUARE_SIDE);
+	init_coords(player_pos, g->player.position[X],  g->player.position[Y]);
+	draw_square_tab(g->mlx_infos.images.next_frame, 0x0002255FF, where_to_draw, RADAR_SQUARE_SIDE);
 	draw_radar_player(g);
 }

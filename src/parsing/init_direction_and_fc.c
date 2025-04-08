@@ -52,9 +52,9 @@ int	init_fc(t_infos_p *infos_p, char *str)
 	while (infos_p->p->all_file[i])
 	{
 		if (ft_strncmp(infos_p->p->all_file[i], infos_p->p->fc[0], 2) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 4, fd);
+			process_direction(&infos_p->g->mlx_infos, infos_p->p->all_file[i], 4, fd);
 		else if (ft_strncmp(infos_p->p->all_file[i], infos_p->p->fc[1], 2) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 5, fd);
+			process_direction(&infos_p->g->mlx_infos, infos_p->p->all_file[i], 5, fd);
 		i++;
 	}
 	return (close_map(fd));
@@ -73,16 +73,16 @@ int	init_direction(t_infos_p *infos_p, char *str, int dir, int fd)
 	{
 		if (ft_strncmp(infos_p->p->all_file[i], \
 		infos_p->p->direction[0], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 0, fd);
+			process_direction(&infos_p->g->mlx_infos, infos_p->p->all_file[i], 0, fd);
 		else if (ft_strncmp(infos_p->p->all_file[i], \
 		infos_p->p->direction[1], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 1, fd);
+			process_direction(&infos_p->g->mlx_infos, infos_p->p->all_file[i], 1, fd);
 		else if (ft_strncmp(infos_p->p->all_file[i], \
 		infos_p->p->direction[2], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 2, fd);
+			process_direction(&infos_p->g->mlx_infos, infos_p->p->all_file[i], 2, fd);
 		else if (ft_strncmp(infos_p->p->all_file[i], \
 		infos_p->p->direction[3], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 3, fd);
+			process_direction(&infos_p->g->mlx_infos, infos_p->p->all_file[i], 3, fd);
 		i++;
 	}
 	return (close_map(fd));

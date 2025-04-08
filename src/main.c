@@ -1,10 +1,20 @@
 #include "cub.h"
 
+/**
+ * @brief memory manager area ZONE_1 deletion function
+ * 
+ * @param mlx_t_adr the adress of the mlx_t to mlx_terminate
+ */
 void	mlx_deletion_func (void *mlx_t_adr)
 {
 	mlx_terminate(mlx_t_adr);
 }
 
+/**
+ * @brief memory manager area ZONE_FDs deletion function
+ * 
+ * @param fd_adr the fd to close
+ */
 void	fd_deletion_func (void *fd_adr)
 {
 	int	*i;
@@ -13,86 +23,41 @@ void	fd_deletion_func (void *fd_adr)
 	close(*i);
 }
 
-void	init_mlx(t_game *game)
+// int	init_mlx_images()
+// {
+
+// }
+
+// int	init_mlx_textures()
+// {
+
+// }
+
+void	init_mlx(t_game *g)
 {
 	mlx_image_t* img;
 
-	game->mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
-	if (!game->mlx)
+	g->mlx_infos.mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
+	if (!g->mlx_infos.mlx)
 		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
-	img = mlx_new_image(game->mlx, 1920, 1080);
-	mlx_image_to_window(game->mlx, img, 0, 0);
-	game->texture->image->img_window = img;
-	game->map->tile_size = 16;
-	game->texture->image->minimap = mlx_new_image(game->mlx, 360, 360);
-	//game->texture->image->minimap->instances[1];
-	game->texture->player = mlx_load_png("images/p3_stand1.png");
-	game->texture->image->player_img = mlx_texture_to_image(game->mlx, game->texture->player);
-	mlx_image_to_window(game->mlx, game->texture->image->player_img, game->player->position[X] * 16, game->player->position[Y] * 16);
-	stock_radian(game->player);
+	img = mlx_new_image(g->mlx_infos.mlx, 1920, 1080);
+	mlx_image_to_window(g->mlx_infos.mlx, img, 0, 0);
+	g->mlx_infos.images.next_frame = img;
+	g->map.tile_size = 16;
+	g->mlx_infos.images.minimap = mlx_new_image(g->mlx_infos.mlx, 360, 360);
+	//g->texture->image->minimap->instances[1];
+	g->mlx_infos.textures.minimap_player = mlx_load_png(PATH_2D_PLAYER);
+	g->mlx_infos.images.minimap_player = mlx_texture_to_image(g->mlx_infos.mlx, g->mlx_infos.textures.minimap_player);
+	mlx_image_to_window(g->mlx_infos.mlx, g->mlx_infos.images.minimap_player, g->player.position[X] * 16, g->player.position[Y] * 16);
+	stock_radian(&g->player);
 }
 
-
-int	main(int argc, char **argv)
+void	create_memory_manager(void)
 {
-	t_infos_p *infos_p;
-
-	infos_p = NULL;
-	if (argc != 2)
-		return (ft_error(WHERE, "Bad argument", EXIT_FAILURE));
-	create_memory_manager(&infos_p);
-	if (init(infos_p, argv[1]) != EXIT_SUCCESS)
-	  	nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
-	init_mlx(infos_p->g);
-	if (mlx_loop_hook(infos_p->g->mlx, &ft_hook, infos_p->g))
-			mlx_loop(infos_p->g->mlx);
-	mlx_terminate(infos_p->g->mlx);
-	memory_manager(DESTROY, NULL, NULL);
-	printf(BGREEN"\tDone !\n"RESET);
-	return (EXIT_SUCCESS);
-}
-
-static void	ft_close_window(t_game *game)
-{
-	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlx);
-}
-
-
-void	print_minimap(t_game *g)
-{
-	draw_radar(g);
-	if (mlx_is_key_down(g->mlx, MLX_KEY_M))
-	{
-		g->texture->image->player_img->enabled = true;
-		g->texture->image->img_window->enabled = true;
-	}
-	else if (mlx_is_key_down(g->mlx, MLX_KEY_N))
-	{
-		g->texture->image->player_img->enabled = false;
-		g->texture->image->img_window->enabled = false;
-	}
-}
-
-void	create_memory_manager(t_infos_p **infos_p)
-{
-	t_parsing_map 		*parse;
-	t_game				*game;
-
 	memory_manager(CREATE, NULL, NULL);
 	memory_manager_area_create(ZONE_1, &free, 256);
 	memory_manager_area_create(ZONE_FDS, &fd_deletion_func, 10);
 	memory_manager_area_create(ZONE_MLX, &mlx_deletion_func, 1);
-	*infos_p = safe_calloc(ZONE_1, 1, sizeof(t_infos_p));
-	game = safe_calloc(ZONE_1, 1, sizeof(t_game));
-	parse = safe_calloc(ZONE_1, 1, sizeof(t_parsing_map));
-	(*infos_p)->p = parse;
-	(*infos_p)->g = game;
-	(*infos_p)->g->player = safe_calloc(ZONE_1, 1, sizeof(t_player));
-	(*infos_p)->g->texture = safe_calloc(ZONE_1, 1, sizeof(t_texture));
-	(*infos_p)->g->texture->path = safe_calloc(ZONE_1, 1, sizeof(t_path));
-	(*infos_p)->g->texture->colors = safe_calloc(ZONE_1, 1, sizeof(t_colors));
-	(*infos_p)->g->texture->image = safe_calloc(ZONE_1, 1, sizeof(t_image));
 }
 
 void	stock_radian(t_player *player)
@@ -105,4 +70,23 @@ void	stock_radian(t_player *player)
 		player->angle = (2 * M_PI);
 	if (player->facing == 'W')
 		player->angle = (M_PI);
+}
+	
+int	main(int argc, char **argv)
+{
+	t_game	game_infos;
+
+	if (argc != 2)
+	return (ft_error(WHERE, "Bad argument", EXIT_FAILURE));
+	create_memory_manager();
+	ft_memset(&game_infos, 0, sizeof(game_infos));
+	if (parse_map_init_game_infos(&game_infos, argv[1]) != EXIT_SUCCESS)
+		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
+	init_mlx(&game_infos);
+	if (mlx_loop_hook(game_infos.mlx_infos.mlx, &ft_hook, &game_infos))
+		mlx_loop(game_infos.mlx_infos.mlx);
+	mlx_terminate(game_infos.mlx_infos.mlx);
+	memory_manager(DESTROY, NULL, NULL);
+	printf(BGREEN"\tDone !\n"RESET);
+	return (EXIT_SUCCESS);
 }

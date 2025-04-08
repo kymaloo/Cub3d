@@ -2,6 +2,22 @@
 	"files.associations": {
 		"cub.h": "c",
 		"struct.h": "c",
-		"define.h": "c"
+		"define.h": "c",
+		"array": "c",
+		"string_view": "c",
+		"initializer_list": "c",
+		"ranges": "c",
+		"span": "c",
+		"utility": "c",
+		"ft_error.h": "c",
+		"stdio.h": "c",
+		"random": "c",
+		"deque": "c",
+		"string": "c",
+		"unordered_map": "c",
+		"vector": "c",
+		"cstdlib": "c",
+		"functional": "c",
+		"iterator": "c"
 	}
 }

@@ -11,7 +11,7 @@ MLX_VERSION_GIT_HASH := ce254c3a19af8176787601a2ac3490100a5c4c61
 INCLUDES	:= -Iinclude -IMLX42/include
 ARCHIVES	:= $(LIBFT_A) $(MLX_A)
 LIBS		:= -ldl -lglfw -lm
-CFLAGS		:= -Wextra -Wall -Werror -g3 $(INCLUDES)
+CFLAGS		:= -Wextra -Wall -g3 $(INCLUDES) #-Werror
 
 BRED	:=	\033[1;31m
 YELLOW	:=	\033[33m
@@ -44,11 +44,16 @@ SRCS	:= 	\
 			src/parsing/colors_fc.c						\
 			\
 			src/engine_3D/coords.c						\
+			src/engine_3D/digital_differential_analyzer.c	\
+			src/engine_3D/draw_line.c					\
+			src/engine_3D/frame.c						\
 			src/engine_3D/rotations.c					\
 			\
-			src/exec/minimap.c							\
-			src/exec/radar.c							\
-			src/exec/move.c								\
+			src/exec/*.c								\
+			\
+			src/exec/hooks/*.c							\
+			\
+			src/debug/*.c	\
 
 OBJS	:= ${SRCS:.c=.o}
 

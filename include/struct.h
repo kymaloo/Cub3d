@@ -3,35 +3,25 @@
 
 # include "memory_manager.h"
 # include "engine_3d.h"
+# include "parsing.h"
 
 # define GRID_SIZE_X	32
 # define GRID_SIZE_Y	32
 
-
-typedef struct s_parsing_map
+typedef	struct s_time
 {
-	char	**grid;
-	char	**grid_copy;
-	char	**all_file;
-	char	**direction;
-	char	**fc;
-	char	*color_floor_cp;
-	char	*color_ceiling_cp;
-	int		x_last_0;
-	int		y_last_0;
-}	t_parsing_map;
+	struct timeval	now;
+	struct timeval	old;
+	suseconds_t		time_taken_to_draw_frame;
+}	t_time;
 
-typedef	struct s_mlx_texture
+typedef struct s_images
 {
-	mlx_texture_t	*player;
-}	t_mlx_texture;
-
-typedef	struct s_image
-{
-	mlx_image_t			*img_window;
-	mlx_image_t			*player_img;
-	mlx_image_t			*minimap;
-}	t_image;
+	mlx_image_t	*next_frame;
+	mlx_image_t	*minimap;
+	mlx_image_t	*minimap_player;
+	mlx_image_t	*radar;
+} t_images;
 
 typedef	struct s_colors
 {
@@ -39,21 +29,32 @@ typedef	struct s_colors
 	char	*color_ceiling;
 }	t_colors;
 
-typedef	struct s_path
+typedef struct s_textures
 {
-	char	*north;
-	char	*south;
-	char	*east;
-	char	*west;
-}	t_path;
+	mlx_texture_t	*minimap_player;
+	mlx_texture_t	*wall_north;
+	mlx_texture_t	*wall_south;
+	mlx_texture_t	*wall_east;
+	mlx_texture_t	*wall_west;
+} t_textures;
 
-typedef	struct s_texture
+typedef struct s_paths
 {
-	mlx_texture_t	*player;
-	t_image			*image;
-	t_colors		*colors;
-	t_path			*path;
-}	t_texture;
+	char	*minimap_player;
+	char	*wall_north;
+	char	*wall_south;
+	char	*wall_east;
+	char	*wall_west;
+} t_paths;
+
+typedef struct s_mlx_infos
+{
+	mlx_t			*mlx;
+	t_images		images;
+	t_textures		textures;
+	t_colors		colors;
+	t_paths			paths;
+} t_mlx_infos;
 
 typedef	struct s_map
 {
@@ -63,30 +64,13 @@ typedef	struct s_map
 	int		tile_size;
 }	t_map;
 
-typedef struct s_player
-{
-	char		facing;
-	double		position[NB_DIM];
-	t_camera	camera;
-	double		angle;
-}	t_player;
-
-typedef	struct s_time
-{
-	struct timeval	now;
-	struct timeval	old;
-	suseconds_t	time_taken_to_draw_frame;
-}	t_time;
-
 typedef struct s_game
 {
-	int					color;
-	mlx_t				*mlx;
-	t_player			*player;
-	t_map				*map;
-	t_texture			*texture;
-	t_time				*time;
-}			t_game;
+	t_player	player;
+	t_map		map;
+	t_mlx_infos	mlx_infos;
+	t_time		time;
+} t_game;
 
 typedef struct s_infos_p
 {

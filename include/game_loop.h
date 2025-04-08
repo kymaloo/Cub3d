@@ -1,0 +1,6 @@
+#ifndef GAME_LOOP_H
+#define GAME_LOOP_H
+
+void	ft_hook(void *data_game);
+
+#endif

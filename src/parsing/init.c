@@ -20,60 +20,68 @@ static int	init_direction_and_fc(t_infos_p *infos_p, char *str)
 
 static int	init_map(t_infos_p *infos_p)
 {
-	infos_p->g->map = safe_calloc(ZONE_1, 1, sizeof(t_map));
-	infos_p->g->map->map = extract_map(infos_p, infos_p->p->all_file);
-	if (check_map(infos_p->g->map->map) == EXIT_FAILURE)
+	infos_p->g->map.map = extract_map(infos_p, infos_p->p->all_file);
+	if (check_map(infos_p->g->map.map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (check_doublon_map(infos_p->g->map->map, "NSEW") != 1)
+	if (check_doublon_map(infos_p->g->map.map, "NSEW") != 1)
 		nuclear_exit(ft_error(WHERE, "ONE PLEYER PLSSSS 🤓", EXIT_FAILURE));
-	find_pos_player(infos_p->g, infos_p->g->map->map);
+	find_pos_player(infos_p->g, infos_p->g->map.map);
 	copy_map(infos_p);
 	return (EXIT_SUCCESS);
 }
 
-static void	is_dir_and_filled(t_texture *texture)
+static void	is_dir_and_filled(t_mlx_infos *mlx_infos)
 {
-	if (texture->path->east == NULL)
+	if (mlx_infos->paths.wall_east == NULL)
 		nuclear_exit(ft_error(WHERE, "Path east is Null", EXIT_FAILURE));
-	if (texture->path->west == NULL)
+	if (mlx_infos->paths.wall_west == NULL)
 		nuclear_exit(ft_error(WHERE, "Path west is Null", EXIT_FAILURE));
-	if (texture->path->north == NULL)
+	if (mlx_infos->paths.wall_north == NULL)
 		nuclear_exit(ft_error(WHERE, "Path north is Null", EXIT_FAILURE));
-	if (texture->path->south == NULL)
+	if (mlx_infos->paths.wall_south == NULL)
 		nuclear_exit(ft_error(WHERE, "Path south is Null", EXIT_FAILURE));
-	if (texture->colors->color_ceiling == NULL)
+	if (mlx_infos->colors.color_ceiling == NULL)
 		nuclear_exit(ft_error(WHERE, "Path ceilling is Null", EXIT_FAILURE));
-	if (texture->colors->color_floor == NULL)
+	if (mlx_infos->colors.color_floor == NULL)
 		nuclear_exit(ft_error(WHERE, "Path floor is Null", EXIT_FAILURE));
 }
 
-int	init(t_infos_p *infos_p, char *str)
+void	init_infos_p(t_infos_p *infos_p, t_game *g, t_parsing_map *p)
 {
-	if (check_map_format_cub(str) == EXIT_FAILURE)
+	ft_memset(infos_p, 0, sizeof(t_infos_p));
+	ft_memset(infos_p, 0, sizeof(t_parsing_map));
+	infos_p->g = g;
+	infos_p->p = p;
+}
+
+int	parse_map_init_game_infos(t_game *game_infos, char *str)
+{
+	t_infos_p infos_p;
+	t_parsing_map	p;
+
+	init_infos_p(&infos_p, game_infos, &p);
+	if (check_map_format_cub(str) == EXIT_FAILURE 
+	|| check_map_reel(str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (check_map_reel(str) == EXIT_FAILURE)
+	infos_p.p->all_file = stock_file(str);
+	if (init_direction_and_fc(&infos_p, str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	infos_p->p->all_file = stock_file(str);
-	if (init_direction_and_fc(infos_p, str) == EXIT_FAILURE)
+	is_dir_and_filled(&game_infos->mlx_infos);
+	if (all_line_is_valid(&infos_p.g->mlx_infos, infos_p.p->all_file) == 1)
 		return (EXIT_FAILURE);
-	is_dir_and_filled(infos_p->g->texture);
-	if (all_line_is_valid(infos_p->g->texture, infos_p->p->all_file) == 1)
+	if (check_fc(&game_infos->mlx_infos, infos_p.p) == EXIT_FAILURE
+	|| check_format_fc(&game_infos->mlx_infos) == EXIT_FAILURE
+	|| verif_colors(&game_infos->mlx_infos) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (check_fc(infos_p->g->texture, infos_p->p) == EXIT_FAILURE)
+	if (init_map(&infos_p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (check_format_fc(infos_p->g->texture) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (verif_colors(infos_p->g->texture) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (init_map(infos_p) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	memory_manager(DEL_ELEM, ZONE_1, infos_p->p->all_file);
-	if (check_wall(infos_p) == EXIT_FAILURE)
+	memory_manager(DEL_ELEM, ZONE_1, infos_p.p->all_file);
+	if (check_wall(&infos_p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-int	all_line_is_valid(t_texture *texture, char **array)
+int	all_line_is_valid(t_mlx_infos *mlx_infos, char **array)
 {
 	int	i;
 	int	size;
@@ -85,15 +93,15 @@ int	all_line_is_valid(t_texture *texture, char **array)
 		if (check_white_space(array[i]) == 0 || \
 		char_valid_for_map("01NSEWD\t ", array[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], texture->path->north, size) == 0
-			|| ft_strncmp(array[i], texture->path->south, size) == 0)
+		else if (ft_strncmp(array[i], mlx_infos->paths.wall_north, size) == 0
+			|| ft_strncmp(array[i], mlx_infos->paths.wall_south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], texture->path->east, size) == 0
-			|| ft_strncmp(array[i], texture->path->west, size) == 0)
+		else if (ft_strncmp(array[i], mlx_infos->paths.wall_east, size) == 0
+			|| ft_strncmp(array[i], mlx_infos->paths.wall_west, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], \
-			texture->colors->color_ceiling, size) == 0
-			|| ft_strncmp(array[i], texture->colors->color_floor, size) == 0)
+			mlx_infos->colors.color_ceiling, size) == 0
+			|| ft_strncmp(array[i], mlx_infos->colors.color_floor, size) == 0)
 			i++;
 		else
 			nuclear_exit(ft_error(WHERE, "Line isn't valid", EXIT_FAILURE));
