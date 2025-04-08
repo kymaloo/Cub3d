@@ -44,25 +44,23 @@ enum e_directions
 
 typedef struct s_ray
 {
-	float	start_pos[NB_DIM];
+	float	pos[NB_DIM];
 	float	angle;
 
 	float	wall_hit[NB_DIM];
 
-	enum e_directions ray_axis_hit;
-	enum e_directions ray_direction_hit;
+	enum e_directions hit_dir_of_wall;
 } t_ray;
 
-void	ray_ini(float start_pos[], float angle, t_ray *ray)
+void	ray_ini(float pos[], float angle, t_ray *ray)
 {
 	ray->angle = angle;
-	ray->start_pos[X] = start_pos[X];
-	ray->start_pos[Y] = start_pos[Y];
+	ray->pos[X] = pos[X];
+	ray->pos[Y] = pos[Y];
 
 	ray->wall_hit[X] = -1;
 	ray->wall_hit[Y] = -1;
-	ray->ray_axis_hit = NONE;
-	ray->ray_direction_hit = NONE;
+	ray->hit_dir_of_wall = NONE;
 }
 
 void	ray_next(float angle_step, t_ray *ray)
@@ -70,8 +68,7 @@ void	ray_next(float angle_step, t_ray *ray)
 	ray->angle = nomarlise_angle( ray->angle + angle_step);
 	ray->wall_hit[X] = -1;
 	ray->wall_hit[Y] = -1;
-	ray->ray_axis_hit = NONE;
-	ray->ray_direction_hit = NONE;
+	ray->hit_dir_of_wall = NONE;
 }
 
 float nomarlise_angle(float angle)
@@ -131,48 +128,160 @@ void	dda_ini(t_dda *d, t_map *m, t_ray *ray)
 		d->step_y *= -1;
 
 	d->first_step_x = (d->step_x) \
-					* (1 - modf(ray->start_pos[X], truc(ray->start_pos[X])));
+					* (1 - modf(ray->pos[X], truc(ray->pos[X])));
 	d->first_step_y = (d->step_y) \
-					* (1 - modf(ray->start_pos[Y], truc(ray->start_pos[Y])));
+					* (1 - modf(ray->pos[Y], truc(ray->pos[Y])));
 }
 
-collide(t_ray *ray, bool *collided)
+/**
+ * @brief 
+ * depending on collison axis : 
+ * 
+ * X:
+ * Moving to the East, wall hit on the West side
+ * Moving to the West, wall hit on the East side
+ * 
+ * Y:
+ * Moving South, wall hit on the North side
+ * Moving North, wall hit on the South side
+ * 
+ * @param ray 
+ * @param step_x 
+ * @param step_y 
+ * @param collision_axis 
+ * @return true 
+ * @return false 
+ */
+bool collide(t_ray *ray, float step_x, float step_y, enum e_axis collision_axis)
 {
-
+	if (collision_axis == X)
+	{
+		if (step_x > 0)
+       		ray->hit_dir_of_wall = EAST;  // Moving to the East, wall hit on the West side
+		else if (step_x < 0)
+        	ray->hit_dir_of_wall WEST;  // Moving to the West, wall hit on the East side
+	}
+	else if (collision_axis == Y)
+	{
+		if (step_y > 0)
+			ray->hit_dir_of_wall SOUTH;  // Moving South, wall hit on the North side
+		else if (step_y < 0)
+			ray->hit_dir_of_wall NORTH;  // Moving North, wall hit on the South side
+	}
+    return NONE;  // Just in case something goes wrong
+	return (true);
 }
 
-do_the_dda_steps(t_dda *d, t_map *m, t_ray *ray)
+
+
+typedef struct s_bdda
 {
-	float	rayLength1D[NB_DIM];
-	int		where2D[NB_DIM];
-	float	vStep[NB_DIM];
-	float	walked_dist1D[NB_DIM];
+	float ray_angle;
+	float ray_x;
+	float ray_y;
+	float advanced_dist_y;
+	float advanced_dist_x;
+	float delta_dist_x;
+	float delta_dist_y;
+	int	step_x;
+	int	step_y;
+	int where_x;
+	int where_y;
+} t_bdda;
 
-	bool collided;
+// Fonction de normalisation de l'angle entre 0 et 2PI
+void normalize_angle(float *ray_angle) 
+{
+    while (*ray_angle < 0)
+	{
+        *ray_angle += 2 * M_PI;  // Ajouter 2PI tant que l'angle est négatif
+    }
+    while (*ray_angle >= 2 * M_PI) 
+	{
+        *ray_angle -= 2 * M_PI;  // Soustraire 2PI tant que l'angle est >= 2PI
+    }
+}
 
-	walked_dist1D[X] = 0;
-	walked_dist1D[Y] = 0;
-	where2D[X] = ray->start_pos[X];
-	where2D[Y] = ray->start_pos[Y];
+// Fonction d'init du better dda
+void init_bdda(t_bdda *dda, t_ray *ray)
+{
+    dda->ray_angle = ray->angle;
+    dda->ray_x = ray->pos[X];
+    dda->ray_y = ray->pos[Y];
+
+
+    // Calculate delta distances
+    dda->delta_dist_x = fabs(1 / cos(ray->angle));
+    dda->delta_dist_y = fabs(1 / sin(ray->angle));
+
+    // Initialize step and initial side distance
+    if (cos(ray->angle) < 0)
+	{
+        dda->step_x = -1;
+        dda->advanced_dist_x = (ray->pos[X] - (int) ray->pos[X]) * dda->delta_dist_x;
+    } else 
+	{
+        dda->step_x = 1;
+        dda->advanced_dist_x = ((int) ray->pos[X] + 1.0 - ray->pos[X]) * dda->delta_dist_x;
+    }
+
+    if (sin(ray->angle) < 0)
+	{
+        dda->step_y = -1;
+        dda->advanced_dist_y = (ray->pos[Y] - (int)ray->pos[Y]) * dda->delta_dist_y;
+    } else
+	{
+        dda->step_y = 1;
+        dda->advanced_dist_y = ((int) ray->pos[Y] + 1.0 - ray->pos[Y]) * dda->delta_dist_y;
+    }
+}
+map_wall_direction_hit_check(t_bdda *dda, t_map *m, t_ray *ray, enum e_axis moving_along)
+{
+	dda->where_x = (int) dda->ray_x;
+	dda->where_y = (int) dda->ray_y;
+	if ((dda->where_x >= 0 && dda->where_x <= m->x_max) \
+				&& (dda->where_y >= 0 && dda->where_y <= m->y_max) \
+				&& (m->map[dda->where_y][dda->where_x] == WALL)) 
+	{
+		collide(ray, dda->step_x, dda->step_y, moving_along);
+		return true;
+	}
+	return false;
+}
+dda_advance_along_smaller_vect(t_bdda *dda, enum e_axis *moving_along)
+{
+	if (dda->advanced_dist_x < dda->advanced_dist_y)
+	{
+		*moving_along = X;
+		dda->advanced_dist_x += dda->delta_dist_x;
+		dda->ray_x += dda->step_x;
+	} 
+	else
+	{
+		*moving_along = Y;
+		dda->advanced_dist_y += dda->delta_dist_y;
+		dda->ray_y += dda->step_y;
+	}
+}
+
+// Fonction better dda
+void bdda(t_bdda *dda, t_map *m, t_ray *ray)
+{
+	bool		collided;
+	enum e_axis	moving_along;
 
 	collided = false;
-
-	if ( !collided && walked_dist1D[X] <= RENDER_DISTANCE && walked_dist1D[Y] <= RENDER_DISTANCE)
+	while (!collided && (dda->advanced_dist_x < RENDER_DISTANCE \ 
+		|| dda->advanced_dist_x < RENDER_DISTANCE))
 	{
-		if (walked_dist1D[X] < walked_dist1D[Y])
-		{
-			where2D[X] += 1;
-			d->dist_walked_x += d->unit_step_size[X];
-			if (m->map[where2D[X]][where2D[Y]] == WALL)
-				collide(ray, &collided);
-		}
-		else
-		{
-
-		}
+		dda_advance_along_smaller_axis_unit_vect(dda, &moving_along);
+		collided = map_wall_direction_hit_check(dda, m, ray, moving_along);
 	}
 	if (!collided)
+		collide(ray, dda->step_x, dda->step_y, NONE);
+	return ;
 }
+
 
 void	do_the_dda(t_map *map, t_ray *ray)
 {
