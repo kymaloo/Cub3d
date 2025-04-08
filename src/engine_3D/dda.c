@@ -270,6 +270,7 @@ void bdda(t_bdda *dda, t_map *m, t_ray *ray)
 	bool		collided;
 	enum e_axis	moving_along;
 
+	init_bdda(dda, ray);
 	collided = false;
 	while (!collided && (dda->advanced_dist_x < RENDER_DISTANCE \ 
 		|| dda->advanced_dist_x < RENDER_DISTANCE))
