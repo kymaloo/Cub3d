@@ -101,6 +101,68 @@ enum e_directions angle_goes(float angle, enum e_axis axis)
 	return (NONE);
 }
 
+
+typedef struct s_bdda
+{
+	float	ray_angle;
+	float	ray_x;
+	float	ray_y;
+	float	advanced_dist_y;
+	float	advanced_dist_x;
+	float	delta_dist_x;
+	float	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	int		where_tile_x;
+	int		where_tile_y;
+} t_bdda;
+
+// Fonction de normalisation de l'angle entre 0 et 2PI
+void	normalise_angle(float *ray_angle) 
+{
+	while (*ray_angle < 0)
+	{
+        *ray_angle += 2 * M_PI;  // Ajouter 2PI tant que l'angle est négatif
+    }
+    while (*ray_angle >= 2 * M_PI) 
+	{
+		*ray_angle -= 2 * M_PI;  // Soustraire 2PI tant que l'angle est >= 2PI
+    }
+}
+
+// Fonction d'init du better dda
+void	init_bdda(t_bdda *dda, t_ray *ray)
+{
+	dda->ray_angle = ray->angle;
+    dda->ray_x = ray->pos[X];
+    dda->ray_y = ray->pos[Y];
+	
+	
+    // Calculate delta distances
+    dda->delta_dist_x = fabs(1 / cos(ray->angle));
+    dda->delta_dist_y = fabs(1 / sin(ray->angle));
+	
+    // Initialize step and initial side distance
+    if (cosf(ray->angle) < 0)
+	{
+		dda->step_x = -1;
+        dda->advanced_dist_x = (ray->pos[X] - (int) ray->pos[X]) * dda->delta_dist_x;
+    } else 
+	{
+		dda->step_x = 1;
+        dda->advanced_dist_x = ((int) ray->pos[X] + 1.0 - ray->pos[X]) * dda->delta_dist_x;
+    }
+    if (sinf(ray->angle) < 0)
+	{
+		dda->step_y = -1;
+        dda->advanced_dist_y = (ray->pos[Y] - (int)ray->pos[Y]) * dda->delta_dist_y;
+    } else
+	{
+		dda->step_y = 1;
+        dda->advanced_dist_y = ((int) ray->pos[Y] + 1.0 - ray->pos[Y]) * dda->delta_dist_y;
+    }
+}
+
 /**
  * @brief 
  * depending on collison axis : 
@@ -125,9 +187,9 @@ bool	collide(t_ray *ray, float step_x, float step_y, enum e_axis collision_axis)
 	if (collision_axis == X)
 	{
 		if (step_x > 0)
-       		ray->hit_dir_of_wall = EAST;  // Moving to the East, wall hit on the West side
+			   ray->hit_dir_of_wall = EAST;  // Moving to the East, wall hit on the West side
 		else if (step_x < 0)
-        	ray->hit_dir_of_wall = WEST;  // Moving to the West, wall hit on the East side
+			ray->hit_dir_of_wall = WEST;  // Moving to the West, wall hit on the East side
 		ray->percent_tile_texture_hit = ray->coord_wall_hit[X] / GRID_SIZE_X;
 	}
 	else if (collision_axis == Y)
@@ -139,70 +201,8 @@ bool	collide(t_ray *ray, float step_x, float step_y, enum e_axis collision_axis)
 		ray->percent_tile_texture_hit = ray->coord_wall_hit[Y] / GRID_SIZE_Y;
 	}
 	else
-    	return NONE;  // Just in case something goes wrong
+		return NONE;  // Just in case something goes wrong
 	return (true);
-}
-
-typedef struct s_bdda
-{
-	float	ray_angle;
-	float	ray_x;
-	float	ray_y;
-	float	advanced_dist_y;
-	float	advanced_dist_x;
-	float	delta_dist_x;
-	float	delta_dist_y;
-	int		step_x;
-	int		step_y;
-	int		where_tile_x;
-	int		where_tile_y;
-} t_bdda;
-
-// Fonction de normalisation de l'angle entre 0 et 2PI
-void	normalise_angle(float *ray_angle) 
-{
-    while (*ray_angle < 0)
-	{
-        *ray_angle += 2 * M_PI;  // Ajouter 2PI tant que l'angle est négatif
-    }
-    while (*ray_angle >= 2 * M_PI) 
-	{
-        *ray_angle -= 2 * M_PI;  // Soustraire 2PI tant que l'angle est >= 2PI
-    }
-}
-
-// Fonction d'init du better dda
-void	init_bdda(t_bdda *dda, t_ray *ray)
-{
-    dda->ray_angle = ray->angle;
-    dda->ray_x = ray->pos[X];
-    dda->ray_y = ray->pos[Y];
-
-
-    // Calculate delta distances
-    dda->delta_dist_x = fabs(1 / cos(ray->angle));
-    dda->delta_dist_y = fabs(1 / sin(ray->angle));
-
-    // Initialize step and initial side distance
-    if (cosf(ray->angle) < 0)
-	{
-        dda->step_x = -1;
-        dda->advanced_dist_x = (ray->pos[X] - (int) ray->pos[X]) * dda->delta_dist_x;
-    } else 
-	{
-        dda->step_x = 1;
-        dda->advanced_dist_x = ((int) ray->pos[X] + 1.0 - ray->pos[X]) * dda->delta_dist_x;
-    }
-
-    if (sinf(ray->angle) < 0)
-	{
-        dda->step_y = -1;
-        dda->advanced_dist_y = (ray->pos[Y] - (int)ray->pos[Y]) * dda->delta_dist_y;
-    } else
-	{
-        dda->step_y = 1;
-        dda->advanced_dist_y = ((int) ray->pos[Y] + 1.0 - ray->pos[Y]) * dda->delta_dist_y;
-    }
 }
 
 map_wall_direction_hit_check(t_bdda *dda, t_map *m, t_ray *ray, enum e_axis moving_along)
@@ -215,6 +215,13 @@ map_wall_direction_hit_check(t_bdda *dda, t_map *m, t_ray *ray, enum e_axis movi
 	{
 		ray->coord_wall_hit[X] = dda->ray_x;
 		ray->coord_wall_hit[Y] = dda->ray_y;
+		if (moving_along == X)
+			ray->distance_to_hit = dda->advanced_dist_x;
+		else if (moving_along == Y)
+			ray->distance_to_hit = dda->advanced_dist_y;
+		else
+			nuclear_exit(ft_error(WHERE, \
+				"map_wall_direction_hit_check failure: bad axis", EXIT_FAILURE));
 		collide(ray, dda->step_x, dda->step_y, moving_along);
 		return true;
 	}
@@ -268,22 +275,22 @@ get_texture_pixel_color(t_game *g, t_ray *r, int current_x, int current_y, int w
 
 	tile_relative_x_impact = current_x % MAP_SQUARE_SIDE_X;
 	tile_relative_y_impact = current_y / wall_display_height;
-	if (r->type_collided == RAYHIT_WALL_EAST)
+	if (r->hit_dir_of_wall == EAST)
 	{
 		return (g->mlx_infos.textures.wall_east->pixels[ \
 			tile_relative_y_impact * WALL_HEIGHT + tile_relative_x_impact]);
 	}
-	else if(r->type_collided == RAYHIT_WALL_WEST)
+	else if(r->hit_dir_of_wall == WEST)
 	{
 		return (g->mlx_infos.textures.wall_east->pixels[ \
 			tile_relative_y_impact * WALL_HEIGHT + tile_relative_x_impact]);
 	}
-	else if (r->type_collided == RAYHIT_WALL_NORTH)
+	else if (r->hit_dir_of_wall == NORTH)
 	{
 		return (g->mlx_infos.textures.wall_east->pixels[ \
 			tile_relative_y_impact * WALL_HEIGHT + tile_relative_x_impact]);
 	}
-	else if (r->type_collided == RAYHIT_WALL_SOUTH)
+	else if (r->hit_dir_of_wall == SOUTH)
 	{
 		return (g->mlx_infos.textures.wall_east->pixels[ \
 			tile_relative_y_impact * WALL_HEIGHT + tile_relative_x_impact]);
