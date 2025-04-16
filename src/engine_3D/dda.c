@@ -1,16 +1,17 @@
 #include "cub.h"
 
 // Fonction de normalisation de l'angle entre 0 et 2PI
-void	normalize_angle(float *ray_angle) 
+float	normalize_angle(float ray_angle) 
 {
-	while (*ray_angle < 0)
+	while (ray_angle < 0)
 	{
-        *ray_angle += 2 * M_PI;  // Ajouter 2PI tant que l'angle est négatif
+        ray_angle += 2 * M_PI;  // Ajouter 2PI tant que l'angle est négatif
     }
-    while (*ray_angle >= 2 * M_PI) 
+    while (ray_angle >= 2 * M_PI) 
 	{
-		*ray_angle -= 2 * M_PI;  // Soustraire 2PI tant que l'angle est >= 2PI
+		ray_angle -= 2 * M_PI;  // Soustraire 2PI tant que l'angle est >= 2PI
     }
+	return (ray_angle);
 }
 
 void	camera_ini(t_player *player, t_camera *c)
@@ -40,11 +41,11 @@ void	ray_ini(float pos[], float angle, t_ray *ray)
 	ray->hit_dir_of_wall = NONE;
 }
 
-void	ray_next(float angle_step, t_ray *ray, t_camera *camera)
+void	ray_next(t_ray *ray, t_camera *camera)
 {
 	ray->pos[X] += camera->camera_step_vect[X];
 	ray->pos[Y] += camera->camera_step_vect[Y];
-	ray->angle = nomarlize_angle(atan2f(ray->pos[Y], ray->pos[X]));
+	ray->angle = normalize_angle(atan2f(ray->pos[Y], ray->pos[X]));
 	ray->coord_wall_hit[X] = -1;
 	ray->coord_wall_hit[Y] = -1;
 	ray->hit_dir_of_wall = NONE;
@@ -261,10 +262,11 @@ int	get_texture_pixel_color(t_game *g, t_ray *r, int current_x, int current_y, i
 	}
 	else
 		nuclear_exit(ft_error(__FILE__, __LINE__, "Ray collided Unknown type", EXIT_FAILURE));
+	return (0);
 }
 
 
-static inline distance_size_function(float x)
+static inline float distance_size_function(float x)
 {
 	return (1 / x);
 }
@@ -284,7 +286,7 @@ void	draw_the_pixel_column(t_game *g, t_ray *ray, unsigned int current_column_x_
 
 
 	unsigned int	column_height;
-	unsigned int	tile_percent;
+	//unsigned int	tile_percent; //TODO
 	int				color;
 	int				offset_from_ground;
 
@@ -329,7 +331,7 @@ void	raycast_and_draw_fov_from_player(t_game *g, t_map *map, t_player *player)
 
 	camera = &g->player.camera;
 	angle_step = FOV / SCREEN_WIDTH;
-	camera_ini(player, &camera);
+	camera_ini(player, camera);
 	ray_number = 0;
 	ray_ini(camera->camera_leftmost_point, camera->camera_angle_to_leftmost_point, &ray);
 	while (ray_number < SCREEN_WIDTH)
@@ -337,7 +339,7 @@ void	raycast_and_draw_fov_from_player(t_game *g, t_map *map, t_player *player)
 		do_the_bdda(map, &ray);
 		draw_the_pixel_column(g, &ray, ray_number);
 		ray_number++;
-		ray_next(angle_step, &ray, camera);
+		//ray_next(angle_step, &ray, camera); //FIXME
 	}
 }
 
@@ -350,7 +352,7 @@ void	draw_frame(t_game *g)
 	raycast_and_draw_fov_from_player(g, &g->map, &g->player);
 	gettimeofday(&t->now, NULL);
 	t->time_taken_to_draw_frame = (t->old.tv_usec - t->old.tv_usec) * 1e6;
-	printf(BLUE"time taken to display buffered frame: %4d"RESET, t->time_taken_to_draw_frame);
+	printf(BLUE"time taken to display buffered frame: %10ld"RESET, t->time_taken_to_draw_frame);
 }
 
 void	game_loop(t_game *g)
