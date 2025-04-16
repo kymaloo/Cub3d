@@ -90,16 +90,18 @@ draw_screen(t_game *g)
 
 	p = &g->player;
 	c = &p->camera;
-	camera_current[X] = c->start[X];
-	camera_current[Y] = c->start[Y];
+
+	
+	camera_current[X] = c->camera_leftmost_point[X];
+	camera_current[Y] = c->camera_leftmost_point[Y];
 	i = 0;
 	while(i < SCREEN_WIDTH)
 	{
 		r.angle = atan2(camera_current[Y], camera_current[X]);	//whatch out we're in Y X coordinates
 		raycast(p->position, r.angle, &r);
 		draw_column_to_buffer(g, &r, i);
-		camera_current[X] += c->camera_step[X];
-		camera_current[Y] += c->camera_step[Y];
+		camera_current[X] += c->camera_step_vect[X];
+		camera_current[Y] += c->camera_step_vect[Y];
 		i++;
 	}
 }
@@ -117,7 +119,7 @@ void	draw_frame(t_game *g)
 	printf(BLUE"time taken to display buffered frame: %4d"RESET, t->time_taken_to_draw_frame);
 }
 
-void game_loop(t_game *g)
+void	game_loop(t_game *g)
 {
 	draw_frame(g);
 	try_move(g);

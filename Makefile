@@ -44,7 +44,7 @@ SRCS	:= 	\
 			src/parsing/colors_fc.c						\
 			\
 			src/engine_3D/coords.c						\
-			src/engine_3D/digital_differential_analyzer.c	\
+			src/engine_3D/dda.c							\
 			src/engine_3D/draw_line.c					\
 			src/engine_3D/frame.c						\
 			src/engine_3D/rotations.c					\

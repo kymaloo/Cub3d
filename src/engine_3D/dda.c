@@ -1,17 +1,17 @@
 #include "cub.h"
 
-#define FOV	70
-#define WALL '1'
-
-typedef struct s_camera
+// Fonction de normalisation de l'angle entre 0 et 2PI
+void	normalize_angle(float *ray_angle) 
 {
-	float	camera_leftmost_point[NB_DIM];
-	float	camera_angle_to_leftmost_point;
-	float	camera_vect[NB_DIM];
-	float	camera_step_vect[NB_DIM];
-	float	camera_step_angle;
-	float	camera_distance_forward;
-} t_camera;
+	while (*ray_angle < 0)
+	{
+        *ray_angle += 2 * M_PI;  // Ajouter 2PI tant que l'angle est négatif
+    }
+    while (*ray_angle >= 2 * M_PI) 
+	{
+		*ray_angle -= 2 * M_PI;  // Soustraire 2PI tant que l'angle est >= 2PI
+    }
+}
 
 void	camera_ini(t_player *player, t_camera *c)
 {
@@ -29,33 +29,6 @@ void	camera_ini(t_player *player, t_camera *c)
 	c->camera_step_angle = FOV / SCREEN_WIDTH;
 }
 
-enum e_axis
-{
-	NONE = -1,
-	X,
-	Y,
-};
-
-enum e_directions
-{
-	NONE = -1,
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST,
-};
-
-typedef struct s_ray
-{
-	float				pos[NB_DIM];
-	float				angle;
-
-	float				coord_wall_hit[NB_DIM];
-	enum e_directions	hit_dir_of_wall;
-	float				percent_tile_texture_hit;
-	float				distance_to_hit;
-} t_ray;
-
 void	ray_ini(float pos[], float angle, t_ray *ray)
 {
 	ray->angle = angle;
@@ -67,15 +40,17 @@ void	ray_ini(float pos[], float angle, t_ray *ray)
 	ray->hit_dir_of_wall = NONE;
 }
 
-void	ray_next(float angle_step, t_ray *ray)
+void	ray_next(float angle_step, t_ray *ray, t_camera *camera)
 {
-	ray->angle = nomarlise_angle( ray->angle + angle_step);
+	ray->pos[X] += camera->camera_step_vect[X];
+	ray->pos[Y] += camera->camera_step_vect[Y];
+	ray->angle = nomarlize_angle(atan2f(ray->pos[Y], ray->pos[X]));
 	ray->coord_wall_hit[X] = -1;
 	ray->coord_wall_hit[Y] = -1;
 	ray->hit_dir_of_wall = NONE;
 }
 
-enum e_directions angle_goes(float angle, enum e_axis axis)
+enum e_directions angle_goes(float angle, t_axis axis)
 {
 	if (axis == X)
 	{
@@ -117,18 +92,7 @@ typedef struct s_bdda
 	int		where_tile_y;
 } t_bdda;
 
-// Fonction de normalisation de l'angle entre 0 et 2PI
-void	normalise_angle(float *ray_angle) 
-{
-	while (*ray_angle < 0)
-	{
-        *ray_angle += 2 * M_PI;  // Ajouter 2PI tant que l'angle est négatif
-    }
-    while (*ray_angle >= 2 * M_PI) 
-	{
-		*ray_angle -= 2 * M_PI;  // Soustraire 2PI tant que l'angle est >= 2PI
-    }
-}
+
 
 // Fonction d'init du better dda
 void	init_bdda(t_bdda *dda, t_ray *ray)
@@ -182,7 +146,7 @@ void	init_bdda(t_bdda *dda, t_ray *ray)
  * @return true 
  * @return false 
  */
-bool	collide(t_ray *ray, float step_x, float step_y, enum e_axis collision_axis)
+bool	collide(t_ray *ray, float step_x, float step_y, t_axis collision_axis)
 {
 	if (collision_axis == X)
 	{
@@ -205,13 +169,13 @@ bool	collide(t_ray *ray, float step_x, float step_y, enum e_axis collision_axis)
 	return (true);
 }
 
-map_wall_direction_hit_check(t_bdda *dda, t_map *m, t_ray *ray, enum e_axis moving_along)
+int	map_wall_direction_hit_check(t_bdda *dda, t_map *m, t_ray *ray, t_axis moving_along)
 {
 	dda->where_tile_x = (int) dda->ray_x;
 	dda->where_tile_y = (int) dda->ray_y;
 	if ((dda->where_tile_x >= 0 && dda->where_tile_x <= m->x_max) \
 		&& (dda->where_tile_y >= 0 && dda->where_tile_y <= m->y_max) \
-		&& (m->map[dda->where_tile_y][dda->where_tile_x] == WALL)) 
+		&& (m->map[dda->where_tile_y][dda->where_tile_x] == CHAR_WALL)) 
 	{
 		ray->coord_wall_hit[X] = dda->ray_x;
 		ray->coord_wall_hit[Y] = dda->ray_y;
@@ -229,7 +193,7 @@ map_wall_direction_hit_check(t_bdda *dda, t_map *m, t_ray *ray, enum e_axis movi
 	ray->coord_wall_hit[Y] = -1;
 	return false;
 }
-enum e_axis dda_advance_along_smaller_axis_unit_vect(t_bdda *dda)
+t_axis	dda_advance_along_smaller_axis_unit_vect(t_bdda *dda)
 {
 	if (dda->advanced_dist_x < dda->advanced_dist_y)
 	{
@@ -248,11 +212,11 @@ enum e_axis dda_advance_along_smaller_axis_unit_vect(t_bdda *dda)
 }
 
 // Fonction better dda
-void bdda(t_map *m, t_ray *ray)
+void	do_the_bdda(t_map *m, t_ray *ray)
 {
 	t_bdda		bdda;
 	bool		collided;
-	enum e_axis	along_axis;
+	t_axis	along_axis;
 
 	init_bdda(&bdda, ray);
 	collided = false;
@@ -268,7 +232,7 @@ void bdda(t_map *m, t_ray *ray)
 	return ;
 }
 
-get_texture_pixel_color(t_game *g, t_ray *r, int current_x, int current_y, int wall_display_height)
+int	get_texture_pixel_color(t_game *g, t_ray *r, int current_x, int current_y, int wall_display_height)
 {
 	int tile_relative_x_impact;
 	int tile_relative_y_impact;
@@ -299,6 +263,12 @@ get_texture_pixel_color(t_game *g, t_ray *r, int current_x, int current_y, int w
 		nuclear_exit(ft_error(__FILE__, __LINE__, "Ray collided Unknown type", EXIT_FAILURE));
 }
 
+
+static inline distance_size_function(float x)
+{
+	return (1 / x);
+}
+
 void	draw_the_pixel_column(t_game *g, t_ray *ray, unsigned int current_column_x_on_screen)
 {
 	//distance mur = taill colonne mur
@@ -316,40 +286,75 @@ void	draw_the_pixel_column(t_game *g, t_ray *ray, unsigned int current_column_x_
 	unsigned int	column_height;
 	unsigned int	tile_percent;
 	int				color;
-	int offset_from_ground;
+	int				offset_from_ground;
 
-	if (ray->distance_to_hit == 0)
+	if (ray->distance_to_hit <= 0)
 		column_height = SCREEN_HEIGHT;
 	else
-		column_height = SCREEN_HEIGHT * (1 / ray->distance_to_hit);
+		column_height = SCREEN_HEIGHT * distance_size_function(ray->distance_to_hit); //  1/x
 	offset_from_ground = (SCREEN_HEIGHT - column_height) * 0.5;
 
 	unsigned int	current_column_y;
 	current_column_y = offset_from_ground;
 	while(current_column_y < column_height)
 	{
-		color = get_texture_pixel_color(g, ray, current_column_x_on_screen, current_column_y, column_height);
+		//color = get_texture_pixel_color(g, ray, current_column_x_on_screen, current_column_y, column_height);
+		if (ray->hit_dir_of_wall == EAST)
+		{
+			color = C_WALL_EAST;
+		}
+		else if (ray->hit_dir_of_wall == WEST)
+		{
+			color = C_WALL_WEST;
+		}
+		else if (ray->hit_dir_of_wall == NORTH)
+		{
+			color = C_WALL_NORTH;
+		}
+		else if (ray->hit_dir_of_wall == SOUTH)
+		{
+			color = C_WALL_SOUTH;
+		}
 		mlx_put_pixel(g->mlx_infos.images.next_frame, current_column_x_on_screen, offset_from_ground + current_column_y, color);
 	}
 }
 
-void	raycast_fov_from_player(t_game *g, t_map *map, t_player *player)
+void	raycast_and_draw_fov_from_player(t_game *g, t_map *map, t_player *player)
 {
 	t_ray			ray;
-	t_camera		camera;
+	t_camera		*camera;
 	float			angle_step;
-	unsigned int	i;
+	unsigned int	ray_number;
 
 
+	camera = &g->player.camera;
 	angle_step = FOV / SCREEN_WIDTH;
 	camera_ini(player, &camera);
-	i = 0;
-	ray_ini(player->position, player->angle, &ray);
-	while (i < SCREEN_WIDTH)
+	ray_number = 0;
+	ray_ini(camera->camera_leftmost_point, camera->camera_angle_to_leftmost_point, &ray);
+	while (ray_number < SCREEN_WIDTH)
 	{
-		do_the_dda(map, &ray);
-		draw_the_pixel_column(g, &ray, i);
-		i++;
-		ray_next(angle_step, &ray);
+		do_the_bdda(map, &ray);
+		draw_the_pixel_column(g, &ray, ray_number);
+		ray_number++;
+		ray_next(angle_step, &ray, camera);
 	}
+}
+
+void	draw_frame(t_game *g)
+{
+	t_time *t;
+
+	t = &g->time;
+	gettimeofday(&t->old, NULL);
+	raycast_and_draw_fov_from_player(g, &g->map, &g->player);
+	gettimeofday(&t->now, NULL);
+	t->time_taken_to_draw_frame = (t->old.tv_usec - t->old.tv_usec) * 1e6;
+	printf(BLUE"time taken to display buffered frame: %4d"RESET, t->time_taken_to_draw_frame);
+}
+
+void	game_loop(t_game *g)
+{
+	draw_frame(g);
+	try_move(g);
 }

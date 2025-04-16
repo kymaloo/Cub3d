@@ -30,7 +30,7 @@ typedef	 struct s_bresenham
  * @param start_point 
  * @param end_point 
  */
-bresenham_steps(t_bresenham *b, int start_point[], int end_point[])
+void	bresenham_steps(t_bresenham *b, int start_point[], int end_point[])
 {
 	printf("(%d, %d)\n", b->current[X], b->current[Y]); //plot first point
 	put_the_pixel();
@@ -74,7 +74,7 @@ bresenham_steps(t_bresenham *b, int start_point[], int end_point[])
  * @param start_point 
  * @param end_point 
  */
-bresenham_ini(t_bresenham *b, int start_point[], int end_point[])
+void	bresenham_ini(t_bresenham *b, int start_point[], int end_point[])
 {
 	b->differential[X] = abs(end_point[X] - start_point[X]);
 	b->differential[Y] = abs(end_point[Y] - start_point[Y]);
@@ -105,7 +105,7 @@ bresenham_ini(t_bresenham *b, int start_point[], int end_point[])
  * @param start_point 
  * @param end_point 
  */
-void draw_line(int start_point[], int end_point[])
+void	draw_line(int start_point[], int end_point[])
 {
 	t_bresenham b;
 
@@ -113,7 +113,7 @@ void draw_line(int start_point[], int end_point[])
 	bresenham_steps(&b, start_point, end_point);
 }
 
-int main() {
+int	main() {
     int x1, y1, x2, y2;
     
     // Input starting and ending points

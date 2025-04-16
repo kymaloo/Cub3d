@@ -15,6 +15,20 @@
 # define WALL_WIDTH				64
 # define WALL_HEIGHT			64
 
+#define FOV	70
+
+enum e_char_map
+{
+	CHAR_PLAYER_NORTH = 'N',
+	CHAR_PLAYER_SOUTH = 'S',
+	CHAR_PLAYER_EAST = 'E',
+	CHAR_PLAYER_WEST = 'W',
+	CHAR_WALL = '1',
+	CHAR_GROUND = '0',
+	CHAR_DOOR = 'D',
+	CHAR_VOID = ' ',
+};
+
 #ifdef M_PI
 	#undef M_PI
 #endif
@@ -22,12 +36,13 @@
 
 typedef	struct s_map t_map;
 
-enum e_coords
+# define NONE -1
+typedef enum e_coords
 {
 	X = 0,
 	Y,
 	NB_DIM,
-};
+} t_axis, t_dim;
 
 typedef enum e_collision_type
 {
@@ -38,22 +53,53 @@ typedef enum e_collision_type
 	RAYHIT_WALL_WEST
 } t_wall_collision_type;
 
+// OLD
+// typedef struct s_camera
+// {
+// 	float	start[NB_DIM];
+// 	float	end[NB_DIM];
+// 	float	camera_length;
+// 	float	camera_step[NB_DIM];
+// } t_camera;
+
+enum e_directions
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+};
+
 typedef struct s_camera
 {
-	float	start[NB_DIM];
-	float	end[NB_DIM];
-	float	camera_length;
-	float	camera_step[NB_DIM];
+	float	camera_leftmost_point[NB_DIM];
+	float	camera_angle_to_leftmost_point;
+	float	camera_vect[NB_DIM];
+	float	camera_step_vect[NB_DIM];
+	float	camera_step_angle;
+	float	camera_distance_forward;
 } t_camera;
 
-typedef struct s_ray_infos 
+typedef struct s_ray
 {
-	float					point[NB_DIM];
-	float					angle;
-	float					dist;
-	enum e_coords			axis_of_collision;
-	enum e_collision_type	type_collided;
-} t_ray_infos, t_ray;
+	float				pos[NB_DIM];
+	float				angle;
+
+	float				coord_wall_hit[NB_DIM];
+	enum e_directions	hit_dir_of_wall;
+	float				percent_tile_texture_hit;
+	float				distance_to_hit;
+} t_ray;
+
+// OLD
+// typedef struct s_ray_infos 
+// {
+// 	float					point[NB_DIM];
+// 	float					angle;
+// 	float					dist;
+// 	enum e_coords			axis_of_collision;
+// 	enum e_collision_type	type_collided;
+// } t_ray_infos, t_ray;
 
 typedef struct s_player
 {
