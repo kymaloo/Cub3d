@@ -1,7 +1,14 @@
-#include "explosives.h"
+//#include "explosives.h"
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include "debug.h"
 
+# ifndef COUNTDOWN
+#  define COUNTDOWN -1
+# endif
 
 typedef struct s_target_location
 {
@@ -24,23 +31,23 @@ static void *play_with_detonator(size_t size, char *file, int line, const char *
 		printf("\t%s:%-9d in %-35s: 💥 BOOM BABEEH 💥💥💥\n", file, line, function);
 		return (NULL);
 	}
-	else if (c4->skip = true)
+	else if (c4->skip == true)
 	{
 		return (malloc(size));
 	}
 	else if (c4->countdown > 0)
 	{
-		printf("\t%s:%-9d in %-35s: countdown to midnight: %d... 💣... \n", file, line, function, c4->countdown);
+		printf("\t%s:%-9d in %-35s: countdown to midnight: %ld... 💣... \n", file, line, function, c4->countdown);
 		return (malloc(size));
 	}
 	else if (c4->target_number >= 0)
 	{
-		printf("\t\t%s:%-9d in %-35s:  💢(%d)💢🔭", file, line, function, c4->countdown);
+		printf("\t\t%s:%-9d in %-35s:  💢(%ld)💢🔭", file, line, function, c4->countdown);
 		return (malloc(size));
 	}
 	else
 	{
-		printf(BMAGENTA"\t🔥🧨🚒 WHAT THE FUCK IS A KILOMETER ?!?!?!?!??/// 🔥🧨🔥🧨\n"RESET);
+		printf(BMAGENTA"\t🔥💣🚒 WHAT THE FUCK IS A KILOMETER ?!?!?!?!?/// 🔥💣🔥💣\n"RESET);
 		return (NULL);
 	}
 }
@@ -58,14 +65,14 @@ static void	skip_the_skip(t_c4 *c4, t_target_location *last_known_location, char
 	}
 	else //FIX ME
 	{
-		c4->skip_from == -1;
+		c4->skip_from = -1;
 		c4->skip = false;
 	}
-	memmove(&file, &last_known_location->file, ft_strlen(file) + 1);
+	memmove(&file, &last_known_location->file, strlen(file) + 1);
 	if (c4->skip_from != -1 && c4->skip == false \
 	&& (c4->skip_from != c4->skip_from + 1 || c4->skip_from != c4->skip_from + 2))
 	{
-		printf("\t%s:%-9d in %-35s: countdown to midnight: %d... 💣... \n", file, line, function, c4->countdown - c4->skip_from / 2);
+		printf("\t%s:%-9d in %-35s: countdown to midnight: %ld... 💣... \n", file, line, function, c4->countdown - c4->skip_from / 2);
 		printf("\t...\n");
 	}
 }
@@ -88,7 +95,7 @@ void *explosive_malloc(size_t size, char *file, int line, const char *function)
 {
 	static t_target_location	last_known_location = {"nowhere",-1};
 	static t_c4	c4 = {COUNTDOWN, 0, -1, false};
-	void *result;
+	//void *result;
 
 	
 	say_hewwo(&c4);
@@ -125,12 +132,12 @@ void *explosive_calloc(size_t nmeb, size_t size, char *file, int line, const cha
 	static long target	  = -1;
 	if (countdown > 0)
 	{
-		printf("\t%s:%-9d in %-35s: countdown to midnight: %d", file, line, function, countdown);
+		printf("\t%s:%-9d in %-35s: countdown to midnight: %ld", file, line, function, countdown);
 		return (calloc(nmeb, size));
 	}
 	else if (countdown == 0)
 	{
-		printf("\t%s:%-9d in %-35s: BOOM BABEEH %d", file, line, function, countdown);
+		printf("\t%s:%-9d in %-35s: BOOM BABEEH %ld", file, line, function, countdown);
 		return (NULL);
 	}
 	else if (countdown == -1 && target == -1)
@@ -140,9 +147,9 @@ void *explosive_calloc(size_t nmeb, size_t size, char *file, int line, const cha
 	}
 	if (target >= 0)
 	{
-		printf("\tSelect your target: %s:%-9d in %-35s: BOOM BABEEH %d", file, line, function, countdown);
+		printf("\tSelect your target: %s:%-9d in %-35s: BOOM BABEEH %ld", file, line, function, countdown);
 		return (calloc(nmeb, size));
 	}
-	printf("\t WHAT THE FUCK IS A KILOMETER ?!?!?!?!??///\n");
+	printf("\t WHAT THE FUCK IS A KILOMETER ?!?!?!?!?///\n");
 	return (NULL);
 }

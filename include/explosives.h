@@ -3,10 +3,6 @@
 #ifndef EXPLOSIVES_H
 # define EXPLOSIVES_H
 
-# ifndef COUNTDOWN
-#  define COUNTDOWN -1
-# endif
-
 # include <stdio.h>
 # include <stdlib.h>
 # include "debug.h"
