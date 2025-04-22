@@ -355,8 +355,16 @@ void	draw_frame(t_game *g)
 	printf(BLUE"time taken to display buffered frame: %10ld"RESET, t->time_taken_to_draw_frame);
 }
 
+void keys_pressed(t_game *g)
+{
+	if (mlx_is_key_down(g->mlx_infos.mlx, MLX_KEY_ESCAPE))
+	mlx_close_window(g->mlx_infos.mlx);
+}
+
 void	game_loop(t_game *g)
 {
 	draw_frame(g);
-	try_move(g);
+	player_moves(g);
+	player_rotations(g);
+	keys_pressed(g);
 }

@@ -49,9 +49,11 @@ SRCS	:= 	\
 			src/engine_3D/frame.c						\
 			src/engine_3D/rotations.c					\
 			\
-			src/exec/*.c								\
+			src/exec/minimap.c							\
+			src/exec/player_moves.c						\
+			src/exec/player_rotations.c					\
 			\
-			src/exec/hooks/*.c							\
+			src/exec/hooks/ft_hook.c					\
 			\
 			src/debug/*.c	\
 
