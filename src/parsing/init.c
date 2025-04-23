@@ -46,12 +46,12 @@ static void	is_dir_and_filled(t_mlx_infos *mlx_infos)
 		nuclear_exit(ft_error(WHERE, "Path floor is Null", EXIT_FAILURE));
 }
 
-void	init_infos_p(t_infos_p *infos_p, t_game *g, t_parsing_map *p)
+void	init_infos_p(t_infos_p *infos_p, t_game *g, t_parsing_map *parsing_map)
 {
 	ft_memset(infos_p, 0, sizeof(t_infos_p));
-	ft_memset(infos_p, 0, sizeof(t_parsing_map));
+	ft_memset(parsing_map, 0, sizeof(t_parsing_map));
 	infos_p->g = g;
-	infos_p->p = p;
+	infos_p->p = parsing_map;
 }
 
 int	parse_map_init_game_infos(t_game *game_infos, char *str)

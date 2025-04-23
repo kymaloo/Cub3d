@@ -14,20 +14,21 @@ float	normalize_angle(float ray_angle)
 	return (ray_angle);
 }
 
+//TODO Fix camera INI 
 void	camera_ini(t_player *player, t_camera *c)
 {
-	c->camera_distance_forward = ( SCREEN_WIDTH * 0.5 ) / tanf(FOV * 0.5);
+	c->camera_distance_forward = ((SCREEN_WIDTH * 0.5) / tanf(FOV * 0.5)) / MAP_SQUARE_SIDE_Y;
 	
-	c->camera_leftmost_point[X] = player->position[X] - SCREEN_WIDTH / 2;
-	c->camera_leftmost_point[Y] = player->position[Y] + c->camera_distance_forward;
+	c->camera_leftmost_point[X] = (player->position[X] - SCREEN_WIDTH / 2) / MAP_SQUARE_SIDE_X;
+	c->camera_leftmost_point[Y] = (player->position[Y] + c->camera_distance_forward) / MAP_SQUARE_SIDE_Y;
 
-	c->camera_vect[X] = SCREEN_WIDTH;
+	c->camera_vect[X] = SCREEN_WIDTH / MAP_SQUARE_SIDE_X;
 	c->camera_vect[Y] = 0;
 
-	c->camera_step_vect[X] = c->camera_vect[X] / SCREEN_WIDTH;
-	c->camera_step_vect[Y] = c->camera_vect[Y] / SCREEN_WIDTH;
+	c->camera_step_vect[X] = (c->camera_vect[X] / SCREEN_WIDTH) / MAP_SQUARE_SIDE_X;
+	c->camera_step_vect[Y] = (c->camera_vect[Y] / SCREEN_WIDTH) / MAP_SQUARE_SIDE_Y;
 
-	c->camera_step_angle = FOV / SCREEN_WIDTH;
+	c->camera_step_angle = FOV / (SCREEN_WIDTH);
 }
 
 void	ray_ini(float pos[], float angle, t_ray *ray)
@@ -222,7 +223,7 @@ void	do_the_bdda(t_map *m, t_ray *ray)
 	init_bdda(&bdda, ray);
 	collided = false;
 	while (!collided && (bdda.advanced_dist_x < RENDER_DISTANCE \
-		|| bdda.advanced_dist_x < RENDER_DISTANCE))
+		|| bdda.advanced_dist_y < RENDER_DISTANCE))
 	{
 		along_axis = dda_advance_along_smaller_axis_unit_vect(&bdda);
 		collided = map_wall_direction_hit_check(&bdda, m, ray, along_axis);
@@ -330,7 +331,7 @@ void	raycast_and_draw_fov_from_player(t_game *g, t_map *map, t_player *player)
 
 
 	camera = &g->player.camera;
-	angle_step = FOV / SCREEN_WIDTH;
+	//angle_step = FOV / SCREEN_WIDTH;
 	camera_ini(player, camera);
 	ray_number = 0;
 	ray_ini(camera->camera_leftmost_point, camera->camera_angle_to_leftmost_point, &ray);

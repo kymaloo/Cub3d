@@ -101,13 +101,20 @@ $(MLX_DIR):
 	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
 	@git submodule update --init --recursive $(MLX_DIR)
 
-#$(MLX_A)
-$(NAME): $(LIBFT_A) $(OBJS)
+
+$(NAME): $(LIBFT_A) $(OBJS) $(MLX_A)
 	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
 	@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
 	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
 	@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
+
+compile_without_mlx: $(LIBFT_A) $(OBJS)
+	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
+	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
+	@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked without mlx !$(RESET)"
 
 clear:
 	@clear

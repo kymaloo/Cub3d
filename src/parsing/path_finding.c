@@ -55,8 +55,9 @@ static void flood_fill_rec(int x, int y, t_infos_p *ip, int i)
 
 	if (cells[y][x] == '1')
 		return ;
-	printf(BLUE"\n\ni: %d: [Y][X] = [%d][%d]\n"RESET, i, y, x);
-	print_map_highlight(cells, x, y);
+	
+	// printf(BLUE"\n\ni: %d: [Y][X] = [%d][%d]\n"RESET, i, y, x);
+	// print_map_highlight(cells, x, y);
 	
 	cells[y][x] = '1';
 	i = i + 1;

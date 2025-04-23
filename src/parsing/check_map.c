@@ -15,9 +15,12 @@ int	check_map_format_cub(char *str)
 			nuclear_exit(ft_error(WHERE, \
 			"check_map_format_cub() failure", EXIT_FAILURE));
 	}
-	nuclear_exit(ft_error(WHERE, \
-	"check_map_format_cub() failure", EXIT_FAILURE));
-	return (EXIT_SUCCESS);
+	else
+	{
+		nuclear_exit(ft_error(WHERE, \
+		"check_map_format_cub() failure", EXIT_FAILURE));
+	}
+	return (EXIT_FAILURE);
 }
 
 int	check_white_space(char *str)
