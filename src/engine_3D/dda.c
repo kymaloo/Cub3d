@@ -362,10 +362,4 @@ void keys_pressed(t_game *g)
 	mlx_close_window(g->mlx_infos.mlx);
 }
 
-void	game_loop(t_game *g)
-{
-	draw_frame(g);
-	player_moves(g);
-	player_rotations(g);
-	keys_pressed(g);
-}
+

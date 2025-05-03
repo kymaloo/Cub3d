@@ -42,7 +42,7 @@ void	init_mlx(t_game *g)
 		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
 	img = mlx_new_image(g->mlx_infos.mlx, 1920, 1080);
 	mlx_image_to_window(g->mlx_infos.mlx, img, 0, 0);
-	g->mlx_infos.images.next_frame = img;
+	// g->mlx_infos.images.next_frame = img;  //the fuck ? 
 	g->map.tile_size = 16;
 	g->mlx_infos.images.minimap = mlx_new_image(g->mlx_infos.mlx, 360, 360);
 	//g->texture->image->minimap->instances[1];

@@ -17,7 +17,8 @@ typedef	struct s_time
 
 typedef struct s_images
 {
-	mlx_image_t	*next_frame;
+	mlx_image_t	*background;
+	mlx_image_t	*walls;
 	mlx_image_t	*minimap;
 	mlx_image_t	*minimap_player;
 	mlx_image_t	*radar;

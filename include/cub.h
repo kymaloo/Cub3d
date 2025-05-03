@@ -6,15 +6,15 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <math.h>
+# include <sys/time.h>
+# include "memory_manager.h"
 # include "define.h"
 # include "struct.h"
 # include "../libft/libft.h"
-# include "memory_manager.h"
 # include "ft_error.h"
 # include "MLX42/MLX42.h"
 # include "radar.h"
 # include "engine_3d.h"
-# include <sys/time.h>
 # include "game_loop.h"
 
 # ifdef DEBUG
