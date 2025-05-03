@@ -13,8 +13,19 @@
 # define MAX_RENDER_DISTANCE (100 * TILE_SIZE)  // Render distance = 100 tiles
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
-
+# define COLLISION_CHECK_DISTANCE 10
+# define PLAYER_MOVE_SPEED 5
 # define COLOR_MISSING 0xFF00FFFF
+
+# ifndef M_PI_2
+#  define M_PI_2 1.57079632679489661923
+# endif
+
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+
+
 
 
 /**
