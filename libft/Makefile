@@ -4,6 +4,12 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g3
 
+BRED	:=	\033[1;31m
+YELLOW	:=	\033[33m
+GREEN	:=	\033[32m
+BLUE	:=	\033[1;34m
+RESET	:=	\033[0m
+
 SRC =	ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
@@ -53,8 +59,14 @@ OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
+%.o: %.c
+	@printf "$(BLUE)$(NAME): compiling objects:\n$(BLUE)$(NAME): compiling $(RESET)%-33.33s\033[F" $@
+	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
+
 $(NAME): $(OBJ)
 	@ar -rc $(NAME) $(OBJ)
+	@printf "\33[2K\r$(BLUE)$(NAME): objects $(GREEN)compiled$(RESET)\n"
+	@printf "\33[2K\r$(BLUE)$(NAME): $(NAME) $(GREEN)archived$(RESET)\n"
 
 clean:
 	@rm -rf $(OBJ)
