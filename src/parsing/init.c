@@ -78,6 +78,8 @@ int	parse_map_init_game_infos(t_game *game_infos, char *str)
 	memory_manager(DEL_ELEM, ZONE_1, infos_p.p->all_file);
 	if (check_wall(&infos_p) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	char_to_rgb(game_infos->mlx_infos.colors, game_infos->mlx_infos.colors.color_ceiling, CEILING);
+	char_to_rgb(game_infos->mlx_infos.colors, game_infos->mlx_infos.colors.color_floor, FLOOR);
 	return (EXIT_SUCCESS);
 }
 
@@ -107,4 +109,19 @@ int	all_line_is_valid(t_mlx_infos *mlx_infos, char **array)
 			nuclear_exit(ft_error(WHERE, "Line isn't valid", EXIT_FAILURE));
 	}
 	return (EXIT_SUCCESS);
+}
+
+void	char_to_rgb(t_colors colors, char *str, int id)
+{
+	char	**split;
+
+	split = ft_split(&str[2], ',');
+	if (split == NULL)
+		return ;
+	if (id == FLOOR)
+		colors.color_floor_uint = get_rgba(ft_atoi(split[0]), ft_atoi(split[1]), ft_atoi(split[2]), 255);
+	if (id == CEILING)
+		colors.color_ceiling_uint = get_rgba(ft_atoi(split[0]), ft_atoi(split[1]), ft_atoi(split[2]), 255);
+	ft_free_all(split, 0);
+	return ;
 }

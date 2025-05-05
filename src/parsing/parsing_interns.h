@@ -51,7 +51,7 @@ int		get_size_of_array(t_mlx_infos *mlx_infos, \
 int		get_index_before_array(t_infos_p *infos, char **array, int i);
 void	get_line_size(t_infos_p *infos, char **array);
 void	find_pos_player(t_game *game, char **grid);
-
+void	char_to_rgb(t_colors *colors, char *str, int id);
 
 //DEBUG
 void	print_map_highlight(char **map, int hl_x, int hl_y);

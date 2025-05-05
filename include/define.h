@@ -19,6 +19,9 @@
 # define C_INVALID			0xD3D3D3FF
 # define C_WHITE			0xFFFFFFFF
 
+# define FLOOR				0
+# define CEILING			1
+
 enum e_error
 {
 	MALLOC_ERROR = -1,
