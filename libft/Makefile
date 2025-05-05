@@ -74,6 +74,7 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 
-re: fclean all
+re: fclean
+	make all -j4
 
 .PHONY : all clean fclean re

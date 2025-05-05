@@ -44,7 +44,15 @@ SRCS	:= 	\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
 			\
-			src/exec_reborn/*.c							\
+			src/exec_reborn/game_hooks/keys_pressed.c		\
+			src/exec_reborn/game_hooks/player_movements.c	\
+			src/exec_reborn/game_hooks/player_rotations.c	\
+			src/exec_reborn/raycasting/dda_utils.c			\
+			src/exec_reborn/raycasting/dda.c				\
+			src/exec_reborn/raycasting/raycasting.c			\
+			src/exec_reborn/render/render_frame.c			\
+			src/exec_reborn/game_loop.c						\
+
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -69,7 +77,8 @@ vs:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
 
 %.o: %.c
-	@printf "$(BLUE)$(NAME): compiling objects:\n$(BLUE)$(NAME): compiling $(RESET)%-33.33s\n" $@
+	@printf "$(BLUE)$(NAME): compiling objects:\n$(BLUE)$(NAME): compiling $(RESET)%-45.45s\n" $@
+#@printf "$(BLUE)$(NAME): compiling objects:\n$(BLUE)$(NAME): compiling $(RESET)%-33.33s\033[F" $@
 	@$(CC) $(CFLAGS) -o $@ -c $< && printf "\033[F\033[F" || (echo "$(BLUE)$(NAME): $(BRED) $<: error: $(RESET)compilation failure$(RESET)" && return 1)
 
 $(LIBFT_A):
@@ -93,8 +102,8 @@ $(MLX_DIR):
 
 #checks dependencies left to right
 $(NAME): $(MLX_A) $(LIBFT_A) $(OBJS) 
-	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
-	@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
+#@echo "$(BLUE)$(NAME): objects $(GREEN)compiled !$(RESET)"
+#@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
 	@echo "$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)
 
@@ -103,7 +112,7 @@ $(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
 #@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
 
 compile_without_mlx: $(LIBFT_A) $(OBJS)
-	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): objects $(GREEN)compiled !$(RESET)"
 	@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
 	@echo "$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)
@@ -136,6 +145,13 @@ gprof: $(LIBFT_A) $(OBJS)
 	./$(NAME) ./maps/map.cub && gprof $(NAME) gmon.out > analysis.txt && cat analysis.txt
 
 re: clear fclean all
+
+re_project_only: clear
+	@echo "$(BLUE)$(NAME): Cleaning object files$(RESET)"
+	@rm -rf $(OBJS)
+	@echo "$(BLUE)$(NAME): Cleaning $(NAME)$(RESET)"
+	@rm -rf $(NAME)
+	make all
 
 re_mlx: clear fclean_mlx all
 
