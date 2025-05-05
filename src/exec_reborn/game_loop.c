@@ -3,11 +3,11 @@
 void	game_loop(t_game *g)
 {
 	//
-	render_frame(&g->mlx_infos, g->player, &g->mlx_infos.textures, g->ray_collisions);
+	render_frame(g, &g->mlx_infos, &g->mlx_infos.textures, g->ray_collisions);
 	player_rotations(g);
-	// 1/60 s
 	player_moves(g);
 	keys_pressed(g);
+	// 1/60 s
 }
 
 void	ft_hook(void *data_game)

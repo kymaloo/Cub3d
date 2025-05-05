@@ -8,7 +8,7 @@
  * 
  * Calculates ray direction and initial grid position.
  */
-static void init_dda_values(t_dda *dda, const t_player *player, int screen_x)
+void init_dda_values(t_dda *dda, t_player *player, int screen_x)
 {
     float camera_x = 2 * screen_x / (float)SCREEN_WIDTH - 1;
     dda->ray_dir_x = player->camera.dir_x + player->camera.plane_x * camera_x;
@@ -28,7 +28,7 @@ static void init_dda_values(t_dda *dda, const t_player *player, int screen_x)
  * 
  * Determines movement direction through grid (left/right and up/down).
  */
-static void calculate_dda_steps(t_dda *dda, const t_player *player)
+void calculate_dda_steps(t_dda *dda, t_player *player)
 {
     if (dda->ray_dir_x < 0) {
         dda->step_x = -1;
@@ -53,7 +53,7 @@ static void calculate_dda_steps(t_dda *dda, const t_player *player)
  * 
  * Advances one grid cell according to DDA algorithm.
  */
-static void advance_dda(t_dda *dda)
+void advance_dda(t_dda *dda)
 {
     if (dda->side_dist_x < dda->side_dist_y) {
         dda->side_dist_x += dda->delta_dist_x;
@@ -72,7 +72,7 @@ static void advance_dda(t_dda *dda)
  * @param current_dist Ray's current travel distance
  * @return 1 if wall collision, 0 otherwise
  */
-static int check_collision(t_game *g, const t_dda *dda, float current_dist)
+int check_collision(t_game *g, t_dda *dda, float current_dist)
 {
     if (current_dist > MAX_RENDER_DISTANCE)
         return 0;

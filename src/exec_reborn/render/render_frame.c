@@ -13,8 +13,7 @@ static void	clear_walls_image(mlx_image_t *walls)
 	total_pixels = walls->width * walls->height;
 	while (total_pixels--)
 	{
-		*pixels = 0x00000000;
-		*pixels++;
+		*pixels++ = 0x00000000;
 	}
 }
 
@@ -50,6 +49,28 @@ static void	calculate_wall_dimensions(t_collision_infos *col, float *height, \
 	*end = draw_end;
 }
 
+uint32_t	mlx_get_texture_pixel(mlx_texture_t *tex, unsigned int tex_x, unsigned int tex_y)
+{
+	uint8_t		*pixel_ptr;
+	uint32_t	color;
+
+	// Check bounds
+	if (tex == NULL || tex_x >= tex->width || tex_y >= tex->height)
+		return (COLOR_MISSING);
+
+	// Calculate pixel position (4 bytes per pixel: RGBA)
+	pixel_ptr = &tex->pixels[(tex_y * tex->width + tex_x) * 4];
+
+	// Pack into 32-bit ARGB format
+	color = 0;
+	color |= (uint32_t)pixel_ptr[3] << 24; // Alpha
+	color |= (uint32_t)pixel_ptr[0] << 16; // Red
+	color |= (uint32_t)pixel_ptr[1] << 8;  // Green
+	color |= (uint32_t)pixel_ptr[2];       // Blue
+
+	return (color);
+}
+
 static void	draw_textured_column(mlx_image_t *walls, mlx_texture_t *tex, 
 							t_collision_infos *col, int x)
 {
@@ -77,9 +98,25 @@ static void	draw_missing_texture_marker(mlx_image_t *walls, t_collision_infos *c
 {
 	int	y;
 
+	(void) col;
 	y = 0;
 	while (y < SCREEN_HEIGHT)
 		mlx_put_pixel(walls, x, y++, COLOR_MISSING);
+}
+
+mlx_texture_t	*select_wall_texture(t_textures *tex, t_wall_direction face)
+{
+	if (face == NORTH)
+		return (tex->wall_north);
+	else if(face == SOUTH)
+		return (tex->wall_south);
+	else if(face == EAST)
+		return (tex->wall_east);
+	else if(face == WEST)
+		return (tex->wall_west);
+	else
+		nuclear_exit(ft_error(__FILE__, __LINE__, "bad wall_face", EXIT_FAILURE));
+	return (NULL);
 }
 
 void	draw_walls_textures(mlx_image_t *walls, t_textures *tex, t_collision_infos *collisions)
@@ -148,6 +185,7 @@ void	draw_walls_colors_only(mlx_image_t *walls, t_collision_infos *collisions)
 	}
 }
 
+//todo fixme
 void	init_renderer(t_mlx_infos *m)
 {
 	int			x;
@@ -162,9 +200,9 @@ void	init_renderer(t_mlx_infos *m)
 		while (x < SCREEN_WIDTH)
 		{
 			if (y < SCREEN_HEIGHT / 2)
-				color = m->colors.color_floor;
+				color = 0xBC7488FF;	//color = m->colors.color_floor;
 			else
-				color = m->colors.color_ceiling;
+				color = 0x2D50FCFF;	//m->colors.color_ceiling;
 			mlx_put_pixel(m->images.background, x, y, color);
 			x++;
 		}
@@ -176,9 +214,10 @@ void	init_renderer(t_mlx_infos *m)
 	mlx_image_to_window(m->mlx, m->images.walls, 0, 0);
 }
 
-void	render_frame(t_mlx_infos *m, t_player *p, t_textures *t, t_collision_infos *c)
+void	render_frame(t_game *g, t_mlx_infos *m, t_textures *t, t_collision_infos *c)
 {
-	raycast(p, c);
-	clear_walls_image(m);
-	draw_walls_colors_only(m, t, c);
+	(void) t;
+	raycast(g, &g->player, c);
+	clear_walls_image(m->images.walls);
+	draw_walls_colors_only(m->images.walls, c);
 }

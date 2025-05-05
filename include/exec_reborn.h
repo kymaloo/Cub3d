@@ -8,6 +8,7 @@
 # include <sys/time.h>
 # include "memory_manager.h"
 # include "ainsi_color_codes.h"
+# include "parsing.h"
 
 # define TILE_SIZE 64.0f
 # define MAX_RENDER_DISTANCE (100 * TILE_SIZE)  // Render distance = 100 tiles
@@ -75,8 +76,11 @@ typedef struct s_images
 
 typedef	struct s_colors
 {
-	char	*color_floor;
-	char	*color_ceiling;
+	char	*color_floor;	//your sotred the str you read
+	char	*color_ceiling;	//your sotred the str you read
+
+	uint32_t	color_floor_uint;	//fill me up with the actual represented color using RGBA
+	uint32_t	color_ceiling_uint; //fill me up with the actual represented color using RGBA
 }	t_colors;
 
 typedef struct s_textures
@@ -114,6 +118,36 @@ typedef	struct s_map
 	int		tile_size;
 }	t_map;
 
+
+
+
+//TODO fixme
+
+typedef struct s_camera {
+    float	dir_x;        // Vecteur direction (normalisé)
+    float	dir_y;
+    float	plane_x;      // Plan de la caméra (pour FOV)
+    float	plane_y;
+    float	fov;         // Champ de vision en radians
+} t_camera;
+
+typedef struct s_player {
+	char	facing;
+    float	x;            // Position x dans le monde
+    float	y;            // Position y dans le monde
+    float	move_speed;   // Vitesse de déplacement
+    float	rot_speed;    // Vitesse de rotation
+    t_camera camera;    // Camera attachée au joueur
+} t_player;
+
+/*typedef struct s_player
+{
+	char		facing;
+	float		position[NB_DIM];
+	t_camera	camera;
+	float		angle;
+}	t_player;*/
+
 typedef struct s_game
 {
 	t_player	player;
@@ -129,5 +163,18 @@ typedef struct s_infos_p
 	t_game			*g;
 } t_infos_p;
 
-void		render_frame(mlx_t *mlx, t_player *p, t_textures *t, t_collision_infos *c);
+void	render_frame(t_game *g, t_mlx_infos *m, t_textures *t, t_collision_infos *c);
+
+
+void	raycast(t_game *g, t_player *player, t_collision_infos *collisions);
+
+
+void	player_rotations(t_game *g);
+void	player_moves(t_game *g);
+void	keys_pressed();
+
+void	advance_dda(t_dda *dda);
+int		check_collision(t_game *g, t_dda *dda, float current_dist);
+void	calculate_dda_steps(t_dda *dda, t_player *player);
+void	init_dda_values(t_dda *dda, t_player *player, int screen_x);
 #endif
