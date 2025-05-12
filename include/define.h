@@ -3,7 +3,7 @@
 
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
-# define ZONE_1				"petit_chacalot"
+# define ZONE_PARSE				"petit_chacalot"
 # define ZONE_MLX			"zebi_la_mlx"
 # define ZONE_FDS			"oulah_les_Fds"
 
@@ -19,6 +19,15 @@
 # define C_BLUE				0x0000FFFF
 # define C_WHITE			0xFFFFFFFF
 # define C_GREY_INVALID		0xD3D3D3FF
+
+# define DIM	2
+
+enum e_coord
+{
+	X = 0,
+	Y = 1,
+};
+
 
 enum e_error
 {

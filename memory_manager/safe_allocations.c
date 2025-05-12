@@ -101,13 +101,13 @@ char	*safe_strdup_with_calloc(char *area, char *str, int size)
 	return (new);
 }
 
-mlx_t *safe_mlx_init(char *area)
-{
-	void	*new;
+// mlx_t *safe_mlx_init(char *area)
+// {
+// 	void	*new;
 	
-	new = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
-	if (!new)
-		nuclear_exit(ft_error(WHERE, "mlx init failure", MALLOC_ERROR));
-	memory_manager(ADD_ELEM, area, new);
-	return (new);
-}
+// 	new = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
+// 	if (!new)
+// 		nuclear_exit(ft_error(WHERE, "mlx init failure", MALLOC_ERROR));
+// 	memory_manager(ADD_ELEM, area, new);
+// 	return (new);
+// }

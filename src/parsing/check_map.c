@@ -93,10 +93,10 @@ int	update_color(char **color, char *tmp)
 
 	i = 2;
 	j = 0;
-	*color = safe_malloc(ZONE_1, sizeof(char) * (ft_strlen_int(tmp) - 1));
+	*color = safe_malloc(ZONE_PARSE, sizeof(char) * (ft_strlen_int(tmp) - 1));
 	if (!*color)
 	{
-		safe_free(ZONE_1, tmp);
+		safe_free(ZONE_PARSE, tmp);
 		return (EXIT_FAILURE);
 	}
 	while (tmp[i])
@@ -106,6 +106,6 @@ int	update_color(char **color, char *tmp)
 		i++;
 	}
 	(*color)[j] = '\0';
-	safe_free(ZONE_1, tmp);
+	safe_free(ZONE_PARSE, tmp);
 	return (EXIT_SUCCESS);
 }

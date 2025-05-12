@@ -14,7 +14,6 @@
 # define MEMORY_MANAGER_H
 # include "ft_error.h"
 # include "define.h"
-# include "MLX42/MLX42.h"
 # include "../libft/libft.h"
 # include <math.h>
 # include <stdbool.h>
@@ -85,7 +84,7 @@ void	safe_free(char *area, void *address);
 char	*safe_get_next_line(char *area, int fd);
 char	**safe_split(char *area, const char *s, char c);
 char	*safe_substr(char *area, const char *str, unsigned int start, size_t len);
-mlx_t	*safe_mlx_init(char *area);
+// mlx_t	*safe_mlx_init(char *area);
 char	*safe_strdup_with_calloc(char *area, char *str, int size);
 
 // here be the memorymanager functions.

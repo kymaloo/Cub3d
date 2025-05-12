@@ -9,9 +9,9 @@ MLX_A		:= $(MLX_DIR)/build/libmlx42.a
 MLX_VERSION_GIT_HASH := ce254c3a19af8176787601a2ac3490100a5c4c61
 
 INCLUDES	:= -Iinclude -IMLX42/include
-ARCHIVES	:= $(LIBFT_A) $(MLX_A)
+ARCHIVES	:= $(LIBFT_A)
 LIBS		:= -ldl -lglfw -lm
-CFLAGS		:= -Wextra -Wall -Werror -g3 $(INCLUDES)
+CFLAGS		:= -Wall -Wextra -Werror -g3 $(INCLUDES)
 
 BRED	:=	\033[1;31m
 YELLOW	:=	\033[33m
@@ -34,17 +34,16 @@ SRCS	:= 	\
 			src/error.c									\
 			\
 			src/parsing/open_close_map.c				\
-			src/parsing/init_direction_and_fc.c			\
-			src/parsing/stock_direction_and_fc.c		\
 			src/parsing/check_map.c						\
 			src/parsing/init.c							\
-			src/parsing/path_finding.c					\
 			src/parsing/stock_map.c						\
 			src/parsing/utils_parse.c					\
-			src/parsing/colors_fc.c						\
-			\
-			src/exec/minimap.c							\
-			src/exec/move.c							\
+			src/parsing/stock_direction_and_fc.c					\
+			src/parsing/init_direction_and_fc.c					\
+			src/parsing/colors_fc.c							\
+			src/parsing/path_finding.c							\
+
+
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -69,7 +68,7 @@ vs:	re
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
+	cc $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
 
 $(LIBFT_A):
 	@echo "$(BLUE)$(NAME): archiving $(LIBFT_A)$(RESET)"
@@ -94,8 +93,8 @@ $(MLX_DIR):
 $(NAME): $(LIBFT_A) $(OBJS)
 	@echo "$(BLUE)$(NAME): ${NAME} $(GREEN)OBJS compiled !$(RESET)"
 	@echo "$(BLUE)$(NAME): Linking ${NAME} $(RESET)"
-	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
+	@echo "cc $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
+	cc $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
 	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Linked !$(RESET)"
 
 clear:

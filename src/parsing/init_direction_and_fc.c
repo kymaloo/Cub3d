@@ -2,87 +2,87 @@
 #include "cub.h"
 #include "parsing_interns.h"
 
-int	init_tab_direction(t_parsing_map *p)
+int	init_tab_direction(t_parsing_map *parse)
 {
 	int	i;
 
 	i = 0;
-	p->direction = safe_malloc(ZONE_1, sizeof(char *) * 6);
-	if (!p->direction)
+	parse->direction = safe_malloc(ZONE_PARSE, sizeof(char *) * 6);
+	if (!parse->direction)
 		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
-	p->direction[i] = safe_strdup(ZONE_1, "NO ./");
+	parse->direction[i] = safe_strdup(ZONE_PARSE, "NO ./");
 	i++;
-	p->direction[i] = safe_strdup(ZONE_1, "SO ./");
+	parse->direction[i] = safe_strdup(ZONE_PARSE, "SO ./");
 	i++;
-	p->direction[i] = safe_strdup(ZONE_1, "WE ./");
+	parse->direction[i] = safe_strdup(ZONE_PARSE, "WE ./");
 	i++;
-	p->direction[i] = safe_strdup(ZONE_1, "EA ./");
+	parse->direction[i] = safe_strdup(ZONE_PARSE, "EA ./");
 	i++;
-	p->direction[i] = NULL;
+	parse->direction[i] = NULL;
 	return (EXIT_SUCCESS);
 }
 
-int	init_tab_fc(t_parsing_map *p)
+int	init_tab_fc(t_parsing_map *parse)
 {
 	int	i;
 
 	i = 0;
-	p->fc = safe_malloc(ZONE_1, sizeof(char *) * 3);
-	if (!p->fc)
+	parse->fc = safe_malloc(ZONE_PARSE, sizeof(char *) * 3);
+	if (!parse->fc)
 		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
-	p->fc[i] = safe_strdup(ZONE_1, "F ");
+	parse->fc[i] = safe_strdup(ZONE_PARSE, "F ");
 	i++;
-	p->fc[i] = safe_strdup(ZONE_1, "C ");
+	parse->fc[i] = safe_strdup(ZONE_PARSE, "C ");
 	i++;
-	p->fc[i] = NULL;
+	parse->fc[i] = NULL;
 	return (EXIT_SUCCESS);
 }
 
-int	init_fc(t_infos_p *infos_p, char *str)
+int	init_fc(t_data *data, char *str)
 {
 	int		i;
 	int		fd;
 	int		fc;
 
 	i = 0;
-	fc = count_fc_in_file(infos_p->p, infos_p->p->fc);
+	fc = count_fc_in_file(data->parse, data->parse->fc);
 	if (fc != 2)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	while (infos_p->p->all_file[i])
+	while (data->parse->all_file[i])
 	{
-		if (ft_strncmp(infos_p->p->all_file[i], infos_p->p->fc[0], 2) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 4, fd);
-		else if (ft_strncmp(infos_p->p->all_file[i], infos_p->p->fc[1], 2) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 5, fd);
+		if (ft_strncmp(data->parse->all_file[i], data->parse->fc[0], 2) == 0)
+			process_direction(data, data->parse->all_file[i], 4, fd);
+		else if (ft_strncmp(data->parse->all_file[i], data->parse->fc[1], 2) == 0)
+			process_direction(data, data->parse->all_file[i], 5, fd);
 		i++;
 	}
 	return (close_map(fd));
 }
 
-int	init_direction(t_infos_p *infos_p, char *str, int dir, int fd)
+int	init_direction(t_data *data, char *str, int dir, int fd)
 {
 	int		i;
 
 	i = 0;
-	dir = count_dir_in_file(infos_p->p, infos_p->p->direction);
+	dir = count_dir_in_file(data->parse, data->parse->direction);
 	if (dir != 4)
 		return (EXIT_FAILURE);
 	fd = open_map(str);
-	while (infos_p->p->all_file[i])
+	while (data->parse->all_file[i])
 	{
-		if (ft_strncmp(infos_p->p->all_file[i], \
-		infos_p->p->direction[0], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 0, fd);
-		else if (ft_strncmp(infos_p->p->all_file[i], \
-		infos_p->p->direction[1], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 1, fd);
-		else if (ft_strncmp(infos_p->p->all_file[i], \
-		infos_p->p->direction[2], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 2, fd);
-		else if (ft_strncmp(infos_p->p->all_file[i], \
-		infos_p->p->direction[3], 5) == 0)
-			process_direction(infos_p, infos_p->p->all_file[i], 3, fd);
+		if (ft_strncmp(data->parse->all_file[i], \
+		data->parse->direction[0], 5) == 0)
+			process_direction(data, data->parse->all_file[i], 0, fd);
+		else if (ft_strncmp(data->parse->all_file[i], \
+		data->parse->direction[1], 5) == 0)
+			process_direction(data, data->parse->all_file[i], 1, fd);
+		else if (ft_strncmp(data->parse->all_file[i], \
+		data->parse->direction[2], 5) == 0)
+			process_direction(data, data->parse->all_file[i], 2, fd);
+		else if (ft_strncmp(data->parse->all_file[i], \
+		data->parse->direction[3], 5) == 0)
+			process_direction(data, data->parse->all_file[i], 3, fd);
 		i++;
 	}
 	return (close_map(fd));
