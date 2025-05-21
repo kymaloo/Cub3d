@@ -1,6 +1,6 @@
 #include "exec_reborn.h"
 
-keys_pressed()
+void keys_pressed(void)
 {
-
+	return ;
 }
