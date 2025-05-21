@@ -99,38 +99,59 @@ void	move_translate_forward(t_game *game)
 
 void	move_translate_backward(t_game *game)
 {
-	if (DEBUG)
-		printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "RESET, __FILE__, __LINE__, __FUNCTION__);
-	game->player->position[X];
-	game->player->position[Y];
-	if (DEBUG)
-		printf(BBLUE"%4s\t"RESET"player infos:\t"RED" x: %-4.0f"GREEN" y: %-4.0f"MAGENTA" a: %.2f"RESET"\n",
-			"DOWN", game->player->position[X], game->player->position[Y], game->player->radian);
+	t_player *p = game->player;
+	double new_x = p->position[0] - p->direction[0] * MOVE_SPEED;
+	double new_y = p->position[1] - p->direction[1] * MOVE_SPEED;
+
+	if (!is_wall(game->map, new_x + PLAYER_WIDTH, new_y + PLAYER_WIDTH) &&
+		!is_wall(game->map, new_x - PLAYER_WIDTH, new_y - PLAYER_WIDTH))
+	{
+		p->position[0] = new_x;
+		p->position[1] = new_y;
+	}
 }
 
 void	move_translate_left(t_game *game)
 {
-	if (DEBUG)
-		printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "RESET, __FILE__, __LINE__, __FUNCTION__);
-	game->player->position[X];
-	game->player->position[Y];
-	if (DEBUG)
-		printf(BBLUE"\t%4s\t"RESET"player infos:\t"RED" x: %-4.0f"GREEN" y: %-4.0f"MAGENTA" a: %.2f"RESET"\n",
-			"LEFT", game->player->position[X], game->player->position[Y], game->player->radian);
+	t_player *p = game->player;
+	double perp_x = -p->direction[1]; // perpendicular vector
+	double perp_y = p->direction[0];
+
+	double new_x = p->position[0] + perp_x * MOVE_SPEED;
+	double new_y = p->position[1] + perp_y * MOVE_SPEED;
+
+	if (!is_wall(game->map, new_x + PLAYER_WIDTH, new_y + PLAYER_WIDTH) &&
+		!is_wall(game->map, new_x - PLAYER_WIDTH, new_y - PLAYER_WIDTH))
+	{
+		p->position[0] = new_x;
+		p->position[1] = new_y;
+	}
 }
 
 void	move_translate_right(t_game *game)
 {
-	if (DEBUG)
-		printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "RESET, __FILE__, __LINE__, __FUNCTION__);
-	game->player->position[X];
-	game->player->position[Y];
-	if (DEBUG)
-		printf(BBLUE"\t%4s\t"RESET"player infos:\t"RED" x: %-4.0f"GREEN" y: %-4.0f"MAGENTA" a: %.2f"RESET"\n",
-			"RIGHT", game->player->position[X], game->player->position[Y], game->player->radian);
+	t_player *p = game->player;
+	double perp_x = p->direction[1];
+	double perp_y = -p->direction[0];
+
+	double new_x = p->position[0] + perp_x * MOVE_SPEED;
+	double new_y = p->position[1] + perp_y * MOVE_SPEED;
+
+	if (!is_wall(game->map, new_x + PLAYER_WIDTH, new_y + PLAYER_WIDTH) &&
+		!is_wall(game->map, new_x - PLAYER_WIDTH, new_y - PLAYER_WIDTH))
+	{
+		p->position[0] = new_x;
+		p->position[1] = new_y;
+	}
 }
 
 /* MLX MOVEMENT HOOKS */
+
+void	update_player_direction(t_player *player)
+{
+	player->direction[0] = cos(player->radian); // X component
+	player->direction[1] = sin(player->radian); // Y component
+}
 
 void	ft_keys_player_movements(t_game *game)
 {
@@ -154,20 +175,18 @@ void	ft_keys_player_movements(t_game *game)
 
 void	ft_keys_mouse_player_rotations(t_game *game)
 {
-	// if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-	// {
-	// 	rotate_camera_left(0.05);
-	// }
-	// else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-	// {
-	// 	rotate_camera_right(0.05);
-	// }
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+		game->player->radian += 0.05;
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+		game->player->radian -= 0.05;
 
 	// double old_mouse_position_x;
 	// double old_mouse_position_y;
 
 	// mlx_get_mouse_pos(game->mlx, &old_mouse_position_x, &old_mouse_position_y);
 	// mlx_get_mouse_pos(game->mlx, &old_mouse_position_x, &old_mouse_position_y);
+
+	update_player_direction(game->player);
 }
 
 void	ft_keys_other_actions(t_game *game)
@@ -179,11 +198,42 @@ void	ft_keys_other_actions(t_game *game)
 
 /* HOOKS */
 
+#include <unistd.h>     // for usleep()
+#include <sys/time.h>   // for gettimeofday()
+
+#define TARGET_FPS 60
+#define FRAME_DURATION_US (1000000 / TARGET_FPS) // 16,666 microseconds
+
+long long	get_time_us(void)
+{
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return ((long long)tv.tv_sec * 1000000LL + tv.tv_usec);
+}
+
+void	precise_sleep(long long target_us)
+{
+	long long start = get_time_us();
+	long long now = get_time_us();
+
+	// Sleep most of the time, then busy-wait for the final part
+	if (target_us > 2000) // Skip usleep if total delay is very small
+		usleep(target_us - 1000); // sleep all but last ~1ms
+
+	now = get_time_us();
+	while ((now - start) < target_us)
+	{
+		now = get_time_us();
+	}
+}
+
 void	ft_hook(void *gamed)
 {
 	t_game	*game;
 
 	game = gamed;
+	long long start = get_time_us();
+
 	ft_keys_player_movements(game);
 	ft_keys_mouse_player_rotations(game);
 	ft_keys_other_actions(game);
@@ -192,10 +242,12 @@ void	ft_hook(void *gamed)
 	//ft_move_perso(game);
 	//print_minimap(game);
 	raycast(game);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		game->player->radian += 0.05;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		game->player->radian -= 0.05;
+
+	long long end = get_time_us();
+	long long elapsed = end - start;
+
+	if (elapsed < FRAME_DURATION_US)
+		precise_sleep(FRAME_DURATION_US - elapsed);
 }
 
 void	print_minimap(t_game *g)
