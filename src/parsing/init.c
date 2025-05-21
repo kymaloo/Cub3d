@@ -73,6 +73,7 @@ int	init(t_data *data, char *str)
 	memory_manager(DEL_ELEM, ZONE_PARSE, data->parse->all_file);
 	if (check_wall(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	
 	return (EXIT_SUCCESS);
 }
 

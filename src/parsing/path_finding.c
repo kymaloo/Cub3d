@@ -55,10 +55,6 @@ static void flood_fill_rec(int x, int y, t_data *data, int i)
 
 	if (cells[y][x] == '1')
 		return ;
-	
-	// printf(BLUE"\n\ni: %d: [Y][X] = [%d][%d]\n"RESET, i, y, x);
-	// print_map_highlight(cells, x, y);
-	
 	cells[y][x] = '1';
 	i = i + 1;
 	flood_fill_rec(x, y + 1, data, i);
@@ -109,6 +105,7 @@ void	find_pos_player(t_game *game, char **grid)
 				game->player->facing = grid[i][j];
 				game->player->position[X] = j;
 				game->player->position[Y] = i;
+				printf("%d ----------- %d\n", j, i);
 				break ;
 			}
 			j++;

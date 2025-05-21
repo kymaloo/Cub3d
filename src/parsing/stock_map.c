@@ -56,10 +56,8 @@ char	**extract_map(t_data *data, char **array)
 	j = 0;
 	size = get_size_of_array(data, array, 1);
 	data->game->map->y_max = size;
-	printf("%d\n", size);
 	get_line_size(data, array);
 	len = data->game->map->x_max;
-	printf("%d\n", len);
 	result = safe_calloc(ZONE_PARSE, 1, (sizeof(char *) * (size + 1)));
 	if (!result)
 		return (NULL);

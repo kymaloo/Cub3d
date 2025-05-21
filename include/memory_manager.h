@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 18:30:12 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:49:45 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <aio.h>
+# include "MLX42/MLX42.h"
+# include "MLX42/MLX42_Int.h"
 
 # define MM_AREA_NAME_MAX_SIZE	64
 # define MM_INITIAL_CONTENT_NB	4

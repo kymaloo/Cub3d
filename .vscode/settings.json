@@ -2,6 +2,12 @@
 	"files.associations": {
 		"cub.h": "c",
 		"struct.h": "c",
-		"define.h": "c"
+		"define.h": "c",
+		"array": "c",
+		"string_view": "c",
+		"initializer_list": "c",
+		"ranges": "c",
+		"span": "c",
+		"utility": "c"
 	}
 }
