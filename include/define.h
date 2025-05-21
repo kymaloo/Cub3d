@@ -1,6 +1,8 @@
 #ifndef DEFINE_H
 # define DEFINE_H
 
+# define DEBUG				true
+
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
 # define ZONE_PARSE				"petit_chacalot"

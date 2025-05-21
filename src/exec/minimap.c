@@ -1,9 +1,10 @@
 #include "cub.h"
-
-
-int	is_wall(char **map, int x, int y)
+ 
+int	is_wall(t_map *map, int x, int y)
 {
-	if (isset(map[y][x], "1D") == false)
+	if (x > map->x_max -1 || x < 0 || y > map->y_max -1 || y < 0) //if it's outside of the map, it's a wall now // max -1 ???
+		return (1);
+	if (isset(map->grid[y][x], "1D") == false)
 		return (1);
 	return (0);
 }
