@@ -42,8 +42,9 @@ int	main(int argc, char **argv)
 	if (init(data, argv[1]) != EXIT_SUCCESS)
 	  	nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
 	stock_radian(data->game->player);
-	printf("%f\n", data->game->player->radian);
+	//printf("%f\n", data->game->player->radian);
 	init_mlx(data->game);
+	init_textures(data->game);
 	
 	if (mlx_loop_hook(data->game->mlx, &ft_hook, data->game))
 			mlx_loop(data->game->mlx);
@@ -59,20 +60,46 @@ static void	ft_close_window(t_game *game)
 		mlx_close_window(game->mlx);
 }
 
-void	ft_hook(void *gamed)
-{
-	t_game	*game;
+// void	ft_hook(void *gamed)
+// {
+// 	t_game	*game;
 
-	game = gamed;
-	//ft_move_perso(game);
-	ft_close_window(game);
-	//print_minimap(game);
-	raycast(game);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		game->player->radian += 0.05;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		game->player->radian -= 0.05;
+// 	game = gamed;
+// 	//ft_move_perso(game);
+// 	ft_close_window(game);
+// 	//print_minimap(game);
+// 	raycast(game);
+// 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+// 		game->player->radian += 0.05;
+// 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+// 		game->player->radian -= 0.05;
+// }
+
+void ft_hook(void *gamed)
+{
+    t_game *game;
+    double rotation_speed;
+
+    game = gamed;
+    rotation_speed = 0.05; // Environ 2.86 degrés par frame
+
+    ft_close_window(game);
+    raycast(game);
+
+    if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+    {
+        game->player->radian += rotation_speed;
+        if (game->player->radian >= 2 * M_PI)
+            game->player->radian -= 2 * M_PI;
+    }
+    if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+    {
+        game->player->radian -= rotation_speed;
+        if (game->player->radian < 0)
+            game->player->radian += 2 * M_PI;
+    }
 }
+
 
 void	print_minimap(t_game *g)
 {
@@ -102,19 +129,48 @@ void	create_memory_manager(t_data **data)
 	(*data)->game->texture = safe_calloc(ZONE_PARSE, 1, sizeof(t_texture));
 	(*data)->game->texture->image = safe_calloc(ZONE_PARSE, 1, sizeof(t_image));
 	(*data)->game->player = safe_calloc(ZONE_PARSE, 1, sizeof(t_player));
-	(*data)->path = safe_calloc(ZONE_PARSE, 1, sizeof(t_path));
+	//(*data)->path = safe_calloc(ZONE_PARSE, 1, sizeof(t_path));
+	(*data)->game->path = safe_calloc(ZONE_PARSE, 1, sizeof(t_path));
 	(*data)->colors = safe_calloc(ZONE_PARSE, 1, sizeof(t_colors));
 	(*data)->game->ray = safe_calloc(ZONE_PARSE, 1, sizeof(t_ray));
 }
 
-void	stock_radian(t_player *player)
+// void	stock_radian(t_player *player)
+// {
+// 	if (player->facing == 'N')
+// 		player->radian = (3 * M_PI / 2);
+// 	if (player->facing == 'S')
+// 		player->radian = (M_PI / 2);
+// 	if (player->facing == 'E')
+// 		player->radian = (0);
+// 	if (player->facing == 'W')
+// 		player->radian = (M_PI);
+// }
+
+void stock_radian(t_player *player)
 {
-	if (player->facing == 'N')
-		player->radian = (M_PI / 2);
-	if (player->facing == 'S')
-		player->radian = (-M_PI / 2);
-	if (player->facing == 'E')
-		player->radian = (2 * M_PI);
-	if (player->facing == 'W')
-		player->radian = (M_PI);
+    if (player->facing == 'N')
+    {
+        player->radian = (3 * M_PI / 2);
+        player->position[X] = player->position[X] + 0.5; // Centrer dans la case
+        player->position[Y] = player->position[Y] + 0.5;
+    }
+    else if (player->facing == 'S')
+    {
+        player->radian = (M_PI / 2);
+        player->position[X] = player->position[X] + 0.5;
+        player->position[Y] = player->position[Y] + 0.5;
+    }
+    else if (player->facing == 'E')
+    {
+        player->radian = 0;
+        player->position[X] = player->position[X] + 0.5;
+        player->position[Y] = player->position[Y] + 0.5;
+    }
+    else if (player->facing == 'W')
+    {
+        player->radian = M_PI;
+        player->position[X] = player->position[X] + 0.5;
+        player->position[Y] = player->position[Y] + 0.5;
+    }
 }

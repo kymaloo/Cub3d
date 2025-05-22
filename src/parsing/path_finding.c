@@ -105,7 +105,6 @@ void	find_pos_player(t_game *game, char **grid)
 				game->player->facing = grid[i][j];
 				game->player->position[X] = j;
 				game->player->position[Y] = i;
-				printf("%d ----------- %d\n", j, i);
 				break ;
 			}
 			j++;

@@ -32,6 +32,13 @@ typedef struct s_ray
 	int		side; // 0 = x, 1 = y
 	int		draw_end;
 	int		draw_start;
+	double perp_wall_dist;
+	int line_height;
+	mlx_texture_t *current_texture;
+	uint8_t *pixel;
+	uint32_t color;
+	double wall_hit_x;  // Exact X hit position
+    double wall_hit_y;
 }	t_ray;
 
 typedef	struct s_colors
@@ -67,6 +74,10 @@ typedef	struct s_image
 
 typedef	struct s_texture
 {
+	mlx_texture_t *north;
+    mlx_texture_t *south;
+    mlx_texture_t *east;
+    mlx_texture_t *west;
 	mlx_texture_t	*player;
 	t_image			*image;
 }	t_texture;
@@ -87,6 +98,7 @@ typedef struct s_game
 	t_map				*map;
 	mlx_t				*mlx;
 	int					colors_minimap;
+	t_path				*path;
 		t_ray			*ray;
 }			t_game;
 

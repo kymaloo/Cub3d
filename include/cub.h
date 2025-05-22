@@ -30,5 +30,7 @@ void	ft_move_perso(t_game *g);
 void	raycast(t_game *game);
 void	perform_dda(t_ray *ray, char **grid);
 //void	init_ray(t_ray *ray, t_player *player, double ray_angle);
+void init_textures(t_game *game);
+
 
 #endif

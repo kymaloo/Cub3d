@@ -5,13 +5,13 @@
 static void	save_path(t_data *data, char *line, int dir_index)
 {
 	if (dir_index == 0)
-		data->path->north = safe_strdup(ZONE_PARSE, line);
+		data->game->path->north = safe_strdup(ZONE_PARSE, line);
 	else if (dir_index == 1)
-		data->path->south = safe_strdup(ZONE_PARSE, line);
+		data->game->path->south = safe_strdup(ZONE_PARSE, line);
 	else if (dir_index == 2)
-		data->path->west = safe_strdup(ZONE_PARSE, line);
+		data->game->path->west = safe_strdup(ZONE_PARSE, line);
 	else if (dir_index == 3)
-		data->path->east = safe_strdup(ZONE_PARSE, line);
+		data->game->path->east = safe_strdup(ZONE_PARSE, line);
 	else if (dir_index == 4)
 		data->colors->color_floor = safe_strdup(ZONE_PARSE, line);
 	else if (dir_index == 5)
@@ -28,13 +28,13 @@ static	int	check_doublon(char *direction, char *line, int fd)
 
 int	process_direction(t_data *data, char *line, int dir_i, int fd)
 {
-	if (dir_i == 0 && data->path->north != NULL)
+	if (dir_i == 0 && data->game->path->north != NULL)
 		return (check_doublon("north", line, fd));
-	if (dir_i == 1 && data->path->south != NULL)
+	if (dir_i == 1 && data->game->path->south != NULL)
 		return (check_doublon("south", line, fd));
-	if (dir_i == 2 && data->path->west != NULL)
+	if (dir_i == 2 && data->game->path->west != NULL)
 		return (check_doublon("west", line, fd));
-	if (dir_i == 3 && data->path->east != NULL)
+	if (dir_i == 3 && data->game->path->east != NULL)
 		return (check_doublon("east", line, fd));
 	if (dir_i == 4 && data->colors->color_floor != NULL)
 		return (check_doublon("floor", line, fd));

@@ -33,13 +33,13 @@ static int	init_map(t_data *data)
 
 static void	is_dir_and_filled(t_data *data)
 {
-	if (data->path->east == NULL)
+	if (data->game->path->east == NULL)
 		nuclear_exit(ft_error(WHERE, "Path east is Null", EXIT_FAILURE));
-	if (data->path->west == NULL)
+	if (data->game->path->west == NULL)
 		nuclear_exit(ft_error(WHERE, "Path west is Null", EXIT_FAILURE));
-	if (data->path->north == NULL)
+	if (data->game->path->north == NULL)
 		nuclear_exit(ft_error(WHERE, "Path north is Null", EXIT_FAILURE));
-	if (data->path->south == NULL)
+	if (data->game->path->south == NULL)
 		nuclear_exit(ft_error(WHERE, "Path south is Null", EXIT_FAILURE));
 	if (data->colors->color_ceiling == NULL)
 		nuclear_exit(ft_error(WHERE, "Path ceilling is Null", EXIT_FAILURE));
@@ -89,11 +89,11 @@ int	all_line_is_valid(t_data *data, char **array)
 		if (check_white_space(array[i]) == 0 || 
 		char_valid_for_map("01NSEWD\t ", array[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], data->path->north, size) == 0
-			|| ft_strncmp(array[i], data->path->south, size) == 0)
+		else if (ft_strncmp(array[i], data->game->path->north, size) == 0
+			|| ft_strncmp(array[i], data->game->path->south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], data->path->east, size) == 0
-			|| ft_strncmp(array[i], data->path->west, size) == 0)
+		else if (ft_strncmp(array[i], data->game->path->east, size) == 0
+			|| ft_strncmp(array[i], data->game->path->west, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], 
 			data->colors->color_ceiling, size) == 0
