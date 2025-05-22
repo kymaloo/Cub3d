@@ -44,7 +44,6 @@ SRCS	:= 	\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
 			\
-			src/exec/move.c \
 			src/exec/minimap.c \
 			src/exec/dda.c \
 

@@ -68,7 +68,7 @@ int	main(int argc, char **argv)
 /* MOUVEMENT HOOKS : TRANSLATION FUNCTIONS : */
 
 #define MOVE_SPEED 3
-#define PLAYER_WIDTH 0.001
+#define PLAYER_WIDTH 0.05
 
 void	move_translate_forward(t_game *game)
 {
@@ -79,7 +79,7 @@ void	move_translate_forward(t_game *game)
 	if (DEBUG)
 	{
 		printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%4s\t"RESET, __FILE__, __LINE__, __FUNCTION__, "UP");
-		printf("\n\ttrying to move to:\t("RED"%.0f"RESET", "GREEN"%.0f"RESET")\n");
+		printf("\n\ttrying to move to:\t("RED"%.0f"RESET", "GREEN"%.0f"RESET")\n", new_x, new_y);
 	}
 	if (!is_wall(game->map, new_x + PLAYER_WIDTH, new_y + PLAYER_WIDTH) &&
 		!is_wall(game->map, new_x - PLAYER_WIDTH, new_y - PLAYER_WIDTH))
@@ -88,13 +88,13 @@ void	move_translate_forward(t_game *game)
 		p->position[1] = new_y;
 	}
 	else if (DEBUG)
-	{
 		printf(BRED"\t\t\t\t(NO)"RESET);
-	}
 	if (DEBUG)
+	{
 		printf("\n\tplayer infos after:\t"RED" x: %-4.0f"GREEN" y: %-4.0f"MAGENTA" a: %.2f"RESET"\n",
 			game->player->position[X], game->player->position[Y], game->player->radian);
-	printf("\tplayer direction:\t("RED"%.0f"RESET","GREEN" %.0f"RESET")\n", game->player->direction[Y], game->player->direction[Y]);
+		printf("\tplayer direction:\t("RED"%.0f"RESET","GREEN" %.0f"RESET")\n", game->player->direction[Y], game->player->direction[Y]);
+	}
 }
 
 void	move_translate_backward(t_game *game)
@@ -147,11 +147,7 @@ void	move_translate_right(t_game *game)
 
 /* MLX MOVEMENT HOOKS */
 
-void	update_player_direction(t_player *player)
-{
-	player->direction[0] = cos(player->radian); // X component
-	player->direction[1] = sin(player->radian); // Y component
-}
+
 
 void	ft_keys_player_movements(t_game *game)
 {
@@ -173,19 +169,23 @@ void	ft_keys_player_movements(t_game *game)
 	}
 }
 
-void	ft_keys_mouse_player_rotations(t_game *game)
+void	update_player_direction(t_player *player)
+{
+	player->direction[0] = cos(player->radian); // X component
+	player->direction[1] = sin(player->radian); // Y component
+}
+
+void	ft_keys_mouse_player_rotations(t_game *game, int32_t old_mouse_x, int32_t old_mouse_y)
 {
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		game->player->radian += 0.05;
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 		game->player->radian -= 0.05;
 
-	// double old_mouse_position_x;
-	// double old_mouse_position_y;
+	int32_t new_mouse_x;
+	int32_t new_mouse_y;
 
-	// mlx_get_mouse_pos(game->mlx, &old_mouse_position_x, &old_mouse_position_y);
-	// mlx_get_mouse_pos(game->mlx, &old_mouse_position_x, &old_mouse_position_y);
-
+	mlx_get_mouse_pos(game->mlx, &new_mouse_x, &new_mouse_y);
 	update_player_direction(game->player);
 }
 
@@ -227,11 +227,13 @@ void	precise_sleep(long long target_us)
 	}
 }
 
-void	ft_hook(void *gamed)
+void	ft_hook(void *game_ptr)
 {
 	t_game	*game;
+	static int32_t	old_mouse_x;
+	static int32_t	old_mouse_y;
 
-	game = gamed;
+	game = game_ptr;
 	long long start = get_time_us();
 
 	ft_keys_player_movements(game);
@@ -248,6 +250,7 @@ void	ft_hook(void *gamed)
 
 	if (elapsed < FRAME_DURATION_US)
 		precise_sleep(FRAME_DURATION_US - elapsed);
+	mlx_get_mouse_pos(game->mlx, &old_mouse_x, &old_mouse_y);
 }
 
 void	print_minimap(t_game *g)
@@ -287,10 +290,12 @@ void	stock_radian(t_player *player)
 {
 	if (player->facing == 'N')
 		player->radian = (M_PI / 2);
-	if (player->facing == 'S')
+	else if (player->facing == 'S')
 		player->radian = (-M_PI / 2);
-	if (player->facing == 'E')
+	else if (player->facing == 'E')
 		player->radian = (2 * M_PI);
-	if (player->facing == 'W')
+	else if (player->facing == 'W')
 		player->radian = (M_PI);
+	else
+		return (ft_error(WHERE, "Bad player direction", EXIT_FAILURE));
 }
