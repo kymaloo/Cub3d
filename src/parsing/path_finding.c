@@ -105,7 +105,7 @@ void	find_pos_player(t_game *game, char **grid)
 				game->player->facing = grid[i][j];
 				game->player->position[X] = j;
 				game->player->position[Y] = i;
-				printf(BLUE"%35s"YELLOW"%-3d:    "RESET, WHERE);
+				print_debug_prefix(WHERE_FUNC, "");
 				printf("player position:\t"RED" x: %-4d"GREEN" y: %-4d"RESET"\n", j, i);
 				break ;
 			}

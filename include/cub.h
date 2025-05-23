@@ -13,6 +13,8 @@
 # include "MLX42/MLX42.h"
 # include "MLX42/MLX42_Int.h"
 # include "dda.h"
+# include "debug.h"
+# include "game_hooks.h"
 
 int		init(t_data *data, char *str);
 void	draw_map(t_game *g);
@@ -28,7 +30,7 @@ void	ft_move_perso(t_game *g);
 
 
 void	raycast(t_game *game);
-void	perform_dda(t_ray *ray, char **grid);
+void	perform_dda(t_ray *ray, t_map *map);
 //void	init_ray(t_ray *ray, t_player *player, double ray_angle);
 
 #endif
