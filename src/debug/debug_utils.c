@@ -25,14 +25,14 @@ void	print_angle(float rad)
 		printf("(S)"RESET);
 	else if (rad >= 13*M_PI/8 && rad < 15*M_PI/8)
 		printf("(SE)"RESET);
-
 }
 
 void	print_player_infos(t_player* player, char *str_prefix)
 {
 	printf("\n%s\n", str_prefix);
 	printf("\tplayer position:\t("RED"%5.2f"RESET","GREEN" %5.2f"RESET")\n", player->position[X], player->position[Y]);
-	printf("\tplayer direction:\t("RED"%5.2f"RESET","GREEN" %5.2f"RESET") ", player->direction[Y], player->direction[Y]);
+	printf("\tplayer direction:\t("RED"%5.2f"RESET","GREEN" %5.2f"RESET") ", player->direction[X], player->direction[Y]);
+	printf("norm: %.2f ", sqrt(player->direction[X] * player->direction[X] + player->direction[Y] * player->direction[Y]));
 	print_angle(player->radian);
 	printf("\n");
 }
@@ -129,7 +129,64 @@ void	print_map_around_a_highlight_b(t_game *g, int xa, int ya, int xb, int yb, i
 			if (i == xb && j == yb)
 				printf(BGBLUE"");
 			if (i == xa && j == ya)
-				printf(BYELLOW"ME"RESET);
+				printf(BBLUE"xx"RESET);
+			else
+				print_map_tile(g->map->grid[j][i]);
+			i++;
+		}
+		printf("\n");
+		j++;
+	}
+}
+
+void	print_map_player(t_game *g, int offset)
+{
+	int xmin, xmax, ymin, ymax, i, j;
+	int	xa, ya, xt, yt;
+	float xb, yb;
+
+	t_player *p = g->player;
+	
+	xa = p->position[X]; 
+	ya = p->position[Y]; 
+	xb = p->position[X] + p->direction[X] * 0.3; 
+	yb = p->position[Y] + p->direction[Y] * 0.3;
+
+
+	xmin = xa - offset;
+	xmax = xa + offset;
+	ymin = ya - offset;
+	ymax = ya + offset;
+
+	if (xmin < 0)
+		xmin = 0;
+	if (xmax > g->map->x_max -1)
+		xmax = g->map->x_max -1;
+	if (ymin < 0)
+		ymin = 0;
+	if (ymax > g->map->y_max -1)
+		ymax = g->map->y_max -1;
+
+
+
+
+
+	print_coord("player is:", "", xa, ya);
+	print_coord("targeting move:", "", xb, yb);
+	xt = xb;
+	yt = yb;
+	print_coord("targeting grid:", "", xt, yt);
+	printf("\ncurrent grid situation: \n");
+	j = ymin;
+	while(j <= ymax)
+	{
+		i = xmin;
+		while(i <= xmax)
+		{
+			if (i == xt && j == yt)
+				printf(BGBLUE""); //highlight target background in BBLUE
+			if (i == xa && j == ya)
+				printf(BBLUE"xx"RESET);
 			else
 				print_map_tile(g->map->grid[j][i]);
 			i++;

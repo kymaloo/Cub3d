@@ -44,13 +44,14 @@ SRCS	:= 	\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
 			\
-			src/exec/minimap.c \
-			src/exec/dda.c \
+			src/exec/minimap.c		\
+			src/exec/dda.c			\
 			\
-			src/game_hooks/game_hook.c					\
-			src/game_hooks/other_key_actions.c			\
-			src/game_hooks/player_move_rotations.c		\
-			src/game_hooks/player_move_translations.c 	\
+			src/hooks/keys_hook.c						\
+			src/hooks/loop_hook.c						\
+			src/hooks/mouse_hooks.c						\
+			src/hooks/player_move_translations.c		\
+			src/hooks/utils.c							\
 			\
 			src/debug/debug_utils.c						\
 

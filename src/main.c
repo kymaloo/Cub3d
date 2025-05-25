@@ -37,6 +37,9 @@ int	main(int argc, char **argv)
 	data = NULL;
 	if (DEBUG)
 	{
+		int i = 0;
+		while (i++ < 15)
+			printf("\n\n\n");
 		printf(BBLUE"\n%s:"BBLUE" executing program:"BYELLOW" mode: Debug"RESET"\n\n\n", argv[0]);
 		printf(BWHITE"parsing debug infos:"RESET"\n");
 	}
@@ -53,9 +56,16 @@ int	main(int argc, char **argv)
 		printf(BWHITE"game hooks debug infos:"RESET"\n");
 	}
 	init_mlx(data->game);
-	mlx_set_cursor_mode(data->game->mlx, MLX_MOUSE_DISABLED);
-	if (mlx_loop_hook(data->game->mlx, &ft_hook, data->game))
-			mlx_loop(data->game->mlx);
+	if (mlx_loop_hook(data->game->mlx, &ft_loop_hook, data->game))
+	{
+		data->game->toggles.catch_mouse_cursor = true;
+		mlx_set_cursor_mode(data->game->mlx, MLX_MOUSE_DISABLED);
+		data->game->toggles.minimap = false;
+		mlx_cursor_hook(data->game->mlx, &ft_cursor_hook, data->game);
+		mlx_mouse_hook(data->game->mlx, &ft_mouse_hook, data->game);
+		mlx_key_hook(data->game->mlx, &ft_keys_hook, data->game);
+		mlx_loop(data->game->mlx);
+	}
 	mlx_terminate(data->game->mlx);
 	memory_manager(DESTROY, NULL, NULL);
 	if (DEBUG)
