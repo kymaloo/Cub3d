@@ -4,11 +4,14 @@
 
 void	move_translate_forward(t_game *game)
 {
-	t_player *p = game->player;
-	double new_x = p->position[X] + p->direction[X] * MOVE_SPEED;
-	double new_y = p->position[Y] + p->direction[Y] * MOVE_SPEED;
+	t_player *p;
+	float new_x;
+	float new_y;
 
-	if (DEBUG)
+	p = game->player;
+	new_x = p->position[X] + p->direction[X] * MOVE_SPEED;
+	new_y = p->position[Y] + p->direction[Y] * MOVE_SPEED;
+	if (DEBUG_KEYS)
 	{
 		print_debug_prefix(WHERE_FUNC, "UP");
 		print_player_infos(game->player, "before");
@@ -20,30 +23,30 @@ void	move_translate_forward(t_game *game)
     	!is_wall(game->map, new_x + PLAYER_WIDTH, new_y - PLAYER_WIDTH) &&
     	!is_wall(game->map, new_x - PLAYER_WIDTH, new_y - PLAYER_WIDTH))
 	{
-		if (DEBUG)
+		if (DEBUG_KEYS)
 			printf(GREEN"\t\t\t(ALLOWED)"RESET"\n");
 		
 		p->position[X] = new_x;
 		p->position[Y] = new_y;
 	}
-	else if (DEBUG)
-	{
+	else if (DEBUG_KEYS)
 		printf(RED"\t\t\t(DENIED)"RESET"\n");
-		//print_map_around(game, p->position[X],  p->position[Y], 5);
-	}
-	//print_map_around_a_highlight_b(game, p->position[X], p->position[Y], new_x, new_y, 5);
-	if (DEBUG)
+	if (DEBUG_KEYS)
 		print_player_infos(game->player, "after");
 }
 
 void	move_translate_backward(t_game *game)
 {
-	t_player *p = game->player;
+	t_player *p;
+	float new_x;
+	float new_y;
 
-	double new_x = p->position[X] - (p->direction[X] * MOVE_SPEED);
-	double new_y = p->position[Y] - (p->direction[Y] * MOVE_SPEED);
+	
+	p = game->player;
+	new_x = p->position[X] - (p->direction[X] * MOVE_SPEED);
+	new_y = p->position[Y] - (p->direction[Y] * MOVE_SPEED);
 
-	if (DEBUG)
+	if (DEBUG_KEYS)
 	{
     	print_debug_prefix(WHERE_FUNC, "DOWN");
     	print_player_infos(game->player, "before");
@@ -58,20 +61,20 @@ void	move_translate_backward(t_game *game)
 		p->position[X] = new_x;
 		p->position[Y] = new_y;
 	}
-	if (DEBUG)
+	if (DEBUG_KEYS)
     	print_player_infos(game->player, "after");
 }
 
 void	move_translate_left(t_game *game)
 {
 	t_player *p = game->player;
-	double perp_x = p->direction[Y]; //perpendicular vector
-	double perp_y = -p->direction[X];
+	float new_x;
+	float new_y;
 
-	double new_x = p->position[X] + perp_x * MOVE_SPEED;
-	double new_y = p->position[Y] + perp_y * MOVE_SPEED;
+	new_x = p->position[X] + (p->direction[Y] * MOVE_SPEED);
+	new_y = p->position[Y] - (p->direction[X] * MOVE_SPEED);
 
-	if (DEBUG)
+	if (DEBUG_KEYS)
 	{
     	print_debug_prefix(WHERE_FUNC, "LEFT");
     	print_player_infos(game->player, "before");
@@ -86,20 +89,20 @@ void	move_translate_left(t_game *game)
 		p->position[X] = new_x;
 		p->position[Y] = new_y;
 	}
-	if (DEBUG)
+	if (DEBUG_KEYS)
     	print_player_infos(game->player, "after");
 }
 
 void	move_translate_right(t_game *game)
 {
 	t_player *p = game->player;
-	double perp_x = +p->direction[Y];
-	double perp_y = p->direction[X];
+	float new_x;
+	float new_y;
 
-	double new_x = p->position[X] + perp_x * MOVE_SPEED;
-	double new_y = p->position[Y] + perp_y * MOVE_SPEED;
+	new_x = p->position[X] - (p->direction[Y] * MOVE_SPEED);
+	new_y = p->position[Y] + (p->direction[X] * MOVE_SPEED);
 
-	if (DEBUG)
+	if (DEBUG_KEYS)
 	{
     	print_debug_prefix(WHERE_FUNC, "RIGHT");
     	print_player_infos(game->player, "before");
@@ -114,6 +117,6 @@ void	move_translate_right(t_game *game)
 		p->position[X] = new_x;
 		p->position[Y] = new_y;
 	}
-	if (DEBUG)
+	if (DEBUG_KEYS)
     	print_player_infos(game->player, "after");
 }

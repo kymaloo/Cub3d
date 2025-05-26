@@ -29,6 +29,9 @@
 
 # define TILE_SIZE_MINIMAP	16
 
+#define	MOUSE_SENSITIVITY 0.002
+#define MOUSE_MOUVEMENT_DETECTION_THRESHOLD 5
+
 # define DIM	2
 
 enum e_coord

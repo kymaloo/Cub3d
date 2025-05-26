@@ -16,7 +16,7 @@ void	move_translate_left(t_game *game);
 void	move_translate_right(t_game *game);
 
 void	ft_keys_mouse_player_rotations(t_game *game, int32_t old_mouse_x, int32_t old_mouse_y);
-void	ft_keys_other_actions(t_game *game);
+void	ft_keys_other_actions(mlx_key_data_t keydata, t_game *game);
 
 
 /*hooks*/

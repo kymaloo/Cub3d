@@ -1,9 +1,5 @@
 #include "cub.h"
 
-#define DEBUG_MOUSE false
-#define	MOUSE_SENSITIVITY 0.002
-#define MOUSE_MOUVEMENT_DETECTION_THRESHOLD 5
-
 bool	mouse_rotations(t_game *game, int32_t old_xpos, int32_t xpos)
 {
 	bool	moved;
@@ -17,6 +13,7 @@ bool	mouse_rotations(t_game *game, int32_t old_xpos, int32_t xpos)
 		{
 			print_debug_prefix(WHERE_FUNC, "MOUSE ROTATE");
 			print_player_infos(game->player, "before");
+			print_map_player(game, 5);
 		}
 		game->player->radian += delta_mouse_x * MOUSE_SENSITIVITY;
 		moved = true;

@@ -99,46 +99,6 @@ void	print_map_around(t_game *g, int x, int y, int offset)
 	}
 }
 
-void	print_map_around_a_highlight_b(t_game *g, int xa, int ya, int xb, int yb, int offset)
-{
-	int xmin, xmax, ymin, ymax, i, j;
-
-	xmin = xa - offset;
-	xmax = xa + offset;
-	ymin = ya - offset;
-	ymax = ya + offset;
-
-	if (xmin < 0)
-		xmin = 0;
-	if (xmax > g->map->x_max -1)
-		xmax = g->map->x_max -1;
-	if (ymin < 0)
-		ymin = 0;
-	if (ymax > g->map->y_max -1)
-		ymax = g->map->y_max -1;
-
-	print_coord("player is:", "", xa, ya);
-	print_coord("trying move:", "", xb, yb);
-	printf("\ncurrent grid situation: \n");
-	j = ymin;
-	while(j <= ymax)
-	{
-		i = xmin;
-		while(i <= xmax)
-		{
-			if (i == xb && j == yb)
-				printf(BGBLUE"");
-			if (i == xa && j == ya)
-				printf(BBLUE"xx"RESET);
-			else
-				print_map_tile(g->map->grid[j][i]);
-			i++;
-		}
-		printf("\n");
-		j++;
-	}
-}
-
 void	print_map_player(t_game *g, int offset)
 {
 	int xmin, xmax, ymin, ymax, i, j;

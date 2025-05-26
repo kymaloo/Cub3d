@@ -58,26 +58,26 @@ void	perform_dda(t_ray *ray, t_map *map)
 		}
 
 		//TODO si hors de la grille : te mettre a l'extremum grille
-		if(ray->map_x >= map->x_max)
-		{
-			ray->map_x = map->x_max - 1;
-			ray->hit = 1;
-		}
-		else if(ray->map_x < 0)
-		{
-			ray->map_x = 0;
-			ray->hit = 1;
-		}
-		if(ray->map_y >= map->y_max )
-		{
-			ray->map_y = map->y_max - 1;
-			ray->hit = 1;
-		}
-		else if(ray->map_y < 0 )
-		{
-			ray->map_y = 0;
-			ray->hit = 1;
-		}
+		// if(ray->map_x >= map->x_max)
+		// {
+		// 	ray->map_x = map->x_max - 1;
+		// 	ray->hit = 1;
+		// }
+		// else if(ray->map_x < 0)
+		// {
+		// 	ray->map_x = 0;
+		// 	ray->hit = 1;
+		// }
+		// if(ray->map_y >= map->y_max )
+		// {
+		// 	ray->map_y = map->y_max - 1;
+		// 	ray->hit = 1;
+		// }
+		// else if(ray->map_y < 0 )
+		// {
+		// 	ray->map_y = 0;
+		// 	ray->hit = 1;
+		// }
 			
 
 
