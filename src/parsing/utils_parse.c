@@ -32,11 +32,11 @@ int	get_size_of_array(t_data *data, char **t, int i)
 		size = ft_strlen_int(t[i]);
 		if (check_white_space(t[i]) == 0)
 			i++;
-		else if (ft_strncmp(t[i], data->path->north, size) == 0
-			|| ft_strncmp(t[i], data->path->south, size) == 0)
+		else if (ft_strncmp(t[i], data->game->path->north, size) == 0
+			|| ft_strncmp(t[i], data->game->path->south, size) == 0)
 			i++;
-		else if (ft_strncmp(t[i], data->path->east, size) == 0
-			|| ft_strncmp(t[i], data->path->west, size) == 0)
+		else if (ft_strncmp(t[i], data->game->path->east, size) == 0
+			|| ft_strncmp(t[i], data->game->path->west, size) == 0)
 			i++;
 		else if (ft_strncmp(t[i], data->parse->color_ceiling_cp, size) == 0
 			|| ft_strncmp(t[i], data->parse->color_floor_cp, size) == 0)
@@ -61,13 +61,13 @@ int	get_index_before_array(t_data *data, char **array, int i)
 		if (check_white_space(array[i]) == 0)
 			i++;
 		else if (ft_strncmp(array[i], 
-		data->path->north, size) == 0
+		data->game->path->north, size) == 0
 			|| ft_strncmp(array[i], 
-			data->path->south, size) == 0)
+			data->game->path->south, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], 
-		data->path->east, size) == 0
-			|| ft_strncmp(array[i], data->path->west, size) == 0)
+		data->game->path->east, size) == 0
+			|| ft_strncmp(array[i], data->game->path->west, size) == 0)
 			i++;
 		else if (ft_strncmp(array[i], 
 		data->parse->color_ceiling_cp, size) == 0

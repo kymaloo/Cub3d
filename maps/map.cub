@@ -1,13 +1,13 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_north_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./textures/diana.png
+SO ./textures/diana.png
+WE ./textures/josukeHigashikataDeLaPartie4.png
+EA ./textures/josukeHigashikataDeLaPartie4.png
 
 C 14,2,42
 F 220,100,0
 1111111111111111111111111
-100000000N110000000000001
 1000000000110000000000001
+1000N00000110000000000001
 1000000000110000000000001
 1110000011100000000000001
 1111111111111111111111111
