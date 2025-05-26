@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 11:36:38 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/15 16:49:45 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 # define MEMORY_MANAGER_H
 # include "ft_error.h"
 # include "define.h"
-# include "MLX42/MLX42.h"
 # include "../libft/libft.h"
 # include <math.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <aio.h>
+# include "MLX42/MLX42.h"
+# include "MLX42/MLX42_Int.h"
 
 # define MM_AREA_NAME_MAX_SIZE	64
 # define MM_INITIAL_CONTENT_NB	4
@@ -85,7 +86,8 @@ void	safe_free(char *area, void *address);
 char	*safe_get_next_line(char *area, int fd);
 char	**safe_split(char *area, const char *s, char c);
 char	*safe_substr(char *area, const char *str, unsigned int start, size_t len);
-mlx_t	*safe_mlx_init(char *area);
+// mlx_t	*safe_mlx_init(char *area);
+char	*safe_strdup_with_calloc(char *area, char *str, int size);
 
 // here be the memorymanager functions.
 // failure results in nuclear_exit.

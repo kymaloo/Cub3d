@@ -29,3 +29,21 @@ char	*ft_strdup(const char *s)
 	str[i] = '\0';
 	return (str);
 }
+
+char	*ft_strdup_with_calloc(char *s, int size)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	str = ft_calloc(1, (size) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}

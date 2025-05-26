@@ -57,6 +57,7 @@ char	**ft_split(char const *s, char c);
 char	**ft_free_all(char **tab, int i);
 char	*ft_strchr(const char *str, int i);
 char	*ft_strdup(const char *s);
+char	*ft_strdup_with_calloc(char *s, int size);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);

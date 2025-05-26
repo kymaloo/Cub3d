@@ -1,4 +1,3 @@
-
 #ifndef FT_ERROR_H
 # define FT_ERROR_H
 
