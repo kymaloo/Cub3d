@@ -82,7 +82,6 @@ void	perform_dda(t_ray *ray, t_map *map)
 
 
 		if (map->grid[ray->map_y][ray->map_x] == '1') // plus haut si SEGV
-		if (grid[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
 }
@@ -294,7 +293,7 @@ void raycast(t_game *game)
         camera_x = 2 * x / (double)WIDTH - 1;
         ray_angle = game->player->radian + atan(camera_x * tan(FOV * M_PI / 360.0));
         init_var_ray(game->ray, game->player, ray_angle);
-        perform_dda(game->ray, game->map->grid);
+        perform_dda(game->ray, game->map);
         calculate_perp_wall_dist(game, ray_angle);
         
         if (game->ray->perp_wall_dist < 0.1)
