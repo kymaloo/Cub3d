@@ -35,71 +35,44 @@ int	main(int argc, char **argv)
 	t_data *data;
 
 	data = NULL;
-	(void)argv;
+	if (DEBUG)
+	{
+		int i = 0;
+		while (i++ < 15)
+			printf("\n\n\n");
+		printf(BBLUE"\n%s:"BBLUE" executing program:"BYELLOW" mode: Debug"RESET"\n\n\n", argv[0]);
+		printf(BWHITE"parsing debug infos:"RESET"\n");
+	}
 	if (argc != 2)
 		return (ft_error(WHERE, "Bad argument", EXIT_FAILURE));
 	create_memory_manager(&data);
 	if (init(data, argv[1]) != EXIT_SUCCESS)
 	  	nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
 	stock_radian(data->game->player);
-	//printf("%f\n", data->game->player->radian);
+	if (DEBUG)
+	{
+		print_debug_prefix(WHERE_FUNC, "");
+		print_player_infos(data->game->player, "");
+		printf(BWHITE"game hooks debug infos:"RESET"\n");
+	}
 	init_mlx(data->game);
 	init_textures(data->game);
-	
-	if (mlx_loop_hook(data->game->mlx, &ft_hook, data->game))
-			mlx_loop(data->game->mlx);
+	if (mlx_loop_hook(data->game->mlx, &ft_loop_hook, data->game))
+	{
+		data->game->toggles.catch_mouse_cursor = true;
+		mlx_set_cursor_mode(data->game->mlx, MLX_MOUSE_DISABLED);
+		data->game->toggles.minimap = false;
+		mlx_cursor_hook(data->game->mlx, &ft_cursor_hook, data->game);
+		mlx_mouse_hook(data->game->mlx, &ft_mouse_hook, data->game);
+		mlx_key_hook(data->game->mlx, &ft_keys_hook, data->game);
+		mlx_loop(data->game->mlx);
+	}
 	mlx_terminate(data->game->mlx);
 	memory_manager(DESTROY, NULL, NULL);
-	printf(BGREEN"\tDone !\n"RESET);
+	if (DEBUG)
+		printf(BBLUE"\n\n%s:"BBLUE" executing program:"BGREEN" Done !\n"RESET, argv[0]);
 	return (EXIT_SUCCESS);
 }
-
-static void	ft_close_window(t_game *game)
-{
-	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlx);
-}
-
-// void	ft_hook(void *gamed)
-// {
-// 	t_game	*game;
-
-// 	game = gamed;
-// 	//ft_move_perso(game);
-// 	ft_close_window(game);
-// 	//print_minimap(game);
-// 	raycast(game);
-// 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-// 		game->player->radian += 0.05;
-// 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-// 		game->player->radian -= 0.05;
-// }
-
-void ft_hook(void *gamed)
-{
-    t_game *game;
-    double rotation_speed;
-
-    game = gamed;
-    rotation_speed = 0.05; // Environ 2.86 degrés par frame
-
-    ft_close_window(game);
-    raycast(game);
-
-    if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-    {
-        game->player->radian += rotation_speed;
-        if (game->player->radian >= 2 * M_PI)
-            game->player->radian -= 2 * M_PI;
-    }
-    if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-    {
-        game->player->radian -= rotation_speed;
-        if (game->player->radian < 0)
-            game->player->radian += 2 * M_PI;
-    }
-}
-
 
 void	print_minimap(t_game *g)
 {
@@ -149,6 +122,20 @@ void	create_memory_manager(t_data **data)
 
 void stock_radian(t_player *player)
 {
+	if (player->facing == 'N')
+		player->radian = (M_PI / 2);
+	else if (player->facing == 'S')
+		player->radian = (-M_PI / 2);
+	else if (player->facing == 'E')
+		player->radian = (2 * M_PI);
+	else if (player->facing == 'W')
+		player->radian = (M_PI);
+	else
+		nuclear_exit(ft_error(WHERE, "Bad player direction", EXIT_FAILURE));
+
+
+
+//TODO pas certain si c'est un fix de direction ou pas, pas rapport a ma branche (dessus), mais sans doute, oui 
     if (player->facing == 'N')
     {
         player->radian = (3 * M_PI / 2);
@@ -173,4 +160,9 @@ void stock_radian(t_player *player)
         player->position[X] = player->position[X] + 0.5;
         player->position[Y] = player->position[Y] + 0.5;
     }
+	else
+		nuclear_exit(ft_error(WHERE, "Bad player direction", EXIT_FAILURE));
+
+	//ça, je rajoute :
+	update_player_direction(player);
 }

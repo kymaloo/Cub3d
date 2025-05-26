@@ -11,7 +11,7 @@ MLX_VERSION_GIT_HASH := ce254c3a19af8176787601a2ac3490100a5c4c61
 INCLUDES	:= -Iinclude -IMLX42/include
 ARCHIVES	:= $(LIBFT_A) $(MLX_A)
 LIBS		:= -ldl -lglfw -lm
-CFLAGS		:= -Wall -Wextra -Werror -g3 $(INCLUDES) #-Werror
+CFLAGS		:= -Wall -Wextra -g3 $(INCLUDES) #-Werror
 
 BRED	:=	\033[1;31m
 RED		:=	\033[31m
@@ -44,9 +44,16 @@ SRCS	:= 	\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
 			\
-			src/exec/move.c \
-			src/exec/minimap.c \
-			src/exec/dda.c \
+			src/exec/minimap.c		\
+			src/exec/dda.c			\
+			\
+			src/hooks/keys_hook.c						\
+			src/hooks/loop_hook.c						\
+			src/hooks/mouse_hooks.c						\
+			src/hooks/player_move_translations.c		\
+			src/hooks/utils.c							\
+			\
+			src/debug/debug_utils.c						\
 
 
 OBJS	:= ${SRCS:.c=.o}
@@ -99,10 +106,10 @@ $(MLX_DIR):
 $(NAME): $(MLX_A) $(LIBFT_A) $(OBJS) 
 #@echo "$(BLUE)$(NAME): objects $(GREEN)compiled !$(RESET)"
 #@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
-	@echo "$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
+	@printf "\33[2K\r$(BLUE)$(NAME): objects $(GREEN)compiled$(RESET)\n"
+	@echo "$(CC) $(CFLAGS) \$$($(NAME)_OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)
 
-	@printf "\33[2K\r$(BLUE)$(NAME): objects $(GREEN)compiled$(RESET)\n"
 	@printf "\33[2K\r$(BLUE)$(NAME): $(NAME) $(GREEN)Linked!$(RESET)\n"
 #@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
 

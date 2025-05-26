@@ -1,6 +1,8 @@
 #ifndef DEFINE_H
 # define DEFINE_H
 
+# define DEBUG				true
+
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
 # define ZONE_PARSE				"petit_chacalot"
@@ -31,6 +33,9 @@
 # define PLAYER_ADJUSTMENT	5
 
 # define TILE_SIZE_MINIMAP	16
+
+#define	MOUSE_SENSITIVITY 0.002
+#define MOUSE_MOUVEMENT_DETECTION_THRESHOLD 5
 
 # define DIM	2
 

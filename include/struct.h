@@ -91,6 +91,12 @@ typedef struct s_player
 	double	radian;
 }	t_player;
 
+typedef struct s_toggles
+{
+	bool	catch_mouse_cursor;
+	bool	minimap;
+}	t_toggles;
+
 typedef struct s_game
 {
 	t_texture			*texture;
@@ -98,8 +104,9 @@ typedef struct s_game
 	t_map				*map;
 	mlx_t				*mlx;
 	int					colors_minimap;
+	t_ray				*ray;
+	t_toggles			toggles;
 	t_path				*path;
-		t_ray			*ray;
 }			t_game;
 
 typedef struct s_data
