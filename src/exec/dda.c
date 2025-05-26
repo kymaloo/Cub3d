@@ -182,9 +182,9 @@ static void wall(t_game *game, int x)
     double wall_x;
     
     if (game->ray->side == 0)
-        wall_x = game->player->position[1] + game->ray->perp_wall_dist * game->ray->dir_y;
+        wall_x = game->player->position[1] + game->ray->realdist * game->ray->dir_y;
     else
-        wall_x = game->player->position[0] + game->ray->perp_wall_dist * game->ray->dir_x;
+        wall_x = game->player->position[0] + game->ray->realdist * game->ray->dir_x;
     wall_x -= floor(wall_x);
     setup_texture(game);
     draw_column(game, wall_x, x);
@@ -276,6 +276,7 @@ static void calculate_perp_wall_dist(t_game *game, double ray_angle)
         angle_diff -= 2 * M_PI;
     while (angle_diff < -M_PI)
         angle_diff += 2 * M_PI;
+    game->ray->realdist = game->ray->perp_wall_dist;
     game->ray->perp_wall_dist *= cos(angle_diff);
     if (game->ray->perp_wall_dist < 0.05)
         game->ray->perp_wall_dist = 0.05;

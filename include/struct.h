@@ -32,6 +32,7 @@ typedef struct s_ray
 	int		side; // 0 = x, 1 = y
 	int		draw_end;
 	int		draw_start;
+	double realdist;
 	double perp_wall_dist;
 	int line_height;
 	mlx_texture_t *current_texture;

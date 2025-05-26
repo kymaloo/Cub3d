@@ -1,7 +1,7 @@
 #ifndef DEFINE_H
 # define DEFINE_H
 
-# define DEBUG				true
+# define DEBUG				false
 
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
