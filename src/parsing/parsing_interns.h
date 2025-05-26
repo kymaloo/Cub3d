@@ -6,7 +6,7 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:50 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/02/25 10:30:40 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:41:45 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ int	get_size_of_array(t_data *data, char **t, int i);
 int		get_index_before_array(t_data *data, char **array, int i);
 void	get_line_size(t_data *data, char **array);
 void	find_pos_player(t_game *game, char **grid);
+int		check_line_map(t_map *map);
+void	char_to_rgb(t_colors *colors, char *str, int id);;
 
 #endif

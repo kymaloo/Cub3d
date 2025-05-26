@@ -67,13 +67,13 @@ int	init(t_data *data, char *str)
 		return (EXIT_FAILURE);
 	if (init_map(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	// printf("%d\n", data->game->map->x_max);
-	// printf("%d\n", data->game->map->y_max);
-	//print_map(data->parse->grid_copy);
+	if (check_line_map(data->game->map) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	char_to_rgb(data->colors, data->colors->color_floor, 0);
+	char_to_rgb(data->colors, data->colors->color_ceiling, 1);
 	memory_manager(DEL_ELEM, ZONE_PARSE, data->parse->all_file);
 	if (check_wall(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	
 	return (EXIT_SUCCESS);
 }
 
@@ -103,4 +103,30 @@ int	all_line_is_valid(t_data *data, char **array)
 			nuclear_exit(ft_error(WHERE, "Line isn't valid", EXIT_FAILURE));
 	}
 	return (EXIT_SUCCESS);
+}
+
+static int get_rgba(int r, int g, int b, int a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
+}
+
+void	char_to_rgb(t_colors *colors, char *str, int id)
+{
+	char	**split;
+	int i = 0;
+	//printf("%s\n", str);
+	split = ft_split(str, ',');
+	// while (split[i])
+	// {
+	// 	printf("%s\n", split[i]);
+	// 	i++;
+	// }
+	if (split == NULL)
+		return ;
+	if (id == 0)
+		colors->color_floor_uint = get_rgba(ft_atoi(split[0]), ft_atoi(split[1]), ft_atoi(split[2]), 255);
+	if (id == 1)
+		colors->color_ceiling_uint = get_rgba(ft_atoi(split[0]), ft_atoi(split[1]), ft_atoi(split[2]), 255);
+	ft_free_all(split, 0);
+	return ;
 }

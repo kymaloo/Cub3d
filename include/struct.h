@@ -48,6 +48,8 @@ typedef	struct s_colors
 	char	*color_ceiling;
 	int		floor;
 	int		ceiling;
+	uint32_t	color_floor_uint;
+	uint32_t	color_ceiling_uint;
 }	t_colors;
 
 typedef	struct s_path
@@ -108,6 +110,7 @@ typedef struct s_game
 	t_ray				*ray;
 	t_toggles			toggles;
 	t_path				*path;
+	t_colors			*colors;
 }			t_game;
 
 typedef struct s_data

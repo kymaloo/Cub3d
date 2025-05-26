@@ -36,7 +36,6 @@ void	perform_dda(t_ray *ray, t_map *map)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-	//	printf("%d ----------- %d\n", ray->map_x, ray->map_y);
 		# define DEBUG_DDA false
 		if (DEBUG_DDA)
 		{
@@ -56,32 +55,7 @@ void	perform_dda(t_ray *ray, t_map *map)
 			if (tmp > 100)
 				nuclear_exit(EXIT_FAILURE);
 		}
-
-		//TODO si SEGV hors de la grille : forcer position X Y a l'extremum grille au max
-		// if(ray->map_x >= map->x_max)
-		// {
-		// 	ray->map_x = map->x_max - 1;
-		// 	ray->hit = 1;
-		// }
-		// else if(ray->map_x < 0)
-		// {
-		// 	ray->map_x = 0;
-		// 	ray->hit = 1;
-		// }
-		// if(ray->map_y >= map->y_max )
-		// {
-		// 	ray->map_y = map->y_max - 1;
-		// 	ray->hit = 1;
-		// }
-		// else if(ray->map_y < 0 )
-		// {
-		// 	ray->map_y = 0;
-		// 	ray->hit = 1;
-		// }
-			
-
-
-		if (map->grid[ray->map_y][ray->map_x] == '1') // plus haut si SEGV
+		if (map->grid[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
 }
@@ -89,20 +63,17 @@ void	perform_dda(t_ray *ray, t_map *map)
 static void ceilling(t_game *game, int x)
 {
 	int	y;
-	int color_floor;
 
 	y = 0;
-	color_floor = C_FLOOR_BROWN;
-	while (y < game->ray->draw_start - 2) //FIXME the -2 was necessary, as game->ray->draw_start was set to 1082
+	while (y < game->ray->draw_start)
 	{
-		mlx_put_pixel(game->texture->image->img_window, x, y, color_floor);
+		mlx_put_pixel(game->texture->image->img_window, x, y, game->colors->color_ceiling_uint);
 		y++;
 	}
 }
 
 void init_textures(t_game *game)
 {
-   //printf("%s\n", &game->path->north[3]);
     game->texture->north = mlx_load_png(&game->path->north[3]);
     if (!game->texture->north)
         nuclear_exit(ft_error(WHERE, "Texture loading failed", EXIT_FAILURE));
@@ -193,13 +164,13 @@ static void wall(t_game *game, int x)
 static void floors(t_game *game, int x)
 {
 	int	y;
-	int color_floor;
+	//int color_floor;
 
 	y = game->ray->draw_end + 1;
-	color_floor = C_GREY_INVALID;
+	//color_floor = C_GREY_INVALID;
 	while (y < HEIGHT)
 	{
-		mlx_put_pixel(game->texture->image->img_window, x, y, color_floor);
+		mlx_put_pixel(game->texture->image->img_window, x, y, game->colors->color_floor_uint);
 		y++;
 	}
 }

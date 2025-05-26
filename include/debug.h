@@ -5,11 +5,11 @@
 #include "cub.h"
 
 #ifndef DEBUG_KEYS
-# define DEBUG_KEYS true
+# define DEBUG_KEYS false
 #endif
 
 #ifndef DEBUG_MOUSE
-# define DEBUG_MOUSE true
+# define DEBUG_MOUSE false
 #endif
 
 #define WHERE_FUNC __FILE__, __LINE__, __FUNCTION__

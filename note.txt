@@ -1,7 +1,2 @@
-Choses a faire : Check si on a bien tous les tableau rempli
-				 stock map
-				 free all file
-				 check line si c'est espace ou tab (dir ou fc) ou 01NSEWD
-				 copy tab
-				 Patfinding
+Choses a faire : 
 				 

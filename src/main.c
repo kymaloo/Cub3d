@@ -106,6 +106,7 @@ void	create_memory_manager(t_data **data)
 	(*data)->game->path = safe_calloc(ZONE_PARSE, 1, sizeof(t_path));
 	(*data)->colors = safe_calloc(ZONE_PARSE, 1, sizeof(t_colors));
 	(*data)->game->ray = safe_calloc(ZONE_PARSE, 1, sizeof(t_ray));
+	(*data)->game->colors = (*data)->colors;
 }
 
 // void	stock_radian(t_player *player)
