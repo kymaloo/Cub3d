@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:12 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 10:46:33 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:30:54 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_status	ft_strcmp(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (EXIT_FAILURE);
 	i = 0;
-	while(s1[i] && s2[i])
+	while (s1[i] && s2[i])
 	{
 		if (s1[i] != s2[i])
 			return (EXIT_FAILURE);
@@ -38,7 +38,7 @@ t_area_node	*go_to_area_name(t_mm *mm, char *area_name_to_find)
 	t_area_node	*next;
 
 	area_node = mm->areas;
-	while(area_node)
+	while (area_node)
 	{
 		next = area_node->next;
 		if (ft_strcmp(area_node->area_name, area_name_to_find) == EXIT_SUCCESS)
@@ -49,7 +49,7 @@ t_area_node	*go_to_area_name(t_mm *mm, char *area_name_to_find)
 	return (NULL);
 }
 
-t_content_array *initialize_content_array(t_mm *mm, t_content_array *new)
+t_content_array	*initialize_content_array(t_mm *mm, t_content_array *new)
 {
 	if (!new)
 		mm_nuclear_exit(mm, ft_error(WHERE, "failure.", EXIT_FAILURE));
@@ -63,14 +63,14 @@ t_content_array *initialize_content_array(t_mm *mm, t_content_array *new)
 	return (new);
 }
 
-void upgrade_content_array_size(t_mm *mm, t_content_array *old)
+void	upgrade_content_array_size(t_mm *mm, t_content_array *old)
 {
 	bool	*new_bits;
 	void	*new_content;
 	size_t	old_size;
 	size_t	new_size;
 
-	old_size = old->size; 
+	old_size = old->size;
 	new_size = old_size * 2;
 	new_content = ft_calloc(new_size, new_size * sizeof(void *));
 	if (!new_content)

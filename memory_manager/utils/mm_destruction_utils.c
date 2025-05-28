@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:15 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 10:43:50 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:32:28 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	destroy_content_array(t_content_array *content, t_deletion_func deletion_fu
 
 	size = content->size;
 	i = 0;
-	while(i < size)
+	while (i < size)
 	{
 		if (content->bits[i])
 			deletion_func(content->content[i]);
@@ -56,7 +56,7 @@ void	destroy_areas(t_area_node *areas)
 {
 	t_area_node	*next;
 
-	while(areas)
+	while (areas)
 	{
 		next = areas->next;
 		destroy_area(areas);

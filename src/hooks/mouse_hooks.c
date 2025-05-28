@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouse_hooks.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 11:09:23 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 11:10:53 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 bool	mouse_rotations(t_game *game, int32_t old_xpos, int32_t xpos)
@@ -30,10 +42,10 @@ bool	mouse_rotations(t_game *game, int32_t old_xpos, int32_t xpos)
 
 void	ft_cursor_hook(double xpos, double ypos, void *game_data)
 {
-	static int32_t old_xpos = -1;
-	t_game *game;
-	game = game_data;
+	static int32_t	old_xpos = -1;
+	t_game			*game;
 
+	game = game_data;
 	(void) ypos;
 	if (old_xpos == -1)
 		old_xpos = (int32_t) xpos;
@@ -42,7 +54,7 @@ void	ft_cursor_hook(double xpos, double ypos, void *game_data)
 	old_xpos = (int32_t) xpos;
 }
 
-void toggle_mouse_capture(mlx_t *mlx, t_toggles *toggles)
+void	toggle_mouse_capture(mlx_t *mlx, t_toggles *toggles)
 {
 	toggles->catch_mouse_cursor = !toggles->catch_mouse_cursor;
 	if (toggles->catch_mouse_cursor == true)
@@ -53,7 +65,7 @@ void toggle_mouse_capture(mlx_t *mlx, t_toggles *toggles)
 
 void	ft_mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *game_data)
 {
-	t_game *game;
+	t_game	*game;
 
 	(void) mods;
 	game = game_data;

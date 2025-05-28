@@ -1,12 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loop_hook.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 11:03:59 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 11:05:56 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	ft_keys_movement_translations(t_game *game)
 {
-	if (mlx_is_key_down(game->mlx, MLX_KEY_W) || mlx_is_key_down(game->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W) \
+		|| mlx_is_key_down(game->mlx, MLX_KEY_UP))
 	{
 		move_translate_forward(game);
 	}
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_S) || mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_S) \
+		|| mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
 	{
 		move_translate_backward(game);
 	}
@@ -18,12 +32,12 @@ void	ft_keys_movement_translations(t_game *game)
 	{
 		move_translate_right(game);
 	}
-}		
+}
 
 void	ft_keys_movement_rotations(t_game *game)
 {
-	bool rotated;
-	
+	bool	rotated;
+
 	rotated = false;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 	{
@@ -57,19 +71,16 @@ void	ft_keys_movement_rotations(t_game *game)
 /* GAME LOGIC HOOK */
 void	ft_loop_hook(void *game_ptr)
 {
-	t_game	*game;
-	static double last_time = 0;
-    double current_time;
-	
+	t_game			*game;
+	static double	last_time = 0;
+	double			current_time;
+
 	current_time = mlx_get_time();
-    if ((current_time - last_time) < FRAME_TIME)
-        return ;
-
-    last_time = current_time;
+	if ((current_time - last_time) < FRAME_TIME)
+		return ;
+	last_time = current_time;
 	game = game_ptr;
-
 	ft_keys_movement_translations(game);
 	ft_keys_movement_rotations(game);
-
 	raycast(game);
 }

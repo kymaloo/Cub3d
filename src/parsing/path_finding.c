@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_finding.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:52:05 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:54:47 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
 
 static void	find_last_floor(t_parsing_map *p)
 {
-	int y;
+	int	y;
 	int	x;
 
 	y = 0;
@@ -39,20 +50,20 @@ bool	isset(char c, char *set)
 	return (false);
 }
 
-
-static void flood_fill_rec(int x, int y, t_data *data, int i)
+static void	flood_fill_rec(int x, int y, t_data *data, int i)
 {
 	char	**cells;
 	char	*legal_grid_chars;
-	
+
 	legal_grid_chars = "NSEW01D\n\0 \t";
 	cells = data->parse->grid_copy;
-
-	if (x < 0 || x > data->game->map->x_max || y < 0 || y > data->game->map->y_max - 1)
-		nuclear_exit(ft_error(WHERE, "map walling not valid: entering illegal coords territory (very scary stuff)", EXIT_FAILURE));
+	if (x < 0 || x > data->game->map->x_max || y < 0 \
+											|| y > data->game->map->y_max - 1)
+		nuclear_exit(ft_error(WHERE, \
+			"map walling not valid: illegal coords", EXIT_FAILURE));
 	if (isset(cells[y][x], legal_grid_chars) == false)
-		nuclear_exit(ft_error(WHERE, "map walling not valid: illegal char used", EXIT_FAILURE));
-
+		nuclear_exit(ft_error(WHERE, \
+			"map walling not valid: illegal char used", EXIT_FAILURE));
 	if (cells[y][x] == '1')
 		return ;
 	cells[y][x] = '1';
@@ -78,8 +89,8 @@ int	check_wall(t_data *data)
 			if (isset(data->parse->grid_copy[i][j], "NSEW0") == true)
 			{
 				find_last_floor(data->parse);
-				//printf("pathfinding n*%d starts in [Y][X] = [%d][%d]\n", id++, data->parse->->y_last_0, data->parse->->x_last_0);
-				flood_fill_rec(data->parse->x_last_0, data->parse->y_last_0, data, 1);
+				flood_fill_rec(data->parse->x_last_0, \
+												data->parse->y_last_0, data, 1);
 			}
 			j++;
 		}

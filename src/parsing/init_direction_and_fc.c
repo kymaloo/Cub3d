@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_direction_and_fc.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:51:27 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:51:38 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
@@ -53,7 +64,8 @@ int	init_fc(t_data *data, char *str)
 	{
 		if (ft_strncmp(data->parse->all_file[i], data->parse->fc[0], 2) == 0)
 			process_direction(data, data->parse->all_file[i], 4, fd);
-		else if (ft_strncmp(data->parse->all_file[i], data->parse->fc[1], 2) == 0)
+		else if (ft_strncmp(data->parse->all_file[i], \
+													data->parse->fc[1], 2) == 0)
 			process_direction(data, data->parse->all_file[i], 5, fd);
 		i++;
 	}

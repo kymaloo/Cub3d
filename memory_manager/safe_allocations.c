@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   safe_allocations.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 11:25:39 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 11:28:22 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "memory_manager.h"
 #include "cub.h"
@@ -100,14 +111,3 @@ char	*safe_strdup_with_calloc(char *area, char *str, int size)
 	memory_manager(ADD_ELEM, area, new);
 	return (new);
 }
-
-// mlx_t *safe_mlx_init(char *area)
-// {
-// 	void	*new;
-	
-// 	new = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
-// 	if (!new)
-// 		nuclear_exit(ft_error(WHERE, "mlx init failure", MALLOC_ERROR));
-// 	memory_manager(ADD_ELEM, area, new);
-// 	return (new);
-// }

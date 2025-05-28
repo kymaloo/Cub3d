@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:28:16 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/15 16:49:45 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:34:05 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 typedef void	*t_addr;
 
-typedef	void (*t_deletion_func)(void *elem);
+typedef void	(*t_deletion_func)(void *elem);
 
 typedef struct s_area_create_data
 {
@@ -65,7 +65,7 @@ typedef struct s_memory_manager
 	t_area_node		*areas;
 } t_memory_manager,	t_mm;
 
-typedef	enum e_mm_opcode
+typedef enum e_mm_opcode
 {
 	CREATE,
 	DESTROY,
@@ -74,8 +74,8 @@ typedef	enum e_mm_opcode
 	DEL_ELEM,
 }	t_mm_opcode;
 
-# define	MM_NUKE			666
-# define	MM_AREA_CREATE	42
+# define MM_NUKE			666
+# define MM_AREA_CREATE		42
 
 // here, add the safe_allocation_functions ...
 
@@ -85,7 +85,8 @@ char	*safe_strdup(char *area, const char *str);
 void	safe_free(char *area, void *address);
 char	*safe_get_next_line(char *area, int fd);
 char	**safe_split(char *area, const char *s, char c);
-char	*safe_substr(char *area, const char *str, unsigned int start, size_t len);
+char	*safe_substr(char *area, const char *str, \
+												unsigned int start, size_t len);
 // mlx_t	*safe_mlx_init(char *area);
 char	*safe_strdup_with_calloc(char *area, char *str, int size);
 
@@ -93,6 +94,7 @@ char	*safe_strdup_with_calloc(char *area, char *str, int size);
 // failure results in nuclear_exit.
 
 void	memory_manager(t_mm_opcode opcode, char *area_name, void *elem);
-void	memory_manager_area_create(char *area_name, t_deletion_func	deletion_func, size_t nb_hahsmap_buckets);
+void	memory_manager_area_create(char *area_name, \
+					t_deletion_func	deletion_func, size_t nb_hahsmap_buckets);
 void	nuclear_exit(t_status status);
 #endif

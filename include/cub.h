@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:24:15 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:24:33 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB_H
 # define CUB_H
 
@@ -28,11 +40,8 @@ void	print_map(char **map);
 int		is_wall(t_map *map, int x, int y);
 void	ft_move_perso(t_game *g);
 
-
 void	raycast(t_game *game);
 void	perform_dda(t_ray *ray, t_map *map);
-//void	init_ray(t_ray *ray, t_player *player, double ray_angle);
-void init_textures(t_game *game);
-
+void	init_textures(t_game *game);
 
 #endif

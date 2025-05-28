@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_parse.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:47:40 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:47:57 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
@@ -60,17 +71,14 @@ int	get_index_before_array(t_data *data, char **array, int i)
 		size = ft_strlen_int(array[i]);
 		if (check_white_space(array[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], 
-		data->game->path->north, size) == 0
-			|| ft_strncmp(array[i], 
-			data->game->path->south, size) == 0)
+		else if (ft_strncmp(array[i], data->game->path->north, size) == 0 \
+			|| ft_strncmp(array[i], data->game->path->south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], 
-		data->game->path->east, size) == 0
+		else if (ft_strncmp(array[i], data->game->path->east, size) == 0 \
 			|| ft_strncmp(array[i], data->game->path->west, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], 
-		data->parse->color_ceiling_cp, size) == 0
+		else if (ft_strncmp(array[i], \
+			data->parse->color_ceiling_cp, size) == 0 \
 			|| ft_strncmp(array[i], data->parse->color_floor_cp, size) == 0)
 			i++;
 		else

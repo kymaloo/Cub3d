@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_interns.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:08:50 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/05/26 19:41:45 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/05/28 09:45:51 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int		count_dir_in_file(t_parsing_map *p, char **dir);
 int		count_fc_in_file(t_parsing_map *p, char **dir);
 int		char_valid_for_map(char *cmp, char *str);
 int		all_line_is_valid(t_data *data, char **array);
-int	get_size_of_array(t_data *data, char **t, int i);
+int		get_size_of_array(t_data *data, char **t, int i);
 int		get_index_before_array(t_data *data, char **array, int i);
 void	get_line_size(t_data *data, char **array);
 void	find_pos_player(t_game *game, char **grid);
 int		check_line_map(t_map *map);
-void	char_to_rgb(t_colors *colors, char *str, int id);;
+void	char_to_rgb(t_colors *colors, char *str, int id);
 
 #endif

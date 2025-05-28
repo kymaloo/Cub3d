@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors_fc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:50:48 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:51:10 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
@@ -6,8 +17,10 @@ int	check_fc(t_data *data)
 {
 	char	*tmp;
 
-	data->parse->color_ceiling_cp = safe_strdup(ZONE_PARSE, data->colors->color_ceiling);
-	data->parse->color_floor_cp = safe_strdup(ZONE_PARSE, data->colors->color_floor);
+	data->parse->color_ceiling_cp = safe_strdup(ZONE_PARSE, \
+												data->colors->color_ceiling);
+	data->parse->color_floor_cp = safe_strdup(ZONE_PARSE, \
+													data->colors->color_floor);
 	if (ft_isdigit(data->colors->color_ceiling[2])
 		|| ft_isdigit(data->colors->color_floor[2]))
 		nuclear_exit(ft_error(WHERE, \

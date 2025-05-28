@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:55:40 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:58:01 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub.h"
 #include "parsing_interns.h"
@@ -5,14 +16,14 @@
 static int	init_direction_and_fc(t_data *data, char *str)
 {
 	if (init_tab_direction(data->parse) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Init Tab Direction Failed",
-		EXIT_FAILURE));
+		nuclear_exit(ft_error(WHERE, "Init Tab Direction Failed", \
+																EXIT_FAILURE));
 	if (init_tab_fc(data->parse) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Init Tab Fc Failed",
-		EXIT_FAILURE));
+		nuclear_exit(ft_error(WHERE, "Init Tab Fc Failed", \
+																EXIT_FAILURE));
 	if (init_direction(data, str, 0, 0) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Init Direction Failed",
-		EXIT_FAILURE));
+		nuclear_exit(ft_error(WHERE, "Init Direction Failed", \
+																EXIT_FAILURE));
 	if (init_fc(data, str) == EXIT_FAILURE)
 		nuclear_exit(ft_error(WHERE, "Init Fc Failed", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
@@ -86,17 +97,16 @@ int	all_line_is_valid(t_data *data, char **array)
 	while (array[i])
 	{
 		size = ft_strlen_int(array[i]);
-		if (check_white_space(array[i]) == 0 || 
-		char_valid_for_map("01NSEWD\t ", array[i]) == 0)
+		if (check_white_space(array[i]) == 0 \
+			|| char_valid_for_map("01NSEWD\t ", array[i]) == 0)
 			i++;
-		else if (ft_strncmp(array[i], data->game->path->north, size) == 0
+		else if (ft_strncmp(array[i], data->game->path->north, size) == 0 \
 			|| ft_strncmp(array[i], data->game->path->south, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], data->game->path->east, size) == 0
+		else if (ft_strncmp(array[i], data->game->path->east, size) == 0 \
 			|| ft_strncmp(array[i], data->game->path->west, size) == 0)
 			i++;
-		else if (ft_strncmp(array[i], 
-			data->colors->color_ceiling, size) == 0
+		else if (ft_strncmp(array[i], data->colors->color_ceiling, size) == 0 \
 			|| ft_strncmp(array[i], data->colors->color_floor, size) == 0)
 			i++;
 		else
@@ -105,28 +115,26 @@ int	all_line_is_valid(t_data *data, char **array)
 	return (EXIT_SUCCESS);
 }
 
-static int get_rgba(int r, int g, int b, int a)
+static int	get_rgba(int r, int g, int b, int a)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void	char_to_rgb(t_colors *colors, char *str, int id)
 {
 	char	**split;
-	int i = 0;
-	//printf("%s\n", str);
+	int		i;
+
+	i = 0;
 	split = ft_split(str, ',');
-	// while (split[i])
-	// {
-	// 	printf("%s\n", split[i]);
-	// 	i++;
-	// }
 	if (split == NULL)
 		return ;
 	if (id == 0)
-		colors->color_floor_uint = get_rgba(ft_atoi(split[0]), ft_atoi(split[1]), ft_atoi(split[2]), 255);
+		colors->color_floor_uint = get_rgba(ft_atoi(split[0]), \
+									ft_atoi(split[1]), ft_atoi(split[2]), 255);
 	if (id == 1)
-		colors->color_ceiling_uint = get_rgba(ft_atoi(split[0]), ft_atoi(split[1]), ft_atoi(split[2]), 255);
+		colors->color_ceiling_uint = get_rgba(ft_atoi(split[0]), \
+									ft_atoi(split[1]), ft_atoi(split[2]), 255);
 	ft_free_all(split, 0);
 	return ;
 }

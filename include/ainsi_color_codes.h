@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:33:43 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/23 14:20:22 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 09:24:08 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,33 @@
 # define BCYAN       "\033[1;36m"
 # define BWHITE      "\033[1;37m"
 
-
 // Standard Background Colors
-#define BGBLACK     "\033[40m"
-#define BGRED       "\033[41m"
-#define BGGREEN     "\033[42m"
-#define BGYELLOW    "\033[43m"
-#define BGBLUE      "\033[44m"
-#define BGMAGENTA   "\033[45m"
-#define BGCYAN      "\033[46m"
-#define BGWHITE     "\033[47m"
+# define BGBLACK     "\033[40m"
+# define BGRED       "\033[41m"
+# define BGGREEN     "\033[42m"
+# define BGYELLOW    "\033[43m"
+# define BGBLUE      "\033[44m"
+# define BGMAGENTA   "\033[45m"
+# define BGCYAN      "\033[46m"
+# define BGWHITE     "\033[47m"
 
 // Bright Background Colors (if supported)
-#define BGBBLACK   "\033[100m"
-#define BGBRED     "\033[101m"
-#define BGBGREEN   "\033[102m"
-#define BGBYELLOW  "\033[103m"
-#define BGBBLUE    "\033[104m"
-#define BGBMAGENTA "\033[105m"
-#define BGBCYAN    "\033[106m"
-#define BGBWHITE   "\033[107m"
+# define BGBBLACK   "\033[100m"
+# define BGBRED     "\033[101m"
+# define BGBGREEN   "\033[102m"
+# define BGBYELLOW  "\033[103m"
+# define BGBBLUE    "\033[104m"
+# define BGBMAGENTA "\033[105m"
+# define BGBCYAN    "\033[106m"
+# define BGBWHITE   "\033[107m"
 
 // Reset Background Only
-#define BGRESET  "\033[49m"
+# define BGRESET	"\033[49m"
 
 // Reset Bold (and other intensity/weight styles)
-#define BRESET      "\033[22m"
+# define BRESET		"\033[22m"
 
 // Full Reset (attributes + colors)
-#define RESET_ALL         "\033[0m"
-
+# define RESET_ALL	"\033[0m"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:16:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 12:31:54 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:37:53 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
  */
 size_t	mm_hashmap_hash(t_content_hashmap *h, void *ptr)
 {
-	size_t addr;
-	size_t hash;
-	unsigned long long fibonnacci_ratio;
+	size_t				addr;
+	size_t				hash;
+	unsigned long long	fibonnacci_ratio;
 
 	fibonnacci_ratio = 11400714819323198485ull;
 	addr = (size_t) ptr;
@@ -32,14 +32,14 @@ size_t	mm_hashmap_hash(t_content_hashmap *h, void *ptr)
 	return (hash % h->nb_buckets);
 }
 
-
 void	mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 {
-	size_t hash;
-	size_t where;
+	size_t	hash;
+	size_t	where;
 
 	hash = mm_hashmap_hash(hashmap, elem);
-	where = findFirstZeroBit(hashmap->buckets[hash].bits, hashmap->buckets[hash].size);
+	where = find_first_zero_bit(hashmap->buckets[hash].bits, \
+												hashmap->buckets[hash].size);
 	if (where == (size_t) -1)
 	{
 		where = hashmap->buckets[hash].size + 1;
@@ -51,7 +51,7 @@ void	mm_hashmap_add(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 }
 
 void	mm_hashmap_init(t_mm *mm, t_content_hashmap *h, size_t nb_buckets)
-{	
+{
 	size_t	i;
 
 	h->nb_buckets = nb_buckets;
