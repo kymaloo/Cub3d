@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 10:21:59 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:37:04 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:02:19 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ void	raycast(t_game *game)
 	x = 0;
 	while (x < WIDTH)
 	{
-		camera_x = 2 * x / (double)WIDTH - 1;
+		camera_x = 2 * x / (float)WIDTH - 1;
 		ray_angle = game->player->radian \
 									+ atan(camera_x * tan(FOV * M_PI / 360.0));
 		init_var_ray(game->ray, game->player, ray_angle);

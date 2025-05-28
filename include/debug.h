@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:34:46 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:41:12 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:59:16 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 # ifndef DEBUG_KEYS
 #  define DEBUG_KEYS false
+# endif
+# ifndef CAPTURE_MOUSE_ON_STARTUP
+#  define CAPTURE_MOUSE_ON_STARTUP false
 # endif
 # ifndef DEBUG_MOUSE
 #  define DEBUG_MOUSE false
@@ -27,7 +30,7 @@
 #  define DEBUG_DDA false
 # endif
 # ifndef RESOLUTION_NB_KS
-#  define RESOLUTION_NB_KS 1
+#  define RESOLUTION_NB_KS 4
 # endif
 # ifndef DEBUG
 #  define DEBUG	false

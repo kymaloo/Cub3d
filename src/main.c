@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:39:50 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:45:19 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:01:07 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_mlx(t_game *game)
 	game->mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
 	if (!game->mlx)
 		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
-	img = mlx_new_image(game->mlx, 1920, 1080);
+	img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(game->mlx, img, 0, 0);
 	game->texture->image->img_window = img;
 	game->texture->player = mlx_load_png("images/p3_stand1.png");
@@ -74,7 +74,8 @@ int	main(int argc, char **argv)
 	if (mlx_loop_hook(data->game->mlx, &ft_loop_hook, data->game))
 	{
 		data->game->toggles.catch_mouse_cursor = true;
-		mlx_set_cursor_mode(data->game->mlx, MLX_MOUSE_DISABLED);
+		if (CAPTURE_MOUSE_ON_STARTUP == true)
+			mlx_set_cursor_mode(data->game->mlx, MLX_MOUSE_DISABLED);
 		data->game->toggles.minimap = false;
 		mlx_cursor_hook(data->game->mlx, &ft_cursor_hook, data->game);
 		mlx_mouse_hook(data->game->mlx, &ft_mouse_hook, data->game);
