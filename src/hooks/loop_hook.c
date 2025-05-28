@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:03:59 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 12:19:05 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 21:01:44 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ void	ft_keys_movement_translations(t_game *game)
 	}
 }
 
+static void	debug_key(t_game *game, char *key)
+{
+	printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\tROTATE %4s\t" \
+	RESET"\n", __FILE__, __LINE__, __FUNCTION__, key);
+	print_player_infos(game->player, "key rotate");
+	print_map_player(game, 5);
+}
+
 void	ft_keys_movement_rotations(t_game *game)
 {
 	bool	rotated;
@@ -42,24 +50,14 @@ void	ft_keys_movement_rotations(t_game *game)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 	{
 		if (DEBUG_KEYS)
-		{
-			printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%4s\t" \
-				RESET"\n", __FILE__, __LINE__, __FUNCTION__, "ROTATE RIGHT");
-			print_player_infos(game->player, "key rotate right");
-			print_map_player(game, 5);
-		}
+			debug_key(game, "RIGHT");
 		game->player->radian += 0.05;
 		rotated = !rotated;
 	}
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 	{
 		if (DEBUG_KEYS)
-		{
-			printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%4s\t" \
-				RESET"\n", __FILE__, __LINE__, __FUNCTION__, "ROTATE LEFT");
-			print_player_infos(game->player, "key rotate right");
-			print_map_player(game, 5);
-		}
+			debug_key(game, "LEFT");
 		game->player->radian -= 0.05;
 		rotated = !rotated;
 	}

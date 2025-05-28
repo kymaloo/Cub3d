@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:55:19 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/21 11:17:45 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:47:18 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 void	mm_create(t_mm **mm)
 {
 	if (*mm)
-		mm_nuclear_exit(NULL, ft_error(WHERE, "mm_create(): mm isn't NULL", EXIT_FAILURE));
+		mm_nuclear_exit(NULL, ft_error(WHERE, \
+								"mm_create(): mm isn't NULL", EXIT_FAILURE));
 	*mm = malloc(sizeof(t_mm));
 	if (!*mm)
-		mm_nuclear_exit(NULL, ft_error(WHERE, "mm_create(): malloc failure", EXIT_FAILURE));
+		mm_nuclear_exit(NULL, ft_error(WHERE, \
+								"mm_create(): malloc failure", EXIT_FAILURE));
 	(*mm)->areas = NULL;
 }
 

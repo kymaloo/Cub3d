@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:16:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:37:53 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:48:56 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 		}
 		i++;
 	}
-	mm_nuclear_exit(mm, ft_error(WHERE, "elem not found (how dare you give me false information)", EXIT_FAILURE));
+	mm_nuclear_exit(mm, ft_error(WHERE, \
+	"elem not found (how dare you give me false information)", EXIT_FAILURE));
 }

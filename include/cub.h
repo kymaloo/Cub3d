@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:24:15 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:24:33 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:37:38 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,8 @@ void	ft_move_perso(t_game *g);
 void	raycast(t_game *game);
 void	perform_dda(t_ray *ray, t_map *map);
 void	init_textures(t_game *game);
+
+void	init_mlx(t_game *game);
+void	init_spawn_player(t_player *player);
 
 #endif

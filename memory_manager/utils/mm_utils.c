@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:12 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:30:54 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:51:53 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ t_content_array	*initialize_content_array(t_mm *mm, t_content_array *new)
 {
 	if (!new)
 		mm_nuclear_exit(mm, ft_error(WHERE, "failure.", EXIT_FAILURE));
-	new->content = ft_calloc(MM_INITIAL_CONTENT_NB, MM_INITIAL_CONTENT_NB * sizeof(void *));
+	new->content = ft_calloc(MM_INITIAL_CONTENT_NB, \
+										MM_INITIAL_CONTENT_NB * sizeof(void *));
 	if (!new->content)
 		mm_nuclear_exit(mm, ft_error(WHERE, "calloc failure.", EXIT_FAILURE));
 	new->bits = ft_calloc(MM_INITIAL_CONTENT_NB, MM_INITIAL_CONTENT_NB * 1);
@@ -88,7 +89,8 @@ void	upgrade_content_array_size(t_mm *mm, t_content_array *old)
 	return ;
 }
 
-t_area_node	*create_area_node(t_mm *mm, char *new_area_name, t_deletion_func deletion_func, size_t nb_hahsmap_buckets)
+t_area_node	*create_area_node(t_mm *mm, char *new_area_name, \
+					t_deletion_func deletion_func, size_t nb_hahsmap_buckets)
 {
 	t_area_node	*new;
 	size_t		i;

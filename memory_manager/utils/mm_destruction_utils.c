@@ -6,13 +6,14 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:15 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:32:28 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:48:43 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mm_interns.h"
 
-void	destroy_content_array(t_content_array *content, t_deletion_func deletion_func)
+void	destroy_content_array(t_content_array *content, \
+												t_deletion_func deletion_func)
 {
 	size_t	i;
 	size_t	size;
@@ -30,7 +31,8 @@ void	destroy_content_array(t_content_array *content, t_deletion_func deletion_fu
 	return ;
 }
 
-void	destroy_area_hahsmap_content_array(t_content_hashmap *hashmap, t_deletion_func deletion_func)
+void	destroy_area_hahsmap_content_array(t_content_hashmap *hashmap, \
+												t_deletion_func deletion_func)
 {
 	size_t				i;
 
@@ -47,7 +49,8 @@ void	destroy_area_hahsmap_content_array(t_content_hashmap *hashmap, t_deletion_f
 void	destroy_area(t_area_node *area)
 {
 	free(area->area_name);
-	destroy_area_hahsmap_content_array(&area->area_hashmap, area->deletion_func);
+	destroy_area_hahsmap_content_array(&area->area_hashmap, \
+														area->deletion_func);
 	free(area);
 	return ;
 }

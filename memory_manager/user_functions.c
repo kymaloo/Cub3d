@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:27:09 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:28:03 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:46:10 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	nuclear_exit(int err_code)
 	memory_manager(MM_NUKE, NULL, &err_code);
 }
 
-void	memory_manager_area_create(char *area_name, t_deletion_func	deletion_func, size_t nb_hahsmap_buckets)
+void	memory_manager_area_create(char *area_name, \
+					t_deletion_func	deletion_func, size_t nb_hahsmap_buckets)
 {
 	t_area_create_data	a;
 

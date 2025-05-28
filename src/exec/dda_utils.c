@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dda.h                                              :+:      :+:    :+:   */
+/*   dda_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 09:24:37 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:37:42 by ekrebs           ###   ########.fr       */
+/*   Created: 2025/05/28 20:32:01 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 20:41:34 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DDA_H
-# define DDA_H
+#include "cub.h"
 
-bool	is_within_map_boundaries(t_map *map, int x, int y);
-void	update_player_direction(t_player *player);
-float	normalize_angle(float angle);
+void	ceilling(t_game *game, int x)
+{
+	int	y;
 
-void	setup_colors(t_game *game, int x);
-void	ceilling(t_game *game, int x);
-
-#endif
+	y = 0;
+	while (y < game->ray->draw_start)
+	{
+		mlx_put_pixel(game->texture->image->img_window, \
+										x, y, game->colors->color_ceiling_uint);
+		y++;
+	}
+}

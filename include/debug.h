@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:34:46 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 15:37:01 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 21:02:11 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,13 @@
 #  define DEBUG_MOUSE false
 # endif
 # ifndef DEBUG_EXTRACT
-#  define DEBUG_EXTRACT true
-# endif
-# ifndef DEBUG_DDA
-#  define DEBUG_DDA false
+#  define DEBUG_EXTRACT false
 # endif
 # ifndef RESOLUTION_NB_KS
 #  define RESOLUTION_NB_KS 2
 # endif
 # ifndef DEBUG
-#  define DEBUG	true
+#  define DEBUG	false
 # endif
 
 # if RESOLUTION_NB_KS == 4
@@ -52,7 +49,6 @@
 
 # define WHERE_FUNC __FILE__, __LINE__, __FUNCTION__
 
-
 //generals
 void	print_debug_prefix(char *file, int line, \
 											const char *func, char *str_msg);
@@ -61,7 +57,6 @@ void	print_coord(char *str_prefix, char *str_suffix, float x, float y);
 void	print_map_around(t_game *g, int x, int y, int offset);
 void	print_map_player(t_game *g, int offset);
 
-
 //specifics:
 //main.c
 void	debug_main_prefix(char *name);
@@ -69,6 +64,6 @@ void	debug_main_post_parsing(t_game *game);
 void	debug_main_suffix(t_game *game, char *name);
 
 //parsing
-void	debug_parsing_player_pos(t_game *game, int i ,int j);
+void	debug_parsing_player_pos(t_game *game, int i, int j);
 void	debug_map_extraction(t_map *map);
 #endif

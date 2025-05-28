@@ -29,12 +29,15 @@ SRCS	:= 	\
 			memory_manager/utils/mm_destruction_utils.c	\
 			memory_manager/utils/mm_hashmap_utils.c		\
 			memory_manager/safe_allocations.c			\
+			memory_manager/safe_allocations2.c			\
 			memory_manager/user_functions.c				\
 			\
 			src/main.c									\
+			src/init_utils.c							\
 			src/error.c									\
 			\
 			src/parsing/open_close_map.c				\
+			src/parsing/check_line_map.c				\
 			src/parsing/init_direction_and_fc.c			\
 			src/parsing/stock_direction_and_fc.c		\
 			src/parsing/check_map.c						\
@@ -43,9 +46,13 @@ SRCS	:= 	\
 			src/parsing/stock_map.c						\
 			src/parsing/utils_parse.c					\
 			src/parsing/colors_fc.c						\
+			src/parsing/parsing_utils.c					\
 			\
 			src/exec/minimap.c		\
 			src/exec/dda.c			\
+			src/exec/dda_utils.c	\
+			src/exec/draw_wall.c	\
+			src/exec/raycast.c		\
 			\
 			src/hooks/keys_hook.c						\
 			src/hooks/loop_hook.c						\
@@ -56,6 +63,7 @@ SRCS	:= 	\
 			src/debug/debug_main.c						\
 			src/debug/debug_parsing.c					\
 			src/debug/debug_utils.c						\
+			\
 
 
 

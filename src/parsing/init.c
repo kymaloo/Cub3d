@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:55:40 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 15:37:28 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:21:03 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	init_map(t_data *data)
 	if (check_map(data->game->map->grid) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_doublon_map(data->game->map->grid, "NSEW") != 1)
-		nuclear_exit(ft_error(WHERE, "ONLY ONE PLEYER PLSSSS", EXIT_FAILURE));
+		nuclear_exit(ft_error(WHERE, "MUST HAVE EXACTLY ONE PLAYER", \
+																EXIT_FAILURE));
 	find_pos_player(data->game, data->game->map->grid);
 	copy_map(data);
 	return (EXIT_SUCCESS);
@@ -62,25 +63,19 @@ static void	is_dir_and_filled(t_data *data)
 
 int	init(t_data *data, char *str)
 {
-	if (check_map_format_cub(str) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (check_map_reel(str) == EXIT_FAILURE)
+	if (check_map_format_cub(str) == EXIT_FAILURE \
+	|| check_map_reel(str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	data->parse->all_file = stock_file(str);
 	if (init_direction_and_fc(data, str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	is_dir_and_filled(data);
-	if (all_line_is_valid(data, data->parse->all_file) == 1)
-		return (EXIT_FAILURE);
-	if (check_fc(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (check_format_fc(data->colors) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (verif_colors(data->colors) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (init_map(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (check_line_map(data->game->map) != EXIT_SUCCESS)
+	if (all_line_is_valid(data, data->parse->all_file) == EXIT_FAILURE \
+		|| check_fc(data) == EXIT_FAILURE
+		|| check_format_fc(data->colors) == EXIT_FAILURE
+		|| verif_colors(data->colors) == EXIT_FAILURE
+		|| init_map(data) == EXIT_FAILURE
+		|| check_line_map(data->game->map) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	char_to_rgb(data->colors, data->colors->color_floor, 0);
 	char_to_rgb(data->colors, data->colors->color_ceiling, 1);
@@ -115,28 +110,4 @@ int	all_line_is_valid(t_data *data, char **array)
 			nuclear_exit(ft_error(WHERE, "Line isn't valid", EXIT_FAILURE));
 	}
 	return (EXIT_SUCCESS);
-}
-
-static int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-void	char_to_rgb(t_colors *colors, char *str, int id)
-{
-	char	**split;
-	int		i;
-
-	i = 0;
-	split = ft_split(str, ',');
-	if (split == NULL)
-		return ;
-	if (id == 0)
-		colors->color_floor_uint = get_rgba(ft_atoi(split[0]), \
-									ft_atoi(split[1]), ft_atoi(split[2]), 255);
-	if (id == 1)
-		colors->color_ceiling_uint = get_rgba(ft_atoi(split[0]), \
-									ft_atoi(split[1]), ft_atoi(split[2]), 255);
-	ft_free_all(split, 0);
-	return ;
 }

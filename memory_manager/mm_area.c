@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:21:06 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:27:03 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:48:04 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,22 @@ void	mm_area_create(t_mm *mm, char *area_name, t_area_create_data *a)
 	t_area_node	*area_node;
 
 	if (!a->deletion_func)
-		mm_nuclear_exit(mm, ft_error(WHERE, "no deletion function", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(WHERE, \
+										"no deletion function", EXIT_FAILURE));
 	else if (a->nb_hahsmap_buckets < 1)
-		mm_nuclear_exit(mm, ft_error(WHERE, "invalid hashmap buckets number", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(WHERE, \
+							"invalid hashmap buckets number", EXIT_FAILURE));
 	else if (!mm->areas)
 	{
-		mm->areas = create_area_node(mm, area_name, a->deletion_func, a->nb_hahsmap_buckets);
+		mm->areas = create_area_node(mm, \
+							area_name, a->deletion_func, a->nb_hahsmap_buckets);
 		return ;
 	}
 	area_node = mm->areas;
 	while (area_node->next)
 		area_node = area_node->next;
-	area_node->next = create_area_node(mm, area_name, a->deletion_func, a->nb_hahsmap_buckets);
+	area_node->next = create_area_node(mm, \
+							area_name, a->deletion_func, a->nb_hahsmap_buckets);
 	if (!area_node)
 		mm_nuclear_exit(mm, EXIT_FAILURE);
 	return ;
@@ -56,7 +60,8 @@ void	mm_area_delete(t_mm *mm, char *area_name_to_delete)
 	}
 	while (area_node->next)
 	{
-		if (ft_strcmp(area_node->next->area_name, area_name_to_delete) == EXIT_SUCCESS)
+		if (ft_strcmp(area_node->next->area_name, \
+										area_name_to_delete) == EXIT_SUCCESS)
 		{
 			killme = area_node->next;
 			area_node->next = area_node->next->next;
