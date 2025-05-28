@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:55:40 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:58:01 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:37:28 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ static int	init_map(t_data *data)
 {
 	data->game->map = safe_calloc(ZONE_PARSE, 1, sizeof(t_map));
 	data->game->map->grid = extract_map(data, data->parse->all_file);
+	if (DEBUG_EXTRACT)
+		debug_map_extraction(data->game->map);
 	if (check_map(data->game->map->grid) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_doublon_map(data->game->map->grid, "NSEW") != 1)
-		nuclear_exit(ft_error(WHERE, "ONE PLEYER PLSSSS 🤓", EXIT_FAILURE));
+		nuclear_exit(ft_error(WHERE, "ONLY ONE PLEYER PLSSSS", EXIT_FAILURE));
 	find_pos_player(data->game, data->game->map->grid);
 	copy_map(data);
 	return (EXIT_SUCCESS);

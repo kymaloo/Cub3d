@@ -53,7 +53,10 @@ SRCS	:= 	\
 			src/hooks/player_move_translations.c		\
 			src/hooks/utils.c							\
 			\
+			src/debug/debug_main.c						\
+			src/debug/debug_parsing.c					\
 			src/debug/debug_utils.c						\
+
 
 
 OBJS	:= ${SRCS:.c=.o}

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:17:52 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:18:58 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:49:32 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 float	normalize_angle(float angle)
 {
 	while (angle < 0)
-		angle += 2 * M_PI;
-	while (angle >= 2 * M_PI)
-		angle -= 2 * M_PI;
+		angle += M_2_PI;
+	while (angle >= M_2_PI)
+		angle -= M_2_PI;
 	return (angle);
 }
 

@@ -6,14 +6,12 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:24:42 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:36:31 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:54:05 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
-
-# define DEBUG				false
 
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
@@ -21,12 +19,15 @@
 # define ZONE_MLX			"zebi_la_mlx"
 # define ZONE_FDS			"oulah_les_Fds"
 
-
 # ifdef M_PI
 #  undef M_PI
 # endif
+# ifdef M_2_PI
+#  undef M_2_PI
+# endif
 # define M_PI				3.1415
-# define M_3_PI				9.42477
+# define M_2_PI				6.2831
+# define M_3_PI				9.4247
 # define M_5_PI				15.7079
 # define M_7_PI				21.9911
 # define M_PI_BY_8			0.39269
@@ -51,9 +52,8 @@
 
 # define DIM	2
 
-# define FOV				70
-# define FOV_DEG 60.0
-# define FOV_RAD 1.0471 // (FOV_DEG * M_PI / 180.0)
+# define FOV	 70
+# define FOV_DEG 0.6108// FOV * M_PI / 360.0
 
 # define MOVE_SPEED 0.3
 # define PLAYER_WIDTH 0.05

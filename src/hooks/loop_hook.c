@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:03:59 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:05:56 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:19:05 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	ft_keys_movement_rotations(t_game *game)
 	{
 		if (DEBUG_KEYS)
 		{
-			printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%4s\t"RESET"\n", __FILE__, __LINE__, __FUNCTION__, "ROTATE RIGHT");
+			printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%4s\t" \
+				RESET"\n", __FILE__, __LINE__, __FUNCTION__, "ROTATE RIGHT");
 			print_player_infos(game->player, "key rotate right");
 			print_map_player(game, 5);
 		}
@@ -54,7 +55,8 @@ void	ft_keys_movement_rotations(t_game *game)
 	{
 		if (DEBUG_KEYS)
 		{
-			printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%4s\t"RESET"\n", __FILE__, __LINE__, __FUNCTION__, "ROTATE LEFT");
+			printf(BLUE"%15s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%4s\t" \
+				RESET"\n", __FILE__, __LINE__, __FUNCTION__, "ROTATE LEFT");
 			print_player_infos(game->player, "key rotate right");
 			print_map_player(game, 5);
 		}

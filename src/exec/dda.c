@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 10:21:59 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 12:02:19 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:53:30 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,9 +273,9 @@ static void	calculate_perp_wall_dist(t_game *game, float ray_angle)
 						+ (1 - game->ray->step_y) / 2) / game->ray->dir_y);
 	angle_diff = game->player->radian - ray_angle;
 	while (angle_diff > M_PI)
-		angle_diff -= 2 * M_PI;
+		angle_diff -= M_2_PI;
 	while (angle_diff < -M_PI)
-		angle_diff += 2 * M_PI;
+		angle_diff += M_2_PI;
 	game->ray->realdist = game->ray->perp_wall_dist;
 	game->ray->perp_wall_dist *= cos(angle_diff);
 	if (game->ray->perp_wall_dist < 0.05)
@@ -293,7 +293,7 @@ void	raycast(t_game *game)
 	{
 		camera_x = 2 * x / (float)WIDTH - 1;
 		ray_angle = game->player->radian \
-									+ atan(camera_x * tan(FOV * M_PI / 360.0));
+									+ atan(camera_x * tan(FOV_DEG));
 		init_var_ray(game->ray, game->player, ray_angle);
 		perform_dda(game->ray, game->map);
 		calculate_perp_wall_dist(game, ray_angle);

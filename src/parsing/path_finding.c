@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:52:05 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:54:47 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:09:41 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,7 @@ void	find_pos_player(t_game *game, char **grid)
 				game->player->position[X] = j;
 				game->player->position[Y] = i;
 				if (DEBUG)
-				{
-					print_debug_prefix(WHERE_FUNC, "");
-					printf("player position:\t"RED" x: %-4d"GREEN" y: %-4d"RESET"\n", j, i);
-				}
+					debug_parsing_player_pos(game, i, j);
 				break ;
 			}
 			j++;

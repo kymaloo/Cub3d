@@ -6,11 +6,12 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:39:50 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 12:01:07 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:25:54 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub.h"
+#include "cub.h"
+#include "debug.h"
 
 void	mlx_deletion_func(void *mlx_t_adr)
 {
@@ -25,67 +26,86 @@ void	fd_deletion_func(void *fd_adr)
 	close(*i);
 }
 
+//+0.5 pour entrer dans la case
+void	center_player_in_current_tile(t_player *player)
+{
+	player->position[X] = player->position[X] + 0.5;
+	player->position[Y] = player->position[Y] + 0.5;
+}
+
+void	init_spawn_player(t_player *player)
+{
+	if (player->facing == 'N')
+	{
+		player->radian = (3 * M_PI / 2);
+		center_player_in_current_tile(player);
+	}
+	else if (player->facing == 'S')
+	{
+		player->radian = (M_PI / 2);
+		center_player_in_current_tile(player);
+	}
+	else if (player->facing == 'E')
+	{
+		player->radian = 0;
+		center_player_in_current_tile(player);
+	}
+	else if (player->facing == 'W')
+	{
+		player->radian = M_PI;
+		center_player_in_current_tile(player);
+	}
+	else
+		nuclear_exit(ft_error(WHERE, "Bad player direction", EXIT_FAILURE));
+	update_player_direction(player);
+}
+
 void	init_mlx(t_game *game)
 {
 	mlx_image_t	*img;
 
 	game->mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
 	if (!game->mlx)
-		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
+		nuclear_exit(ft_error(WHERE, "mlx_init() failure", EXIT_FAILURE));
 	img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(game->mlx, img, 0, 0);
 	game->texture->image->img_window = img;
-	game->texture->player = mlx_load_png("images/p3_stand1.png");
-	game->texture->image->player_img = mlx_texture_to_image(game->mlx, \
-														game->texture->player);
-	mlx_image_to_window(game->mlx, game->texture->image->player_img, \
-							game->player->position[X] * (TILE_SIZE_MINIMAP), \
-							game->player->position[Y] * (TILE_SIZE_MINIMAP));
+	game->toggles.minimap = false;
+	if (mlx_loop_hook(game->mlx, &ft_loop_hook, game))
+	{
+		game->toggles.catch_mouse_cursor = true;
+		if (CAPTURE_MOUSE_ON_STARTUP == true)
+			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
+		mlx_cursor_hook(game->mlx, &ft_cursor_hook, game);
+		mlx_mouse_hook(game->mlx, &ft_mouse_hook, game);
+		mlx_key_hook(game->mlx, &ft_keys_hook, game);
+	}
+	else
+		nuclear_exit(ft_error(WHERE, "mlx_loop_hook() failure", EXIT_FAILURE));
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	*data;
-	int		tmp;
 
 	data = NULL;
-	tmp = 0;
 	if (DEBUG)
-	{
-		while (tmp++ < 15)
-			printf("\n\n\n");
-		printf(BBLUE"\n%s:"BBLUE" executing program:"BYELLOW" mode: Debug"RESET"\n\n\n", argv[0]);
-		printf(BWHITE"parsing debug infos:"RESET"\n");
-	}
+		debug_main_prefix(argv[0]);
 	if (argc != 2)
 		return (ft_error(WHERE, "Bad argument", EXIT_FAILURE));
 	create_memory_manager(&data);
 	if (init(data, argv[1]) != EXIT_SUCCESS)
 		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
-	stock_radian(data->game->player);
+	init_spawn_player(data->game->player);
 	if (DEBUG)
-	{
-		print_debug_prefix(WHERE_FUNC, "");
-		print_player_infos(data->game->player, "");
-		printf(BWHITE"game hooks debug infos:"RESET"\n");
-	}
+		debug_main_post_parsing(data->game);
 	init_mlx(data->game);
 	init_textures(data->game);
-	if (mlx_loop_hook(data->game->mlx, &ft_loop_hook, data->game))
-	{
-		data->game->toggles.catch_mouse_cursor = true;
-		if (CAPTURE_MOUSE_ON_STARTUP == true)
-			mlx_set_cursor_mode(data->game->mlx, MLX_MOUSE_DISABLED);
-		data->game->toggles.minimap = false;
-		mlx_cursor_hook(data->game->mlx, &ft_cursor_hook, data->game);
-		mlx_mouse_hook(data->game->mlx, &ft_mouse_hook, data->game);
-		mlx_key_hook(data->game->mlx, &ft_keys_hook, data->game);
-		mlx_loop(data->game->mlx);
-	}
+	mlx_loop(data->game->mlx);
 	mlx_terminate(data->game->mlx);
 	memory_manager(DESTROY, NULL, NULL);
 	if (DEBUG)
-		printf(BBLUE"\n\n%s:"BBLUE" executing program:"BGREEN" Done !\n"RESET, argv[0]);
+		debug_main_suffix(data->game, argv[0]);
 	return (EXIT_SUCCESS);
 }
 
@@ -120,36 +140,4 @@ void	create_memory_manager(t_data **data)
 	(*data)->colors = safe_calloc(ZONE_PARSE, 1, sizeof(t_colors));
 	(*data)->game->ray = safe_calloc(ZONE_PARSE, 1, sizeof(t_ray));
 	(*data)->game->colors = (*data)->colors;
-}
-
-//+0.5 pour entrer dans la case
-void	stock_radian(t_player *player)
-{
-	if (player->facing == 'N')
-	{
-		player->radian = (3 * M_PI / 2);
-		player->position[X] = player->position[X] + 0.5;
-		player->position[Y] = player->position[Y] + 0.5;
-	}
-	else if (player->facing == 'S')
-	{
-		player->radian = (M_PI / 2);
-		player->position[X] = player->position[X] + 0.5;
-		player->position[Y] = player->position[Y] + 0.5;
-	}
-	else if (player->facing == 'E')
-	{
-		player->radian = 0;
-		player->position[X] = player->position[X] + 0.5;
-		player->position[Y] = player->position[Y] + 0.5;
-	}
-	else if (player->facing == 'W')
-	{
-		player->radian = M_PI;
-		player->position[X] = player->position[X] + 0.5;
-		player->position[Y] = player->position[Y] + 0.5;
-	}
-	else
-		nuclear_exit(ft_error(WHERE, "Bad player direction", EXIT_FAILURE));
-	update_player_direction(player);
 }

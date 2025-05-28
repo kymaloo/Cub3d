@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 10:54:25 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:00:42 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:42:30 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	print_debug_prefix(char *file, int line, \
 												const char *func, char *str_msg)
 {
-	printf(BLUE"%35s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%15s\t"RESET, \
+	printf(BLUE"%35s:"YELLOW"%-3d:"RESET"%-15s:    "BBLUE"\t%15s"RESET, \
 													file, line, func, str_msg);
 }
 
 void	print_angle(float rad)
 {
 	printf(MAGENTA"%-5.2frad ", rad);
-	if ((rad >= 15 * M_PI_BY_8 && rad < 2 * M_PI) \
+	if ((rad >= 15 * M_PI_BY_8 && rad < M_2_PI) \
 											|| (rad >= 0 && rad < M_PI_BY_8))
 		printf("(E)"RESET);
 	else if (rad >= M_PI_BY_8 && rad < 3 * M_PI_BY_8)

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:10:57 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:52:30 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:19:43 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	move_translate_forward(t_game *game)
 		print_coord("trying to move to:", "", new_x, new_y);
 		print_map_player(game, 5);
 	}
-		try_move_to(p, game->map, new_x, new_y);
+	try_move_to(p, game->map, new_x, new_y);
 	if (DEBUG_KEYS)
 		print_player_infos(game->player, "after");
 }

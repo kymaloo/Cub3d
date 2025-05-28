@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:59:09 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:38:50 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:33:00 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,36 +74,9 @@ char	**extract_map(t_data *data, char **array)
 		return (NULL);
 	while (i != get_index_before_array(data, array, 0))
 		i++;
-	if (DEBUG_EXTRACT)
-	{
-		print_debug_prefix(WHERE_FUNC, "Debug map extraction");
-		printf("\n\n");
-	}
 	while (array[i])
 	{
 		result[j] = safe_strdup_with_calloc(ZONE_PARSE, array[i], len + 1);
-		if (DEBUG_EXTRACT)
-		{
-			int	tmp_x;
-
-			tmp_x = 0;
-			while (tmp_x < len)
-			{
-				if (result[j][tmp_x] == '\0')
-					printf(BGBLUE"\\0"RESET);
-				else if (result[j][tmp_x] == '1')
-					printf(BGWHITE" 1"RESET);
-				else if (result[j][tmp_x] == '0')
-					printf(BGYELLOW" 0"RESET);
-				else if (result[j][tmp_x] == 'N' || result[j][tmp_x] == 'S' \
-						|| result[j][tmp_x] == 'E' || result[j][tmp_x] == 'W')
-					printf(BGBYELLOW" *"RESET);
-				else
-					printf(BGBLACK" %c"RESET, result[j][tmp_x]);
-				tmp_x++;
-			}
-			printf(BGBBLUE"\\0"RESET"\n");
-		}
 		i++;
 		j++;
 	}

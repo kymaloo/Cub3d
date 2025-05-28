@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:09:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 11:10:53 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:19:24 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ bool	mouse_rotations(t_game *game, int32_t old_xpos, int32_t xpos)
 
 	moved = false;
 	delta_mouse_x = xpos - old_xpos;
-	if (delta_mouse_x >= MOUSE_MOUVEMENT_DETECTION_THRESHOLD || delta_mouse_x <= -MOUSE_MOUVEMENT_DETECTION_THRESHOLD)
+	if (delta_mouse_x >= MOUSE_MOUVEMENT_DETECTION_THRESHOLD \
+		|| delta_mouse_x <= -MOUSE_MOUVEMENT_DETECTION_THRESHOLD)
 	{
 		if (DEBUG_MOUSE)
 		{
@@ -63,7 +64,8 @@ void	toggle_mouse_capture(mlx_t *mlx, t_toggles *toggles)
 		mlx_set_cursor_mode(mlx, MLX_MOUSE_NORMAL);
 }
 
-void	ft_mouse_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *game_data)
+void	ft_mouse_hook(mouse_key_t button, action_t action, \
+										modifier_key_t mods, void *game_data)
 {
 	t_game	*game;
 
