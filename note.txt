@@ -1,3 +1,2 @@
-Choses a faire : Verifier Texture
-			     Verifier C 14,2,42
-				 Faire Pathfinding
+Choses a faire : 
+				 

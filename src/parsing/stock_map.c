@@ -1,28 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stock_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:59:09 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 11:38:50 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 #include "parsing_interns.h"
 
-void	line_size(t_mm *mm, t_parsing_map *map, char *str, int fd)
-{
-	char	*line;
-	int		i;
-	int		count;
-
-	i = get_index_before_map(mm, map, str, 0, 0);
-	count = 0;
-	fd = open_map(str);
-	line = safe_get_next_line(mm, ZONE_1, fd);
-	while (line != NULL)
-	{
-		if (count >= i && ft_strlen_int(line) > map->line_size)
-			map->line_size = ft_strlen_int(line);
-		safe_free(mm, ZONE_1, line);
-		line = safe_get_next_line(mm, ZONE_1, fd);
-		count++;
-	}
-	close_map(fd);
-}
-
-int	count_line_in_file(t_mm *mm, char *str)
+int	count_line_in_file(char *str)
 {
 	int		fd;
 	int		count;
@@ -30,18 +21,18 @@ int	count_line_in_file(t_mm *mm, char *str)
 
 	fd = open_map(str);
 	count = 0;
-	line = safe_get_next_line(mm, ZONE_1, fd);
+	line = safe_get_next_line(ZONE_PARSE, fd);
 	while (line != NULL)
 	{
-		safe_free(mm, ZONE_1, line);
+		safe_free(ZONE_PARSE, line);
 		count++;
-		line = safe_get_next_line(mm, ZONE_1, fd);
+		line = safe_get_next_line(ZONE_PARSE, fd);
 	}
 	close_map(fd);
 	return (count);
 }
 
-char	**stock_file(t_mm *mm, char *str)
+char	**stock_file(char *str)
 {
 	int		i;
 	int		fd;
@@ -50,13 +41,13 @@ char	**stock_file(t_mm *mm, char *str)
 
 	i = 0;
 	fd = open_map(str);
-	count = count_line_in_file(mm, str);
-	result = safe_malloc(mm, ZONE_1, sizeof(char *) * (count + 1));
+	count = count_line_in_file(str);
+	result = safe_malloc(ZONE_PARSE, sizeof(char *) * (count + 1));
 	if (!result)
 		return (NULL);
 	while (i < count)
 	{
-		result[i] = safe_get_next_line(mm, ZONE_1, fd);
+		result[i] = safe_get_next_line(ZONE_PARSE, fd);
 		i++;
 	}
 	result[i] = NULL;
@@ -64,22 +55,55 @@ char	**stock_file(t_mm *mm, char *str)
 	return (result);
 }
 
-char	**extract_map(t_mm *mm, t_parsing_map *map, char **src, char *str)
+char	**extract_map(t_data *data, char **array)
 {
 	int		i;
 	int		j;
+	int		len;
+	int		size;
 	char	**result;
 
 	i = 0;
 	j = 0;
-	result = safe_malloc(mm, ZONE_1, sizeof(char *) * (map->count_line + 1));
+	size = get_size_of_array(data, array, 1);
+	data->game->map->y_max = size;
+	get_line_size(data, array);
+	len = data->game->map->x_max;
+	result = safe_calloc(ZONE_PARSE, 1, (sizeof(char *) * (size + 1)));
 	if (!result)
 		return (NULL);
-	while (i < get_index_before_map(mm, map, str, 0, 0))
+	while (i != get_index_before_array(data, array, 0))
 		i++;
-	while (src[i])
+	if (DEBUG_EXTRACT)
 	{
-		result[j] = safe_strdup(mm, ZONE_1, src[i]);
+		print_debug_prefix(WHERE_FUNC, "Debug map extraction");
+		printf("\n\n");
+	}
+	while (array[i])
+	{
+		result[j] = safe_strdup_with_calloc(ZONE_PARSE, array[i], len + 1);
+		if (DEBUG_EXTRACT)
+		{
+			int	tmp_x;
+
+			tmp_x = 0;
+			while (tmp_x < len)
+			{
+				if (result[j][tmp_x] == '\0')
+					printf(BGBLUE"\\0"RESET);
+				else if (result[j][tmp_x] == '1')
+					printf(BGWHITE" 1"RESET);
+				else if (result[j][tmp_x] == '0')
+					printf(BGYELLOW" 0"RESET);
+				else if (result[j][tmp_x] == 'N' || result[j][tmp_x] == 'S' \
+						|| result[j][tmp_x] == 'E' || result[j][tmp_x] == 'W')
+					printf(BGBYELLOW" *"RESET);
+				else
+					printf(BGBLACK" %c"RESET, result[j][tmp_x]);
+				tmp_x++;
+			}
+			printf(BGBBLUE"\\0"RESET"\n");
+		}
 		i++;
 		j++;
 	}
@@ -87,18 +111,50 @@ char	**extract_map(t_mm *mm, t_parsing_map *map, char **src, char *str)
 	return (result);
 }
 
-void	copy_map(t_mm *mm, t_parsing_map *map)
+void	copy_map(t_data *data)
 {
-	int	i;
+	int		i;
+	int		len;
+	int		size;
 
 	i = 0;
-	map->grid_copy = safe_malloc(mm, ZONE_PARSING_TMP, sizeof(char *) * (map->count_line + 1));
-	if (!map->grid_copy)
+	size = data->game->map->y_max;
+	len = data->game->map->x_max;
+	data->parse->grid_copy = safe_calloc(ZONE_PARSE, 1, \
+												sizeof(char *) * (size + 1));
+	if (!data->parse->grid_copy)
 		return ;
-	while (map->grid[i])
+	while (data->game->map->grid[i])
 	{
-		map->grid_copy[i] = safe_strdup(mm, ZONE_1, map->grid[i]);
+		data->parse->grid_copy[i] = safe_strdup_with_calloc(ZONE_PARSE, \
+		data->game->map->grid[i], len + 1);
 		i++;
 	}
-	map->grid_copy[i] = NULL;
+	data->parse->grid_copy[i] = NULL;
+}
+
+int	char_valid_for_map(char *cmp, char *str)
+{
+	int	i;
+	int	j;
+	int	size;
+	int	count;
+
+	i = 0;
+	count = 0;
+	size = ft_strlen_int(str);
+	while (str[i])
+	{
+		j = 0;
+		while (cmp[j])
+		{
+			if (str[i] == cmp[j])
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (size != count)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

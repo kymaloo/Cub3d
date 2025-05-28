@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.h                                         :+:      :+:    :+:   */
+/*   dda.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 09:31:00 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:31:02 by ekrebs           ###   ########.fr       */
+/*   Created: 2025/05/28 09:24:37 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:24:39 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ERROR_H
-# define FT_ERROR_H
+#ifndef DDA_H
+# define DDA_H
 
-# include "define.h"
-# include "ainsi_color_codes.h"
-# define WHERE __FILE__":", __LINE__
-
-typedef int	t_status;
-
-t_status	ft_error(char *where, int line, char *msg, t_status errcode);
+bool	is_within_map_boundaries(t_map *map, int x, int y);
+void	update_player_direction(t_player *player);
+float	normalize_angle(float angle);
 
 #endif

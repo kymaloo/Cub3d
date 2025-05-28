@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.h                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 09:31:00 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:31:02 by ekrebs           ###   ########.fr       */
+/*   Created: 2025/05/28 11:17:52 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 11:18:58 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ERROR_H
-# define FT_ERROR_H
+#include "cub.h"
 
-# include "define.h"
-# include "ainsi_color_codes.h"
-# define WHERE __FILE__":", __LINE__
+float	normalize_angle(float angle)
+{
+	while (angle < 0)
+		angle += 2 * M_PI;
+	while (angle >= 2 * M_PI)
+		angle -= 2 * M_PI;
+	return (angle);
+}
 
-typedef int	t_status;
-
-t_status	ft_error(char *where, int line, char *msg, t_status errcode);
-
-#endif
+void	update_player_direction(t_player *player)
+{
+	player->direction[0] = cos(player->radian);
+	player->direction[1] = sin(player->radian);
+}

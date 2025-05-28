@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_parse.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/28 09:47:40 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 09:47:57 by ekrebs           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 #include "parsing_interns.h"
 
@@ -20,51 +32,75 @@ int	is_white_space(char c)
 	return (1);
 }
 
-void	count_line(t_mm *mm, t_parsing_map *map, char *str, int fd)
+int	get_size_of_array(t_data *data, char **t, int i)
 {
-	char	*line;
-	int		i;
-	int		count;
+	int	j;
+	int	size;
 
-	i = get_index_before_map(mm, map, str, 0, 0);
-	count = 0;
-	fd = open_map(str);
-	line = safe_get_next_line(mm, ZONE_1, fd);
-	while (line != NULL)
+	i = 0;
+	while (t[i])
 	{
-		safe_free(mm, ZONE_1, line);
-		if (count >= i)
-			map->count_line++;
-		line = safe_get_next_line(mm, ZONE_1, fd);
-		count++;
-	}
-	close_map(fd);
-}
-
-int	get_index_before_map(t_mm *mm, t_parsing_map *map, char *str, int count, int fd)
-{
-	char	*line;
-
-	fd = open_map(str);
-	if (fd == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	line = safe_get_next_line(mm, ZONE_1, fd);
-	while (line != NULL)
-	{
-		if (check_white_space(line) == 0)
-			count++;
-		else if (strncmp_with_array(line, map->direction, 5) != -1)
-			count++;
-		else if (strncmp_with_array(line, map->fc, 2) != -1)
-			count++;
+		size = ft_strlen_int(t[i]);
+		if (check_white_space(t[i]) == 0)
+			i++;
+		else if (ft_strncmp(t[i], data->game->path->north, size) == 0
+			|| ft_strncmp(t[i], data->game->path->south, size) == 0)
+			i++;
+		else if (ft_strncmp(t[i], data->game->path->east, size) == 0
+			|| ft_strncmp(t[i], data->game->path->west, size) == 0)
+			i++;
+		else if (ft_strncmp(t[i], data->parse->color_ceiling_cp, size) == 0
+			|| ft_strncmp(t[i], data->parse->color_floor_cp, size) == 0)
+			i++;
 		else
 			break ;
-		safe_free(mm, ZONE_1, line);
-		line = safe_get_next_line(mm, ZONE_1, fd);
 	}
-	close_map(fd);
-	trash_gnl(str);
-	if (fd == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (count);
+	j = i;
+	while (t[i])
+		i++;
+	return (i - j);
+}
+
+int	get_index_before_array(t_data *data, char **array, int i)
+{
+	int	size;
+
+	i = 0;
+	while (array[i])
+	{
+		size = ft_strlen_int(array[i]);
+		if (check_white_space(array[i]) == 0)
+			i++;
+		else if (ft_strncmp(array[i], data->game->path->north, size) == 0 \
+			|| ft_strncmp(array[i], data->game->path->south, size) == 0)
+			i++;
+		else if (ft_strncmp(array[i], data->game->path->east, size) == 0 \
+			|| ft_strncmp(array[i], data->game->path->west, size) == 0)
+			i++;
+		else if (ft_strncmp(array[i], \
+			data->parse->color_ceiling_cp, size) == 0 \
+			|| ft_strncmp(array[i], data->parse->color_floor_cp, size) == 0)
+			i++;
+		else
+			break ;
+	}
+	return (i);
+}
+
+void	get_line_size(t_data *data, char **array)
+{
+	int	i;
+	int	size;
+
+	i = 0;
+	size = get_index_before_array(data, array, 0);
+	while (i != size)
+		i++;
+	data->game->map->x_max = ft_strlen_int(array[i]);
+	while (array[i])
+	{
+		if (data->game->map->x_max < ft_strlen_int(array[i]))
+			data->game->map->x_max = ft_strlen_int(array[i]);
+		i++;
+	}
 }

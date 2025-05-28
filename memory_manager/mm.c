@@ -6,28 +6,26 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:55:19 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/02/17 13:46:13 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/02/21 11:17:45 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils/mm_interns.h"
 
-t_mm	*mm_create(void)
+void	mm_create(t_mm **mm)
 {
-	t_mm 	*new;
-
-	new = malloc(sizeof(t_mm));
-	if (!new)
+	if (*mm)
+		mm_nuclear_exit(NULL, ft_error(WHERE, "mm_create(): mm isn't NULL", EXIT_FAILURE));
+	*mm = malloc(sizeof(t_mm));
+	if (!*mm)
 		mm_nuclear_exit(NULL, ft_error(WHERE, "mm_create(): malloc failure", EXIT_FAILURE));
-	new->areas = NULL;
-	return (new);
+	(*mm)->areas = NULL;
 }
 
 void	mm_destroy(t_mm *mm)
 {
 	destroy_areas(mm->areas);
 	free(mm);
-	return ;
 }
 
 void	mm_nuclear_exit(t_mm *mm, t_status status)

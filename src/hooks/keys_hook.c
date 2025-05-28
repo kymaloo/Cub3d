@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.h                                         :+:      :+:    :+:   */
+/*   keys_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 09:31:00 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:31:02 by ekrebs           ###   ########.fr       */
+/*   Created: 2025/05/28 11:00:54 by ekrebs            #+#    #+#             */
+/*   Updated: 2025/05/28 11:02:10 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ERROR_H
-# define FT_ERROR_H
+#include "cub.h"
 
-# include "define.h"
-# include "ainsi_color_codes.h"
-# define WHERE __FILE__":", __LINE__
+void	ft_keys_other_actions(mlx_key_data_t keydata, t_game *game)
+{
+	if (keydata.action == MLX_PRESS && (keydata.key == MLX_KEY_ESCAPE \
+		|| (keydata.key == MLX_KEY_D && keydata.modifier & MLX_CONTROL)))
+	{
+		mlx_close_window(game->mlx);
+	}
+}
 
-typedef int	t_status;
+void	ft_keys_hook(mlx_key_data_t keydata, void *game_data)
+{
+	t_game	*game;
 
-t_status	ft_error(char *where, int line, char *msg, t_status errcode);
-
-#endif
+	game = game_data;
+	ft_keys_other_actions(keydata, game);
+}
