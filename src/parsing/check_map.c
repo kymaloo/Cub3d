@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:50:35 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:50:38 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:47:41 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	check_map_format_cub(char *str)
 		if (ft_strncmp(&str[len_str - 4], ".cub", 4) == 0)
 			return (EXIT_SUCCESS);
 		else
-			nuclear_exit(ft_error(WHERE, \
+			nuclear_exit(ft_error(__FILE__":", __LINE__, \
 			"check_map_format_cub() failure", EXIT_FAILURE));
 	}
-	nuclear_exit(ft_error(WHERE, \
+	nuclear_exit(ft_error(__FILE__":", __LINE__, \
 	"check_map_format_cub() failure", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }

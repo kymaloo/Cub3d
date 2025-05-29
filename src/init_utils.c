@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:42:01 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:29:24 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:48:49 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	init_spawn_player(t_player *player)
 		center_player_in_current_tile(player);
 	}
 	else
-		nuclear_exit(ft_error(WHERE, "Bad player direction", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"Bad player direction", EXIT_FAILURE));
 	update_player_direction(player);
 }
 
@@ -55,7 +56,8 @@ void	init_textures(t_game *game)
 	if (!game->texture->north || !game->texture->south \
 		|| !game->texture->east || !game->texture->west)
 	{
-		nuclear_exit(ft_error(WHERE, "Texture loading failed", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+									"Texture loading failed", EXIT_FAILURE));
 	}
 	if (game->texture->north->width != 512 \
 		|| game->texture->north->height != 512 \
@@ -66,8 +68,8 @@ void	init_textures(t_game *game)
 		|| game->texture->west->width != 512 \
 		|| game->texture->west->height != 512)
 	{
-		nuclear_exit(ft_error(WHERE, "Texture dimensions must be 512x512", \
-																EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+						"Texture dimensions must be 512x512", EXIT_FAILURE));
 	}
 }
 
@@ -77,7 +79,8 @@ void	init_mlx(t_game *game)
 
 	game->mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
 	if (!game->mlx)
-		nuclear_exit(ft_error(WHERE, "mlx_init() failure", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"mlx_init() failure", EXIT_FAILURE));
 	img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(game->mlx, img, 0, 0);
 	game->texture->image->img_window = img;
@@ -92,5 +95,6 @@ void	init_mlx(t_game *game)
 		mlx_key_hook(game->mlx, &ft_keys_hook, game);
 	}
 	else
-		nuclear_exit(ft_error(WHERE, "mlx_loop_hook() failure", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+									"mlx_loop_hook() failure", EXIT_FAILURE));
 }

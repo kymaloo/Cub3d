@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:16:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:48:56 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:53:28 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	mm_hashmap_init(t_mm *mm, t_content_hashmap *h, size_t nb_buckets)
 	h->nb_buckets = nb_buckets;
 	h->buckets = malloc(sizeof(t_content_array) * nb_buckets);
 	if (!h->buckets)
-		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"malloc failure.", EXIT_FAILURE));
 	i = 0;
 	while (i < h->nb_buckets)
 	{
@@ -85,6 +86,6 @@ void	mm_hashmap_remove(t_mm *mm, t_content_hashmap *hashmap, void *elem)
 		}
 		i++;
 	}
-	mm_nuclear_exit(mm, ft_error(WHERE, \
+	mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
 	"elem not found (how dare you give me false information)", EXIT_FAILURE));
 }

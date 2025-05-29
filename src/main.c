@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:39:50 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 18:44:27 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:48:09 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int	main(int argc, char **argv)
 	if (DEBUG)
 		debug_main_prefix(argv[0]);
 	if (argc != 2)
-		return (ft_error(WHERE, "Bad argument", EXIT_FAILURE));
+		return (ft_error(__FILE__":", __LINE__, \
+												"Bad argument", EXIT_FAILURE));
 	create_memory_manager(&data);
 	if (init(data, argv[1]) != EXIT_SUCCESS)
-		nuclear_exit(ft_error(WHERE, "init() failure", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"init() failure", EXIT_FAILURE));
 	init_spawn_player(data->game->player);
 	if (DEBUG)
 		debug_main_post_parsing(data->game);

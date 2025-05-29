@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:50:48 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:51:10 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:49:24 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ int	check_fc(t_data *data)
 													data->colors->color_floor);
 	if (ft_isdigit(data->colors->color_ceiling[2])
 		|| ft_isdigit(data->colors->color_floor[2]))
-		nuclear_exit(ft_error(WHERE, \
-		"The ceiling or floor isn't valid", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+							"The ceiling or floor isn't valid", EXIT_FAILURE));
 	tmp = safe_strdup(ZONE_PARSE, data->colors->color_ceiling);
 	safe_free(ZONE_PARSE, data->colors->color_ceiling);
 	if (update_color(&data->colors->color_ceiling, tmp) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "The ceiling isn't valid", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+									"The ceiling isn't valid", EXIT_FAILURE));
 	tmp = safe_strdup(ZONE_PARSE, data->colors->color_floor);
 	safe_free(ZONE_PARSE, data->colors->color_floor);
 	if (update_color(&data->colors->color_floor, tmp) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "The floor isn't valid", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+									"The floor isn't valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -54,9 +56,11 @@ int	validate_color_format(char *color)
 int	check_format_fc(t_colors *colors)
 {
 	if (validate_color_format(colors->color_ceiling) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "The ceiling isn't valid", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+									"The ceiling isn't valid", EXIT_FAILURE));
 	if (validate_color_format(colors->color_floor) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "The floor isn't valid", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"The floor isn't valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -85,8 +89,10 @@ int	validate_color_range(char *color)
 int	verif_colors(t_colors *colors)
 {
 	if (validate_color_range(colors->color_ceiling) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Format not valid", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"Format not valid", EXIT_FAILURE));
 	if (validate_color_range(colors->color_floor) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Format not valid", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"Format not valid", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }

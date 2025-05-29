@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:27:09 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:46:10 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:51:44 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	memory_manager(t_mm_opcode opcode, char *area_name, void *data)
 	else if (opcode == MM_NUKE)
 		mm_nuclear_exit(mm, *((int *) data));
 	else
-		mm_nuclear_exit(NULL, ft_error(WHERE, "Unknown opcode", EXIT_FAILURE));
+		mm_nuclear_exit(NULL, ft_error(__FILE__":", __LINE__, \
+											"Unknown opcode", EXIT_FAILURE));
 	return ;
 }

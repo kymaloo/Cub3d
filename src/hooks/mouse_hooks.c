@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:09:23 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 12:19:24 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:47:07 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	mouse_rotations(t_game *game, int32_t old_xpos, int32_t xpos)
 	{
 		if (DEBUG_MOUSE)
 		{
-			print_debug_prefix(WHERE_FUNC, "MOUSE ROTATE");
+			print_debug_prefix(__FILE__, __LINE__, __FUNCTION__, "MOUSE ROTAT");
 			print_player_infos(game->player, "before");
 			print_map_player(game, 5);
 		}

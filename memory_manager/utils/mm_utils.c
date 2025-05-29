@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:13:12 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:51:53 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:55:58 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,25 @@ t_area_node	*go_to_area_name(t_mm *mm, char *area_name_to_find)
 			return (area_node);
 		area_node = next;
 	}
-	mm_nuclear_exit(mm, ft_error(WHERE, "not a valid area name", EXIT_FAILURE));
+	mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+										"not a valid area name", EXIT_FAILURE));
 	return (NULL);
 }
 
 t_content_array	*initialize_content_array(t_mm *mm, t_content_array *new)
 {
 	if (!new)
-		mm_nuclear_exit(mm, ft_error(WHERE, "failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+													"failure.", EXIT_FAILURE));
 	new->content = ft_calloc(MM_INITIAL_CONTENT_NB, \
 										MM_INITIAL_CONTENT_NB * sizeof(void *));
 	if (!new->content)
-		mm_nuclear_exit(mm, ft_error(WHERE, "calloc failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"calloc failure.", EXIT_FAILURE));
 	new->bits = ft_calloc(MM_INITIAL_CONTENT_NB, MM_INITIAL_CONTENT_NB * 1);
 	if (!new->bits)
-		mm_nuclear_exit(mm, ft_error(WHERE, "calloc failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"calloc failure.", EXIT_FAILURE));
 	new->size = MM_INITIAL_CONTENT_NB;
 	return (new);
 }
@@ -75,13 +79,15 @@ void	upgrade_content_array_size(t_mm *mm, t_content_array *old)
 	new_size = old_size * 2;
 	new_content = ft_calloc(new_size, new_size * sizeof(void *));
 	if (!new_content)
-		mm_nuclear_exit(mm, ft_error(WHERE, "calloc failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"calloc failure.", EXIT_FAILURE));
 	ft_memcpy(new_content, old->content, old_size * sizeof(void *));
 	free(old->content);
 	old->content = new_content;
 	new_bits = ft_calloc(new_size, new_size);
 	if (!new_bits)
-		mm_nuclear_exit(mm, ft_error(WHERE, "calloc failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"calloc failure.", EXIT_FAILURE));
 	ft_memcpy(new_bits, old->bits, old_size);
 	free(old->bits);
 	old->bits = new_bits;
@@ -97,13 +103,16 @@ t_area_node	*create_area_node(t_mm *mm, char *new_area_name, \
 
 	i = ft_strlen(new_area_name);
 	if (i > MM_AREA_NAME_MAX_SIZE || i <= 0)
-		mm_nuclear_exit(mm, ft_error(WHERE, "bad name size.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"bad name size.", EXIT_FAILURE));
 	new = malloc(sizeof(t_area_node));
 	if (!new)
-		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"malloc failure.", EXIT_FAILURE));
 	new->area_name = ft_strdup(new_area_name);
 	if (!new->area_name)
-		mm_nuclear_exit(mm, ft_error(WHERE, "malloc failure.", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"malloc failure.", EXIT_FAILURE));
 	new->next = NULL;
 	new->deletion_func = deletion_func;
 	mm_hashmap_init(mm, &new->area_hashmap, nb_hahsmap_buckets);

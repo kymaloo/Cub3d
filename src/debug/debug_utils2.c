@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:00:28 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 21:20:36 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:43:55 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,7 @@ void	print_map_tile(char map_char)
 		printf(MAGENTA"ER"RESET);
 }
 
-
-struct s_debug_map
-{
-	int max[DIM];
-	int min[DIM];
-	int	a[DIM];
-	int	b[DIM];
-	int target[DIM];
-};
-
-static void init_debug_map(struct s_debug_map *s, t_game *g, int offset)
+static void	init_debug_map(struct s_debug_map *s, t_game *g, int offset)
 {
 	s->a[X] = g->player->position[X];
 	s->a[Y] = g->player->position[Y];
@@ -59,20 +49,22 @@ static void init_debug_map(struct s_debug_map *s, t_game *g, int offset)
 		s->min[Y] = 0;
 	if (s->max[Y] > g->map->y_max -1)
 		s->max[Y] = g->map->y_max -1;
+	s->target[X] = s->b[X];
+	s->target[Y] = s->b[Y];
+	print_coord("player is:", "", s->a[X], s->a[Y]);
+	print_coord("targeting move:", "", s->b[X], s->b[Y]);
+	print_coord("targeting grid:", "", s->target[X], s->target[Y]);
 }
+
 void	print_map_player(t_game *g, int offset)
 {
-	struct s_debug_map s;
-	int i, j;
-	t_player *p;
+	struct s_debug_map	s;
+	int					i;
+	int					j;
+	t_player			*p;
 
 	p = g->player;
-	set_min_max(&s, g, offset);
-	print_coord("player is:", "", s.a[X], s.a[Y]);
-	print_coord("targeting move:", "", s.b[X], s.b[Y]);
-	s.target[X] = s.b[X];
-	s.target[Y] = s.b[Y];
-	print_coord("targeting grid:", "", s.target[X], s.target[Y]);
+	init_debug_map(&s, g, offset);
 	printf("\ncurrent grid situation: \n");
 	j = s.min[Y];
 	while (j <= s.max[Y])

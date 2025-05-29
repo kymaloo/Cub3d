@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:10:57 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 12:19:43 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:44:25 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	move_translate_forward(t_game *game)
 	new_y = p->position[Y] + p->direction[Y] * MOVE_SPEED;
 	if (DEBUG_KEYS)
 	{
-		print_debug_prefix(WHERE_FUNC, "UP");
+		print_debug_prefix(__FILE__, __LINE__, __FUNCTION__, "UP");
 		print_player_infos(game->player, "before");
 		print_coord("trying to move to:", "", new_x, new_y);
 		print_map_player(game, 5);
@@ -62,7 +62,7 @@ void	move_translate_backward(t_game *game)
 	new_y = p->position[Y] - (p->direction[Y] * MOVE_SPEED);
 	if (DEBUG_KEYS)
 	{
-		print_debug_prefix(WHERE_FUNC, "DOWN");
+		print_debug_prefix(__FILE__, __LINE__, __FUNCTION__, "DOWN");
 		print_player_infos(game->player, "before");
 		print_coord("trying to move to:", "", new_x, new_y);
 		print_map_player(game, 5);
@@ -83,7 +83,7 @@ void	move_translate_left(t_game *game)
 	new_y = p->position[Y] - (p->direction[X] * MOVE_SPEED);
 	if (DEBUG_KEYS)
 	{
-		print_debug_prefix(WHERE_FUNC, "LEFT");
+		print_debug_prefix(__FILE__, __LINE__, __FUNCTION__, "LEFT");
 		print_player_infos(game->player, "before");
 		print_coord("trying to move to:", "", new_x, new_y);
 		print_map_player(game, 5);
@@ -104,7 +104,7 @@ void	move_translate_right(t_game *game)
 	new_y = p->position[Y] + (p->direction[X] * MOVE_SPEED);
 	if (DEBUG_KEYS)
 	{
-		print_debug_prefix(WHERE_FUNC, "RIGHT");
+		print_debug_prefix(__FILE__, __LINE__, __FUNCTION__, "RIGHT");
 		print_player_infos(game->player, "before");
 		print_coord("trying to move to:", "", new_x, new_y);
 		print_map_player(game, 5);

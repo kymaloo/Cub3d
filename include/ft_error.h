@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:31:00 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:31:02 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:47:50 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "define.h"
 # include "ainsi_color_codes.h"
-# define WHERE __FILE__":", __LINE__
 
 typedef int	t_status;
 

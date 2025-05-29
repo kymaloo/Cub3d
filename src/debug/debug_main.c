@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 14:19:07 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:42:06 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:44:25 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	debug_main_post_parsing(t_game *game)
 {
-	print_debug_prefix(WHERE_FUNC, "");
+	print_debug_prefix(__FILE__, __LINE__, __FUNCTION__, "");
 	print_player_infos(game->player, "");
 	printf(BWHITE"game hooks debug infos:"RESET"\n");
 }

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:51:27 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:51:38 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:49:44 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	init_tab_direction(t_parsing_map *parse)
 	i = 0;
 	parse->direction = safe_malloc(ZONE_PARSE, sizeof(char *) * 6);
 	if (!parse->direction)
-		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"malloc failure", MALLOC_ERROR));
 	parse->direction[i] = safe_strdup(ZONE_PARSE, "NO ./");
 	i++;
 	parse->direction[i] = safe_strdup(ZONE_PARSE, "SO ./");
@@ -40,7 +41,8 @@ int	init_tab_fc(t_parsing_map *parse)
 	i = 0;
 	parse->fc = safe_malloc(ZONE_PARSE, sizeof(char *) * 3);
 	if (!parse->fc)
-		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"malloc failure", MALLOC_ERROR));
 	parse->fc[i] = safe_strdup(ZONE_PARSE, "F ");
 	i++;
 	parse->fc[i] = safe_strdup(ZONE_PARSE, "C ");
@@ -106,8 +108,8 @@ int	check_map_reel(char *str)
 
 	fd = open_map(str);
 	if (fd == -1)
-		nuclear_exit(ft_error(WHERE, \
-		"check_map_reel() failure", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+									"check_map_reel() failure", EXIT_FAILURE));
 	close_map(fd);
 	return (EXIT_SUCCESS);
 }

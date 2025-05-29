@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_close_map.c                                   :+:      :+:    :+:   */
+/*   check_line_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:48:17 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 18:47:23 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:50:17 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,16 @@ int	check_line_map(t_map *map)
 
 	i = 0;
 	if (line_top(map->grid) == false)
-		nuclear_exit(ft_error(WHERE, "Bad characters for borders\n", \
-																EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+								"Bad characters for borders\n", EXIT_FAILURE));
 	if (line_bot(map->grid, map->y_max - 1) == false)
-		nuclear_exit(ft_error(WHERE, "Bad characters for borders\n", \
-																EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+								"Bad characters for borders\n", EXIT_FAILURE));
 	if (line_left(map->grid) == false)
-		nuclear_exit(ft_error(WHERE, "Bad characters for borders\n", \
-																EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+								"Bad characters for borders\n", EXIT_FAILURE));
 	if (line_right(map->grid, map->x_max - 1) == false)
-		nuclear_exit(ft_error(WHERE, "Bad characters for borders\n", \
-																EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+								"Bad characters for borders\n", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }

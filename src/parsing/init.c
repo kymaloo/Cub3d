@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:55:40 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:21:03 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:51:35 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 static int	init_direction_and_fc(t_data *data, char *str)
 {
 	if (init_tab_direction(data->parse) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Init Tab Direction Failed", \
-																EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+									"Init Tab Direction Failed", EXIT_FAILURE));
 	if (init_tab_fc(data->parse) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Init Tab Fc Failed", \
+		nuclear_exit(ft_error(__FILE__":", __LINE__, "Init Tab Fc Failed", \
 																EXIT_FAILURE));
 	if (init_direction(data, str, 0, 0) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Init Direction Failed", \
+		nuclear_exit(ft_error(__FILE__":", __LINE__, "Init Direction Failed", \
 																EXIT_FAILURE));
 	if (init_fc(data, str) == EXIT_FAILURE)
-		nuclear_exit(ft_error(WHERE, "Init Fc Failed", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"Init Fc Failed", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 
@@ -38,8 +39,8 @@ static int	init_map(t_data *data)
 	if (check_map(data->game->map->grid) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (check_doublon_map(data->game->map->grid, "NSEW") != 1)
-		nuclear_exit(ft_error(WHERE, "MUST HAVE EXACTLY ONE PLAYER", \
-																EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+								"MUST HAVE EXACTLY ONE PLAYER", EXIT_FAILURE));
 	find_pos_player(data->game, data->game->map->grid);
 	copy_map(data);
 	return (EXIT_SUCCESS);
@@ -48,17 +49,23 @@ static int	init_map(t_data *data)
 static void	is_dir_and_filled(t_data *data)
 {
 	if (data->game->path->east == NULL)
-		nuclear_exit(ft_error(WHERE, "Path east is Null", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"Path east is Null", EXIT_FAILURE));
 	if (data->game->path->west == NULL)
-		nuclear_exit(ft_error(WHERE, "Path west is Null", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"Path west is Null", EXIT_FAILURE));
 	if (data->game->path->north == NULL)
-		nuclear_exit(ft_error(WHERE, "Path north is Null", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"Path north is Null", EXIT_FAILURE));
 	if (data->game->path->south == NULL)
-		nuclear_exit(ft_error(WHERE, "Path south is Null", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"Path south is Null", EXIT_FAILURE));
 	if (data->colors->color_ceiling == NULL)
-		nuclear_exit(ft_error(WHERE, "Path ceilling is Null", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"Path ceilling is Null", EXIT_FAILURE));
 	if (data->colors->color_floor == NULL)
-		nuclear_exit(ft_error(WHERE, "Path floor is Null", EXIT_FAILURE));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"Path floor is Null", EXIT_FAILURE));
 }
 
 int	init(t_data *data, char *str)
@@ -107,7 +114,8 @@ int	all_line_is_valid(t_data *data, char **array)
 			|| ft_strncmp(array[i], data->colors->color_floor, size) == 0)
 			i++;
 		else
-			nuclear_exit(ft_error(WHERE, "Line isn't valid", EXIT_FAILURE));
+			nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"Line isn't valid", EXIT_FAILURE));
 	}
 	return (EXIT_SUCCESS);
 }

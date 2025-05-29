@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 21:21:06 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:48:04 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:47:41 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	mm_area_create(t_mm *mm, char *area_name, t_area_create_data *a)
 	t_area_node	*area_node;
 
 	if (!a->deletion_func)
-		mm_nuclear_exit(mm, ft_error(WHERE, \
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
 										"no deletion function", EXIT_FAILURE));
 	else if (a->nb_hahsmap_buckets < 1)
-		mm_nuclear_exit(mm, ft_error(WHERE, \
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
 							"invalid hashmap buckets number", EXIT_FAILURE));
 	else if (!mm->areas)
 	{

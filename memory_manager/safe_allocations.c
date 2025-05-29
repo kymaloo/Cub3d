@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:25:39 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:57:49 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:55:19 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	*safe_malloc(char *area, size_t size)
 
 	new = malloc(size);
 	if (!new)
-		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"malloc failure", MALLOC_ERROR));
 	memory_manager(ADD_ELEM, area, new);
 	return (new);
 }
@@ -30,7 +31,8 @@ void	*safe_calloc(char *area, size_t nmeb, size_t size)
 
 	new = ft_calloc(nmeb, size);
 	if (!new)
-		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"malloc failure", MALLOC_ERROR));
 	memory_manager(ADD_ELEM, area, new);
 	return (new);
 }
@@ -41,7 +43,8 @@ char	*safe_strdup(char *area, const char *str)
 
 	new = ft_strdup(str);
 	if (!new)
-		nuclear_exit(ft_error(WHERE, "malloc failure", MALLOC_ERROR));
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+											"malloc failure", MALLOC_ERROR));
 	memory_manager(ADD_ELEM, area, new);
 	return (new);
 }

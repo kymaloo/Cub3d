@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:28:09 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:48:17 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:53:10 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	mm_area_add_elem(t_mm *mm, char *area, void *elem)
 	t_area_node		*area_node;
 
 	if (!elem)
-		mm_nuclear_exit(mm, ft_error(WHERE, "element is NULL", EXIT_FAILURE));
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
+											"element is NULL", EXIT_FAILURE));
 	area_node = go_to_area_name(mm, area);
 	mm_hashmap_add(mm, &area_node->area_hashmap, elem);
 	return ;
@@ -40,7 +41,7 @@ void	mm_area_free_elem(t_mm *mm, char *area, void *elem)
 	t_area_node		*area_node;
 
 	if (!elem)
-		mm_nuclear_exit(mm, ft_error(WHERE, \
+		mm_nuclear_exit(mm, ft_error(__FILE__":", __LINE__, \
 							"element is NULL (how dare you)", EXIT_FAILURE));
 	area_node = go_to_area_name(mm, area);
 	mm_hashmap_remove(mm, &area_node->area_hashmap, elem);

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:34:46 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 21:02:11 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:44:36 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,14 @@
 #  define HEIGHT			720
 # endif
 
-# define WHERE_FUNC __FILE__, __LINE__, __FUNCTION__
+struct s_debug_map
+{
+	int	max[DIM];
+	int	min[DIM];
+	int	a[DIM];
+	int	b[DIM];
+	int	target[DIM];
+};
 
 //generals
 void	print_debug_prefix(char *file, int line, \

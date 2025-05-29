@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:37:14 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 09:39:20 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 14:02:48 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define STRUCT_H
 
 # include "memory_manager.h"
+
+struct s_safe_split_data
+{
+	int			nbword;
+	char		**tab;
+	const char	*start;
+	int			i;
+};
 
 typedef struct s_parsing_map
 {

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:52:05 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 15:09:41 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 13:47:41 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ static void	flood_fill_rec(int x, int y, t_data *data, int i)
 	cells = data->parse->grid_copy;
 	if (x < 0 || x > data->game->map->x_max || y < 0 \
 											|| y > data->game->map->y_max - 1)
-		nuclear_exit(ft_error(WHERE, \
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 			"map walling not valid: illegal coords", EXIT_FAILURE));
 	if (isset(cells[y][x], legal_grid_chars) == false)
-		nuclear_exit(ft_error(WHERE, \
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 			"map walling not valid: illegal char used", EXIT_FAILURE));
 	if (cells[y][x] == '1')
 		return ;
