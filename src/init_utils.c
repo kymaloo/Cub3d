@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:42:01 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 15:31:06 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:41:18 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*safe_mlx_load_png(const char *path)
 	if (!r)
 		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 										"mlx_load_png failed", EXIT_FAILURE));
-	memory_manager(ADD_ELEM, ZONE_MALLOC_EXEC, r);
+	memory_manager(ADD_ELEM, ZONE_MLX_PNG, r);
 	return (r);
 }
 
