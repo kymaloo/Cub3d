@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wall.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:27:37 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:41:46 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:31:58 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	setup_texture(t_game *game)
 	if (game->ray->side == 0)
 	{
 		if (game->ray->dir_x < 0)
-			game->ray->current_texture = game->texture->west;
-		else
 			game->ray->current_texture = game->texture->east;
+		else
+			game->ray->current_texture = game->texture->west;
 	}
 	else
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:39:50 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 16:02:07 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:44:26 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	init_textures(data->game);
 	mlx_loop(data->game->mlx);
 	if (DEBUG)
-	debug_main_suffix(data->game, argv[0]);
+		debug_main_suffix(data->game, argv[0]);
 	nuclear_exit(EXIT_SUCCESS);
 }
 

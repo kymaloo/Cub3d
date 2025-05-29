@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:42:01 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 15:41:18 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:44:06 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_spawn_player(t_player *player)
 
 void	*safe_mlx_load_png(const char *path)
 {
-	mlx_texture_t *r;
+	mlx_texture_t	*r;
 
 	r = mlx_load_png(path);
 	if (!r)
