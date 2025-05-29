@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:39:50 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 13:48:09 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:28:33 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	init_mlx(data->game);
 	init_textures(data->game);
 	mlx_loop(data->game->mlx);
-	mlx_terminate(data->game->mlx);
+	//mlx_terminate(data->game->mlx);
 	memory_manager(DESTROY, NULL, NULL);
 	if (DEBUG)
 		debug_main_suffix(data->game, argv[0]);
@@ -58,7 +58,8 @@ void	create_memory_manager(t_data **data)
 	memory_manager(CREATE, NULL, NULL);
 	memory_manager_area_create(ZONE_PARSE, &free, 256);
 	memory_manager_area_create(ZONE_FDS, &fd_deletion_func, 10);
-	memory_manager_area_create(ZONE_MLX, &mlx_deletion_func, 1);
+	memory_manager_area_create(ZONE_MALLOC_EXEC, &fd_deletion_func, 10);
+	memory_manager_area_create(ZONE_MLX, &mlx_deletion_func, 2);
 	*data = safe_calloc(ZONE_PARSE, 1, sizeof(t_data));
 	(*data)->parse = safe_calloc(ZONE_PARSE, 1, sizeof(t_parsing_map));
 	(*data)->game = safe_calloc(ZONE_PARSE, 1, sizeof(t_game));

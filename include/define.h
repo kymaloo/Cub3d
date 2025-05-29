@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:24:42 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 16:06:41 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:21:46 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # define MALLOC_FAILED		"Error: Malloc failed\n"
 
-# define ZONE_PARSE				"petit_chacalot"
+# define ZONE_PARSE			"petit_chacalot"
 # define ZONE_MLX			"zebi_la_mlx"
+# define ZONE_MALLOC_EXEC	"Wallah_les_textures"
 # define ZONE_FDS			"oulah_les_Fds"
 
 # ifdef M_PI

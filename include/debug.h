@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:34:46 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 13:44:36 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 14:53:30 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "cub.h"
 
 # ifndef CAPTURE_MOUSE_ON_STARTUP
-#  define CAPTURE_MOUSE_ON_STARTUP true
+#  define CAPTURE_MOUSE_ON_STARTUP false
 # endif
 # ifndef DEBUG_KEYS
 #  define DEBUG_KEYS false

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:42:01 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 13:48:49 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:31:06 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,24 @@ void	init_spawn_player(t_player *player)
 	update_player_direction(player);
 }
 
+void	*safe_mlx_load_png(const char *path)
+{
+	mlx_texture_t *r;
+
+	r = mlx_load_png(path);
+	if (!r)
+		nuclear_exit(ft_error(__FILE__":", __LINE__, \
+										"mlx_load_png failed", EXIT_FAILURE));
+	memory_manager(ADD_ELEM, ZONE_MALLOC_EXEC, r);
+	return (r);
+}
+
 void	init_textures(t_game *game)
 {
-	game->texture->north = mlx_load_png(&game->path->north[3]);
-	game->texture->south = mlx_load_png(&game->path->south[3]);
-	game->texture->east = mlx_load_png(&game->path->east[3]);
-	game->texture->west = mlx_load_png(&game->path->west[3]);
+	game->texture->north = safe_mlx_load_png(&game->path->north[3]);
+	game->texture->south = safe_mlx_load_png(&game->path->south[3]);
+	game->texture->east = safe_mlx_load_png(&game->path->east[3]);
+	game->texture->west = safe_mlx_load_png(&game->path->west[3]);
 	if (!game->texture->north || !game->texture->south \
 		|| !game->texture->east || !game->texture->west)
 	{
@@ -81,6 +93,8 @@ void	init_mlx(t_game *game)
 	if (!game->mlx)
 		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 										"mlx_init() failure", EXIT_FAILURE));
+	else
+		memory_manager(ADD_ELEM, ZONE_MLX, game->mlx);
 	img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(game->mlx, img, 0, 0);
 	game->texture->image->img_window = img;
