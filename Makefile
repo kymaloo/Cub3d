@@ -137,10 +137,12 @@ clear:
 clean:
 	@echo "$(BLUE)$(NAME): Cleaning object files$(RESET)"
 	@rm -rf $(OBJS)
+	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
 	@echo "$(BLUE)$(NAME): Cleaning $(NAME)$(RESET)"
 	@rm -rf $(NAME)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 	
 fclean_mlx: fclean
 	@echo "$(BLUE)$(NAME): Fcleaning $(MLX_DIR)$(RESET)"
