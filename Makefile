@@ -11,12 +11,13 @@ MLX_VERSION_GIT_HASH := ce254c3a19af8176787601a2ac3490100a5c4c61
 INCLUDES	:= -Iinclude -IMLX42/include
 ARCHIVES	:= $(LIBFT_A) $(MLX_A)
 LIBS		:= -ldl -lglfw -lm
-CFLAGS		:= -Wextra -Wall -Werror -g3 $(INCLUDES)
+CFLAGS		:= -Wall -Wextra -g3 $(INCLUDES) #-Werror
 
 BRED	:=	\033[1;31m
+RED		:=	\033[31m
 YELLOW	:=	\033[33m
 GREEN	:=	\033[32m
-BLUE	:=	\033[34m
+BLUE	:=	\033[1;34m
 RESET	:=	\033[0m
 
 SRCS	:= 	\
@@ -32,17 +33,28 @@ SRCS	:= 	\
 			\
 			src/main.c									\
 			src/error.c									\
+			\
+			src/parsing/open_close_map.c				\
+			src/parsing/init_direction_and_fc.c			\
+			src/parsing/stock_direction_and_fc.c		\
+			src/parsing/check_map.c						\
+			src/parsing/init.c							\
+			src/parsing/path_finding.c					\
+			src/parsing/stock_map.c						\
+			src/parsing/utils_parse.c					\
+			src/parsing/colors_fc.c						\
+			\
+			src/exec/minimap.c		\
+			src/exec/dda.c			\
+			\
+			src/hooks/keys_hook.c						\
+			src/hooks/loop_hook.c						\
+			src/hooks/mouse_hooks.c						\
+			src/hooks/player_move_translations.c		\
+			src/hooks/utils.c							\
+			\
+			src/debug/debug_utils.c						\
 
-# src/parsing/open_close_map.c					\
-# src/parsing/init_direction_and_fc.c			\
-# src/parsing/stock_direction_and_fc.c			\
-# src/parsing/check_map.c						\
-# src/parsing/init.c							\
-# src/parsing/free.c							\
-# src/parsing/path_finding.c					\
-# src/parsing/stock_map.c						\
-# src/parsing/utils_parse.c						\
-# src/parsing/colors_fc.c						\
 
 OBJS	:= ${SRCS:.c=.o}
 
@@ -63,9 +75,13 @@ r:	re
 v:	all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
 
+vs:	re
+	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
+
 %.o: %.c
-#@echo "$(CC) $(CFLAGS) -o $@ -c $<"
-	@$(CC) $(CFLAGS) -o $@ -c $< || (echo "$(BLUE)$(NAME): $(BRED) $< Compilation failure$(RESET)" && return 1)
+	@printf "$(BLUE)$(NAME): compiling objects:\n$(BLUE)$(NAME): compiling $(RESET)%-45.45s\n" $@
+#@printf "$(BLUE)$(NAME): compiling objects:\n$(BLUE)$(NAME): compiling $(RESET)%-33.33s\033[F" $@
+	@$(CC) $(CFLAGS) -o $@ -c $< && printf "\033[F\033[F" || (echo "$(BLUE)$(NAME): $(BRED) $<: error: $(RESET)compilation failure$(RESET)" && return 1)
 
 $(LIBFT_A):
 	@echo "$(BLUE)$(NAME): archiving $(LIBFT_A)$(RESET)"
@@ -74,9 +90,9 @@ $(LIBFT_A):
 
 $(MLX_A): $(MLX_DIR)
 	@echo "$(BLUE)$(NAME): versionning $(MLX_DIR) submodule$(RESET)"
-	git submodule update --init --recursive $(MLX_DIR)
+	@git submodule update --init --recursive $(MLX_DIR)
 	@echo "$(BLUE)$(NAME): setting $(MLX_DIR) submodule to ce254c3$(RESET)"
-	cd $(MLX_DIR) && git checkout $(MLX_VERSION_GIT_HASH) && cd ..
+	@cd $(MLX_DIR) && git checkout $(MLX_VERSION_GIT_HASH) && cd ..
 	@echo "$(BLUE)$(NAME): archiving $(MLX_A)$(RESET)"
 	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
 	@echo "$(BLUE)$(NAME): $(GREEN)$(MLX_A) archived !$(RESET)"
@@ -84,29 +100,58 @@ $(MLX_A): $(MLX_DIR)
 $(MLX_DIR):
 	@echo "$(BLUE)$(NAME): $(YELLOW)$(MLX_DIR) missing$(RESET)"
 	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
-	git submodule update --init --recursive $(MLX_DIR)
+	@git submodule update --init --recursive $(MLX_DIR)
 
+#checks dependencies left to right
+$(NAME): $(MLX_A) $(LIBFT_A) $(OBJS) 
+#@echo "$(BLUE)$(NAME): objects $(GREEN)compiled !$(RESET)"
+#@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
+	@printf "\33[2K\r$(BLUE)$(NAME): objects $(GREEN)compiled$(RESET)\n"
+	@echo "$(CC) $(CFLAGS) \$$($(NAME)_OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
+	@$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)
 
-$(NAME): $(MLX_A) $(LIBFT_A) $(OBJS)
-	@echo "$(BLUE)$(NAME): ${NAME} $(GREEN)OBJS compiled !$(RESET)"
-	@echo "$(BLUE)$(NAME): Linking ${NAME} $(RESET)"
-	@echo "$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(ARCHIVES) -o $(NAME)
-	@echo "$(BLUE)$(NAME): $(GREEN)${NAME} Linked !$(RESET)"
+	@printf "\33[2K\r$(BLUE)$(NAME): $(NAME) $(GREEN)Linked!$(RESET)\n"
+#@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
+
+compile_without_mlx: $(LIBFT_A) $(OBJS)
+	@echo "$(BLUE)$(NAME): objects $(GREEN)compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
+	@echo "$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
+	@$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)
+	@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked without mlx !$(RESET)"
 
 clear:
-	clear
+	@clear
 
 clean:
 	@echo "$(BLUE)$(NAME): Cleaning object files$(RESET)"
 	@rm -rf $(OBJS)
-	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	@echo "$(BLUE)$(NAME): Cleaning $(NAME)$(RESET)"
 	@rm -rf $(NAME)
-	@make -C $(LIBFT_DIR) fclean
+	
+fclean_mlx: fclean
+	@echo "$(BLUE)$(NAME): Fcleaning $(MLX_DIR)$(RESET)"
+	@rm -rf $(MLX_DIR)
+
+gprof: $(LIBFT_A) $(OBJS)
+	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
+	@echo "$(BLUE)$(NAME): Linking $(NAME) with -gp $(RESET)"
+	@echo "$(CC) $(CFLAGS) -gp $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
+	@$(CC) $(CFLAGS) -gp $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)
+	@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
+	./$(NAME) ./maps/map.cub && gprof $(NAME) gmon.out > analysis.txt && cat analysis.txt
 
 re: clear fclean all
 
-.PHONY: all, clean, fclean, re, n, r, v, clear
+re_project_only: clear
+	@echo "$(BLUE)$(NAME): Cleaning object files$(RESET)"
+	@rm -rf $(OBJS)
+	@echo "$(BLUE)$(NAME): Cleaning $(NAME)$(RESET)"
+	@rm -rf $(NAME)
+	make all
+
+re_mlx: clear fclean_mlx all
+
+.PHONY: all, clean, fclean, re, n, v, clear, compile_without_mlx, gprof, fclean_mlx, re_mlx

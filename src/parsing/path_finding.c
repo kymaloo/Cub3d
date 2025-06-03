@@ -1,30 +1,31 @@
+
 #include "cub.h"
 #include "parsing_interns.h"
 
-static void	find_last_floor(t_parsing_map *parse)
+static void	find_last_floor(t_parsing_map *p)
 {
-	int	i;
-	int	j;
+	int y;
+	int	x;
 
-	i = 0;
-	while (parse->grid_copy[i])
+	y = 0;
+	while (p->grid_copy[y])
 	{
-		j = 0;
-		while (parse->grid_copy[i][j])
+		x = 0;
+		while (p->grid_copy[y][x])
 		{
-			if (parse->grid_copy[i][j] == '0')
+			if (p->grid_copy[y][x] == '0')
 			{
-				parse->x_last_0 = i;
-				parse->y_last_0 = j;
+				p->x_last_0 = x;
+				p->y_last_0 = y;
 				return ;
 			}
-			j++;
+			x++;
 		}
-		i++;
+		y++;
 	}
 }
 
-static bool	isset(char c, char *set)
+bool	isset(char c, char *set)
 {
 	int	i;
 
@@ -38,46 +39,81 @@ static bool	isset(char c, char *set)
 	return (false);
 }
 
-static int	path_finding(int x, int y, char **cells)
-{
-	int	end;
 
-	end = 0;
-	if (isset(cells[x][y], "NSEW01D") == false)
-		return (1);
-	cells[x][y] = '1';
-	if (isset(cells[x + 1][y], "1\n\0") == false)
-		end += path_finding(x + 1, y, cells);
-	if (isset(cells[x - 1][y], "1\n\0") == false)
-		end += path_finding(x - 1, y, cells);
-	if (isset(cells[x][y + 1], "1\n\0") == false)
-		end += path_finding(x, y + 1, cells);
-	if (isset(cells[x][y - 1], "1\n\0") == false)
-		end += path_finding(x, y - 1, cells);
-	return (end);
+static void flood_fill_rec(int x, int y, t_data *data, int i)
+{
+	char	**cells;
+	char	*legal_grid_chars;
+	
+	legal_grid_chars = "NSEW01D\n\0 \t";
+	cells = data->parse->grid_copy;
+
+	if (x < 0 || x > data->game->map->x_max || y < 0 || y > data->game->map->y_max - 1)
+		nuclear_exit(ft_error(WHERE, "map walling not valid: entering illegal coords territory (very scary stuff)", EXIT_FAILURE));
+	if (isset(cells[y][x], legal_grid_chars) == false)
+		nuclear_exit(ft_error(WHERE, "map walling not valid: illegal char used", EXIT_FAILURE));
+
+	if (cells[y][x] == '1')
+		return ;
+	cells[y][x] = '1';
+	i = i + 1;
+	flood_fill_rec(x, y + 1, data, i);
+	flood_fill_rec(x, y - 1, data, i);
+	flood_fill_rec(x + 1, y, data, i);
+	flood_fill_rec(x - 1, y, data, i);
+	return ;
 }
 
-int	check_wall(t_mm *mm, t_parsing_map *parse)
+int	check_wall(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (parse->grid_copy[i])
+	while (data->parse->grid_copy[i])
 	{
 		j = 0;
-		while (parse->grid_copy[i][j])
+		while (data->parse->grid_copy[i][j])
 		{
-			if (isset(parse->grid_copy[i][j], "NSEW0") == true)
+			if (isset(data->parse->grid_copy[i][j], "NSEW0") == true)
 			{
-				find_last_floor(parse);
-				if (path_finding(parse->x_last_0, \
-				parse->y_last_0, parse->grid_copy) != 0)
-					mm_nuclear_exit(mm, ft_error(WHERE, "map not valid", EXIT_FAILURE));
+				find_last_floor(data->parse);
+				//printf("pathfinding n*%d starts in [Y][X] = [%d][%d]\n", id++, data->parse->->y_last_0, data->parse->->x_last_0);
+				flood_fill_rec(data->parse->x_last_0, data->parse->y_last_0, data, 1);
 			}
 			j++;
 		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+void	find_pos_player(t_game *game, char **grid)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (grid[i])
+	{
+		j = 0;
+		while (grid[i][j])
+		{
+			if (grid[i][j] == 'N' || grid[i][j] == 'S'
+				|| grid[i][j] == 'E' || grid[i][j] == 'W')
+			{
+				game->player->facing = grid[i][j];
+				game->player->position[X] = j;
+				game->player->position[Y] = i;
+				if (DEBUG)
+				{
+					print_debug_prefix(WHERE_FUNC, "");
+					printf("player position:\t"RED" x: %-4d"GREEN" y: %-4d"RESET"\n", j, i);
+				}
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
 }

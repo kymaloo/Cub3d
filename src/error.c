@@ -1,3 +1,4 @@
+
 #include "cub.h"
 
 t_status	ft_error(char *where, int line, char *msg, t_status errcode)

@@ -90,13 +90,24 @@ char	**safe_split(char *area, const char *s, char c)
 	return (tab);
 }
 
-mlx_t *safe_mlx_init(char *area)
+char	*safe_strdup_with_calloc(char *area, char *str, int size)
 {
 	void	*new;
-	
-	new = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
+
+	new = ft_strdup_with_calloc(str, size);
 	if (!new)
-		nuclear_exit(ft_error(WHERE, "mlx init failure", MALLOC_ERROR));
+		nuclear_exit(ft_error(WHERE, "strdup failure", MALLOC_ERROR));
 	memory_manager(ADD_ELEM, area, new);
 	return (new);
 }
+
+// mlx_t *safe_mlx_init(char *area)
+// {
+// 	void	*new;
+	
+// 	new = mlx_init(WIDTH, HEIGHT, "CUB3D", true);
+// 	if (!new)
+// 		nuclear_exit(ft_error(WHERE, "mlx init failure", MALLOC_ERROR));
+// 	memory_manager(ADD_ELEM, area, new);
+// 	return (new);
+// }
