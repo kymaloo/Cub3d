@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:42:01 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/06/18 02:12:17 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 10:28:46 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	init_textures(t_game *game)
 		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 									"Texture loading failed", EXIT_FAILURE));
 	}
-	mirror_mlx_texture_t(game->texture->north);
-	mirror_mlx_texture_t(game->texture->south);
 	if (game->texture->north->width != 512 \
 		|| game->texture->north->height != 512 \
 		|| game->texture->south->width != 512 \
@@ -85,6 +83,8 @@ void	init_textures(t_game *game)
 		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 						"Texture dimensions must be 512x512", EXIT_FAILURE));
 	}
+	mirror_mlx_texture_t(game->texture->north);
+	mirror_mlx_texture_t(game->texture->south);
 }
 
 void	init_mlx(t_game *game)
