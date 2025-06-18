@@ -76,19 +76,19 @@ all: $(NAME)
 n:	clear
 	norminette src include libft memory_manager
 
-a:	all
+a:	clear all
 	./cub3D maps/map.cub
 
-l:	all
+l:	clear all
 	lldb ./cub3D maps/map.cub
 
-r:	re
+r:	clear re
 	./cub3D maps/map.cub
 
-v:	all
+v:	clear all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
 
-vs:	all
+vs:	clear all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
 
 %.o: %.c
@@ -149,7 +149,7 @@ fclean_mlx: fclean
 	@echo "$(BLUE)$(NAME): Fcleaning $(MLX_DIR)$(RESET)"
 	@rm -rf $(MLX_DIR)
 
-gprof: $(LIBFT_A) $(OBJS)
+gprof: clear $(LIBFT_A) $(OBJS)
 	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
 	@echo "$(BLUE)$(NAME): Linking $(NAME) with -gp $(RESET)"
 	@echo "$(CC) $(CFLAGS) -gp $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"

@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:51:26 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/06/18 02:17:23 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:11:49 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	char_to_rgb(t_colors *colors, char *str, int id)
 	char	**split;
 
 	check_str_char_valid(str);
-	split = ft_split(str, ',');
+	split = safe_split(ZONE_PARSE, str, ',');
 	if (split == NULL)
 		return ;
 	if (!split[0] || !split[1] || !split[2])

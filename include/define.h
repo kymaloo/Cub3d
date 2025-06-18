@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:24:42 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 15:38:59 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:17:15 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 
 # define ZONE_PARSE			"petit_chacalot"
 # define ZONE_MLX			"zebi_la_mlx"
-# define ZONE_MLX_PNG	"Wallah_les_textures"
+# define ZONE_MLX_PNG		"Wallah_les_textures"
 # define ZONE_FDS			"oulah_les_Fds"
+# define ZONE_MALLOC		"go_ff_les_malloc"
 
 # ifdef M_PI
 #  undef M_PI
