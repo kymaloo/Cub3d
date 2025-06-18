@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:42:01 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 17:44:06 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/06/18 02:12:17 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	init_textures(t_game *game)
 		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 									"Texture loading failed", EXIT_FAILURE));
 	}
+	mirror_mlx_texture_t(game->texture->north);
+	mirror_mlx_texture_t(game->texture->south);
 	if (game->texture->north->width != 512 \
 		|| game->texture->north->height != 512 \
 		|| game->texture->south->width != 512 \

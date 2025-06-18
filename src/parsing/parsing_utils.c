@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:51:26 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/06/02 17:39:38 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/06/18 02:17:23 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ static void	check_str_char_valid(char *str)
 void	char_to_rgb(t_colors *colors, char *str, int id)
 {
 	char	**split;
-	int		i;
 
-	i = 0;
 	check_str_char_valid(str);
 	split = ft_split(str, ',');
 	if (split == NULL)

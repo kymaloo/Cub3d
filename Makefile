@@ -34,6 +34,7 @@ SRCS	:= 	\
 			\
 			src/main.c									\
 			src/init_utils.c							\
+			src/init_utils2.c							\
 			src/error.c									\
 			\
 			src/parsing/open_close_map.c				\
@@ -63,6 +64,7 @@ SRCS	:= 	\
 			src/debug/debug_main.c						\
 			src/debug/debug_parsing.c					\
 			src/debug/debug_utils.c						\
+			src/debug/debug_utils2.c					\
 			\
 
 
@@ -72,7 +74,7 @@ OBJS	:= ${SRCS:.c=.o}
 all: $(NAME)
 
 n:	clear
-	norminette
+	norminette src include libft memory_manager
 
 a:	all
 	./cub3D maps/map.cub

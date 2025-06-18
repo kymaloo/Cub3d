@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:00:28 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 13:43:55 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 01:43:20 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ void	print_map_player(t_game *g, int offset)
 	struct s_debug_map	s;
 	int					i;
 	int					j;
-	t_player			*p;
 
-	p = g->player;
 	init_debug_map(&s, g, offset);
 	printf("\ncurrent grid situation: \n");
 	j = s.min[Y];
