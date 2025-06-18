@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:48:17 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 13:50:17 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 02:17:13 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,6 @@ static int	line_right(char **array, int x_max)
  */
 int	check_line_map(t_map *map)
 {
-	int	i;
-
-	i = 0;
 	if (line_top(map->grid) == false)
 		nuclear_exit(ft_error(__FILE__":", __LINE__, \
 								"Bad characters for borders\n", EXIT_FAILURE));

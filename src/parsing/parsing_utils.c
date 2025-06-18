@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:51:26 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/06/02 17:39:38 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:25:44 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,9 @@ static void	check_str_char_valid(char *str)
 void	char_to_rgb(t_colors *colors, char *str, int id)
 {
 	char	**split;
-	int		i;
 
-	i = 0;
 	check_str_char_valid(str);
-	split = ft_split(str, ',');
+	split = safe_split(ZONE_PARSE, str, ',');
 	if (split == NULL)
 		return ;
 	if (!split[0] || !split[1] || !split[2])
@@ -64,6 +62,5 @@ void	char_to_rgb(t_colors *colors, char *str, int id)
 	if (id == 1)
 		colors->color_ceiling_uint = get_rgba(ft_atoi(split[0]), \
 									ft_atoi(split[1]), ft_atoi(split[2]), 255);
-	ft_free_all(split, 0);
 	return ;
 }

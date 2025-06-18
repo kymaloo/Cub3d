@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:24:15 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/28 20:37:38 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 02:13:13 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	init_textures(t_game *game);
 
 void	init_mlx(t_game *game);
 void	init_spawn_player(t_player *player);
+void	mirror_mlx_texture_t(mlx_texture_t *texture);
 
 #endif

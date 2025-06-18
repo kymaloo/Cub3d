@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:37:14 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 14:02:48 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 01:42:14 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ typedef struct s_parsing_map
 	int		y_last_0;
 }	t_parsing_map;
 
+/**
+ * float side; // 0 = x, 1 = y
+ * int wall_hit_x; // Exact X hit position
+ * 
+ */
 typedef struct s_ray
 {
 	float			dir_x;
@@ -49,7 +54,7 @@ typedef struct s_ray
 	int				step_x;
 	int				step_y;
 	int				hit;
-	int				side; // 0 = x, 1 = y
+	int				side;
 	int				draw_end;
 	int				draw_start;
 	float			realdist;
@@ -58,7 +63,7 @@ typedef struct s_ray
 	mlx_texture_t	*current_texture;
 	uint8_t			*pixel;
 	uint32_t		color;
-	float			wall_hit_x; // Exact X hit position
+	float			wall_hit_x;
 	float			wall_hit_y;
 }	t_ray;
 

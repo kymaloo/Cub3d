@@ -34,6 +34,7 @@ SRCS	:= 	\
 			\
 			src/main.c									\
 			src/init_utils.c							\
+			src/init_utils2.c							\
 			src/error.c									\
 			\
 			src/parsing/open_close_map.c				\
@@ -63,6 +64,7 @@ SRCS	:= 	\
 			src/debug/debug_main.c						\
 			src/debug/debug_parsing.c					\
 			src/debug/debug_utils.c						\
+			src/debug/debug_utils2.c					\
 			\
 
 
@@ -72,21 +74,21 @@ OBJS	:= ${SRCS:.c=.o}
 all: $(NAME)
 
 n:	clear
-	norminette
+	norminette src include libft memory_manager
 
-a:	all
+a:	clear all
 	./cub3D maps/map.cub
 
-l:	all
+l:	clear all
 	lldb ./cub3D maps/map.cub
 
-r:	re
+r:	clear re
 	./cub3D maps/map.cub
 
-v:	all
+v:	clear all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --track-fds=yes ./cub3D maps/map.cub
 
-vs:	all
+vs:	clear all
 	valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes --suppressions=.valgrind.supp ./cub3D maps/map.cub
 
 %.o: %.c
@@ -99,6 +101,7 @@ $(LIBFT_A):
 	@$(MAKE) -C $(LIBFT_DIR)
 	@echo "$(BLUE)$(NAME): $(GREEN)$(LIBFT_A) archived !$(RESET)"
 
+#creates the MLX_A using cmake if it's missing
 $(MLX_A): $(MLX_DIR)
 	@echo "$(BLUE)$(NAME): versionning $(MLX_DIR) submodule$(RESET)"
 	@git submodule update --init --recursive $(MLX_DIR)
@@ -108,6 +111,7 @@ $(MLX_A): $(MLX_DIR)
 	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
 	@echo "$(BLUE)$(NAME): $(GREEN)$(MLX_A) archived !$(RESET)"
 
+#git clones the MLX_DIR if it's missing
 $(MLX_DIR):
 	@echo "$(BLUE)$(NAME): $(YELLOW)$(MLX_DIR) missing$(RESET)"
 	@echo "$(BLUE)$(NAME): cloning missing git $(MLX_DIR) submodule$(RESET)"
@@ -115,14 +119,11 @@ $(MLX_DIR):
 
 #checks dependencies left to right
 $(NAME): $(MLX_A) $(LIBFT_A) $(OBJS) 
-#@echo "$(BLUE)$(NAME): objects $(GREEN)compiled !$(RESET)"
-#@echo "$(BLUE)$(NAME): Linking $(NAME) $(RESET)"
 	@printf "\33[2K\r$(BLUE)$(NAME): objects $(GREEN)compiled$(RESET)\n"
 	@echo "$(CC) $(CFLAGS) \$$($(NAME)_OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)
 
 	@printf "\33[2K\r$(BLUE)$(NAME): $(NAME) $(GREEN)Linked!$(RESET)\n"
-#@echo "$(BLUE)$(NAME): $(GREEN)$(NAME) Linked !$(RESET)"
 
 compile_without_mlx: $(LIBFT_A) $(OBJS)
 	@echo "$(BLUE)$(NAME): objects $(GREEN)compiled !$(RESET)"
@@ -148,7 +149,7 @@ fclean_mlx: fclean
 	@echo "$(BLUE)$(NAME): Fcleaning $(MLX_DIR)$(RESET)"
 	@rm -rf $(MLX_DIR)
 
-gprof: $(LIBFT_A) $(OBJS)
+gprof: clear $(LIBFT_A) $(OBJS)
 	@echo "$(BLUE)$(NAME): $(NAME) $(GREEN)OBJS compiled !$(RESET)"
 	@echo "$(BLUE)$(NAME): Linking $(NAME) with -gp $(RESET)"
 	@echo "$(CC) $(CFLAGS) -gp $(OBJS) $(ARCHIVES) $(LIBS) -o $(NAME)"
