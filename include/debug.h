@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:34:46 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/05/29 14:53:30 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:54:04 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@
 #  define DEBUG_EXTRACT false
 # endif
 # ifndef RESOLUTION_NB_KS
-#  define RESOLUTION_NB_KS 2
+#  define RESOLUTION_NB_KS 4
 # endif
 # ifndef DEBUG
 #  define DEBUG	false
 # endif
 
-# if RESOLUTION_NB_KS == 4
+# if RESOLUTION_NB_KS == 2
 #  define WIDTH				3840
 #  define HEIGHT			2160
 # elif RESOLUTION_NB_KS == 2

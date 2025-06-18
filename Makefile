@@ -11,7 +11,7 @@ MLX_VERSION_GIT_HASH := ce254c3a19af8176787601a2ac3490100a5c4c61
 INCLUDES	:= -Iinclude -IMLX42/include
 ARCHIVES	:= $(LIBFT_A) $(MLX_A)
 LIBS		:= -ldl -lglfw -lm
-CFLAGS		:= -Wall -Wextra -g3 $(INCLUDES) #-Werror
+CFLAGS		:= -Wall -Wextra -Werror -g3 $(INCLUDES)
 
 BRED	:=	\033[1;31m
 RED		:=	\033[31m
