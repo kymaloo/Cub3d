@@ -6,7 +6,7 @@
 /*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 18:51:26 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/06/18 14:11:49 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:25:44 by ekrebs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,5 @@ void	char_to_rgb(t_colors *colors, char *str, int id)
 	if (id == 1)
 		colors->color_ceiling_uint = get_rgba(ft_atoi(split[0]), \
 									ft_atoi(split[1]), ft_atoi(split[2]), 255);
-	ft_free_all(split, 0);
 	return ;
 }
