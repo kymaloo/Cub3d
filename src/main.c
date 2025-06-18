@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrebs <ekrebs@student.42.fr>              +#+  +:+       +#+        */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 09:39:50 by ekrebs            #+#    #+#             */
-/*   Updated: 2025/06/18 14:19:03 by ekrebs           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:27:51 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	create_memory_manager(t_data **data)
 {
 	memory_manager(CREATE, NULL, NULL);
 	memory_manager_area_create(ZONE_PARSE, &free, 256);
-	//memory_manager_area_create(ZONE_MALLOC, &free, 256);
 	memory_manager_area_create(ZONE_FDS, &fd_deletion_func, 10);
 	memory_manager_area_create(ZONE_MLX_PNG, &mlx_png_deletion_func, 10);
 	memory_manager_area_create(ZONE_MLX, &mlx_deletion_func, 2);
